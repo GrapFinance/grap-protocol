@@ -36,7 +36,7 @@ const Home: React.FC = () => {
 
   return (
     <Page>
-      <PageHeader icon="🍇" subtitle="It's a great day to farm GRAPs" title="Welcome" />
+      <PageHeader icon="🍇" subtitle="It's a great day to farm GRAPsIt's a great day to farm GRAPs. (without wrong rebase)" title="Welcome" />
       <StyledOverview>
         <Rebase nextRebase={nextRebase} />
         <StyledSpacer />
