@@ -39,7 +39,17 @@ contract GRAPToken is GRAPGovernanceToken {
         decimals = decimals_;
     }
 
-
+    /**
+    * @notice Computes the current totalSupply
+    */
+    function totalSupply()
+        external
+        view
+        returns (uint256)
+    {
+        return _totalSupply.div(10**24/ (BASE));
+    }
+    
     /**
     * @notice Computes the current max scaling factor
     */
@@ -78,7 +88,7 @@ contract GRAPToken is GRAPGovernanceToken {
         internal
     {
       // increase totalSupply
-      totalSupply = totalSupply.add(amount);
+      _totalSupply = _totalSupply.add(amount);
 
       // get underlying value
       uint256 grapValue = amount.mul(internalDecimals).div(grapsScalingFactor);
@@ -321,7 +331,7 @@ contract GRAPToken is GRAPGovernanceToken {
     {
         if (indexDelta == 0) {
           emit Rebase(epoch, grapsScalingFactor, grapsScalingFactor);
-          return totalSupply;
+          return _totalSupply;
         }
 
         uint256 prevGrapsScalingFactor = grapsScalingFactor;
@@ -337,9 +347,9 @@ contract GRAPToken is GRAPGovernanceToken {
             }
         }
 
-        totalSupply = initSupply.mul(grapsScalingFactor).div(BASE);
+        _totalSupply = initSupply.mul(grapsScalingFactor).div(BASE);
         emit Rebase(epoch, prevGrapsScalingFactor, grapsScalingFactor);
-        return totalSupply;
+        return _totalSupply;
     }
 }
 
@@ -364,7 +374,7 @@ contract GRAP is GRAPToken {
         super.initialize(name_, symbol_, decimals_);
 
         initSupply = initSupply_.mul(10**24/ (BASE));
-        totalSupply = initSupply_;
+        _totalSupply = initSupply;
         grapsScalingFactor = BASE;
         _grapBalances[initial_owner] = initSupply_.mul(10**24 / (BASE));
 

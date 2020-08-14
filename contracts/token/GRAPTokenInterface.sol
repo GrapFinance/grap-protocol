@@ -57,6 +57,7 @@ contract GRAPTokenInterface is GRAPTokenStorage, GRAPGovernanceStorage {
     event Mint(address to, uint256 amount);
 
     // Public functions
+    function totalSupply() external view returns (uint256);
     function transfer(address to, uint256 value) external returns(bool);
     function transferFrom(address from, address to, uint256 value) external returns(bool);
     function balanceOf(address who) external view returns(uint256);

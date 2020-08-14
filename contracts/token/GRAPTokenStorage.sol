@@ -50,7 +50,7 @@ contract GRAPTokenStorage {
     /**
      * @notice Total supply of GRAPs
      */
-    uint256 public totalSupply;
+    uint256 internal _totalSupply;
 
     /**
      * @notice Internal decimals used to handle scaling factor

@@ -151,6 +151,14 @@ contract GRAPDelegator is GRAPTokenInterface, GRAPDelegatorInterface {
         delegateAndReturn();
     }
 
+    function totalSupply()
+        external
+        view
+        returns (uint256)
+    {
+        delegateToViewAndReturn();
+    }
+
     function maxScalingFactor()
         external
         view
