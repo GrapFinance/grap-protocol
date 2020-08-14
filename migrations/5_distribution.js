@@ -25,7 +25,7 @@ const GRAP_LENDPool = artifacts.require("GRAPLENDPool");
 const GRAP_COMPPool = artifacts.require("GRAPCOMPPool");
 const GRAP_SNXPool = artifacts.require("GRAPSNXPool");
 const GRAP_YFIIPool = artifacts.require("GRAPYFIIPool");
-const GRAP_KNCPool = artifacts.require("GRAPKNCPool");
+const GRAP_CRVPool = artifacts.require("GRAPCRVPool");
 
 // deployed fifth
 const GRAPIncentivizer = artifacts.require("GRAPIncentivizer");
@@ -63,7 +63,7 @@ async function deployDistribution(deployer, network, accounts) {
     await deployer.deploy(GRAP_COMPPool);
     await deployer.deploy(GRAP_SNXPool);
     await deployer.deploy(GRAP_YFIIPool);
-    await deployer.deploy(GRAP_KNCPool);
+    await deployer.deploy(GRAP_CRVPool);
 
     let eth_pool = new web3.eth.Contract(GRAP_ETHPool.abi, GRAP_ETHPool.address);
     let ampl_pool = new web3.eth.Contract(GRAP_uAMPLPool.abi, GRAP_uAMPLPool.address);
@@ -74,7 +74,7 @@ async function deployDistribution(deployer, network, accounts) {
     let comp_pool = new web3.eth.Contract(GRAP_COMPPool.abi, GRAP_COMPPool.address);
     let link_pool = new web3.eth.Contract(GRAP_LINKPool.abi, GRAP_LINKPool.address);
     let yfii_pool = new web3.eth.Contract(GRAP_YFIIPool.abi, GRAP_YFIIPool.address);
-    let knc_pool = new web3.eth.Contract(GRAP_KNCPool.abi, GRAP_KNCPool.address);
+    let crv_pool = new web3.eth.Contract(GRAP_CRVPool.abi, GRAP_CRVPool.address);
     let ycrv_pool = new web3.eth.Contract(GRAPIncentivizer.abi, GRAPIncentivizer.address);
 
     console.log("setting distributor");
@@ -89,7 +89,7 @@ async function deployDistribution(deployer, network, accounts) {
         comp_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         link_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         yfii_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
-        knc_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
+        crv_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         ycrv_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
       ]);
 
@@ -108,7 +108,7 @@ async function deployDistribution(deployer, network, accounts) {
       grap.transfer(GRAP_COMPPool.address, twenty.toString()),
       grap.transfer(GRAP_LINKPool.address, twenty.toString()),
       grap.transfer(GRAP_YFIIPool.address, twenty.toString()),
-      grap.transfer(GRAP_KNCPool.address, twenty.toString()),
+      grap.transfer(GRAP_CRVPool.address, twenty.toString()),
       grap._setIncentivizer(GRAPIncentivizer.address),
     ]);
 
@@ -122,7 +122,7 @@ async function deployDistribution(deployer, network, accounts) {
       comp_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
       link_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
       yfii_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
-      knc_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
+      crv_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
 
       // incentives is a minter and prepopulates itself.
       ycrv_pool.methods.notifyRewardAmount("0").send({from: accounts[0], gas: 500000}),
@@ -138,7 +138,7 @@ async function deployDistribution(deployer, network, accounts) {
       comp_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
       link_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
       yfii_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
-      knc_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
+      crv_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
       ycrv_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
     ]);
     await Promise.all([
@@ -151,7 +151,7 @@ async function deployDistribution(deployer, network, accounts) {
       comp_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
       link_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
       yfii_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
-      knc_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
+      crv_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
       ycrv_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
     ]);
   }

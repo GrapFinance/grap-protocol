@@ -602,7 +602,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public knc = IERC20(0xdd974D5C2e2928deA5F71b9825b8b646686BD200);
+    IERC20 public crv = IERC20(0xD533a949740bb3306d119CC777fa900bA034cd52);
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
@@ -618,17 +618,17 @@ contract LPTokenWrapper {
     function stake(uint256 amount) public {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
-        knc.safeTransferFrom(msg.sender, address(this), amount);
+        crv.safeTransferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
-        knc.safeTransfer(msg.sender, amount);
+        crv.safeTransfer(msg.sender, amount);
     }
 }
 
-contract GRAPKNCPool is LPTokenWrapper, IRewardDistributionRecipient {
+contract GRAPCRVPool is LPTokenWrapper, IRewardDistributionRecipient {
     IERC20 public grap = IERC20(0x0e2298E3B3390e3b945a5456fBf59eCc3f55DA16);
     uint256 public constant DURATION = 625000; // ~7 1/4 days
 
