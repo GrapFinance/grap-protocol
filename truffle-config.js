@@ -50,7 +50,7 @@ module.exports = {
         0,
         1,
       ),
-      gasPrice: Number(process.env.GAS_PRICE),
+      gasPrice: 100000000000, // 100 gwei
       gas: 8000000,
       from: process.env.DEPLOYER_ACCOUNT,
       timeoutBlocks: 800,
@@ -89,4 +89,10 @@ module.exports = {
       gasPrice: 1,
     },
   },
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+  api_keys: {
+    etherscan: process.env.ETHERSCAN_API_KEY
+  }
 };
