@@ -646,7 +646,7 @@ contract GRAPIncentivizer is LPTokenWrapper, IRewardDistributionRecipient {
     uint256 public constant DURATION = 625000;
 
     uint256 public initreward = 15 * 10**5 * 10**18; // 1.5m
-    uint256 public starttime = 1597172400 + 24 hours; // 2020-08-12 19:00:00 (UTC UTC +00:00)
+    uint256 public starttime = 1597420800 + 24 hours; // 2020-08-15 16:00:00 (UTC UTC +00:00) 
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public lastUpdateTime;
