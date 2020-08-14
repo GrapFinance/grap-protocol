@@ -36,7 +36,7 @@ async function deployRs(deployer, network) {
   let rebase = new web3.eth.Contract(GRAPRebaser.abi, GRAPRebaser.address);
 
   let pair = await rebase.methods.uniswap_pair().call();
-  console.log(pair)
+  console.log("Uniswap pair is " + pair);
   let grap = await GRAPProxy.deployed();
   await grap._setRebaser(GRAPRebaser.address);
   let reserves = await GRAPReserves.deployed();
