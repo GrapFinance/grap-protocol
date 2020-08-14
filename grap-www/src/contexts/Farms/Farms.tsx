@@ -10,19 +10,23 @@ import Context from './context'
 import { Farm } from './types'
 
 const NAME_FOR_POOL: { [key: string]: string } = {
-  yfi_pool: 'YFI Farm',
   eth_pool: 'Weth Homestead',
   ampl_pool: 'Ample Soils',
   ycrv_pool: 'Curvy Fields',
+  yfi_pool: 'YFI Farm',
+  yfii_pool: 'YFII Farm',
   comp_pool: 'Compounding Hills',
   link_pool: 'Marine Gardens',
   lend_pool: 'Aave Agriculture',
   snx_pool: 'Spartan Grounds',
   mkr_pool: 'Maker Range',
+  knc_pool: 'Kyber'
 }
 
 const ICON_FOR_POOL: { [key: string]: string } = {
   yfi_pool: '🐋',
+  yfii_pool: '🦈',
+  knc_pool: '🔮',
   eth_pool: '🌎',
   ampl_pool: '🌷',
   ycrv_pool: '🚜',
@@ -40,7 +44,7 @@ const Farms: React.FC = ({ children }) => {
 
   const fetchPools = useCallback(async () => {
     const pools: { [key: string]: Contract} = await getPoolContracts(grap)
-    
+
     const farmsArr: Farm[] = []
     const poolKeys = Object.keys(pools)
 
@@ -81,7 +85,7 @@ const Farms: React.FC = ({ children }) => {
       fetchPools()
     }
   }, [grap, fetchPools])
-  
+
   return (
     <Context.Provider value={{ farms }}>
       {children}

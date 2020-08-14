@@ -19,6 +19,10 @@ import WETHPoolJson from '../clean_build/contracts/GRAPETHPool.json';
 import AMPLPoolJson from '../clean_build/contracts/GRAPAMPLPool.json';
 import YFIPoolJson from '../clean_build/contracts/GRAPYFIPool.json';
 
+// TODO
+import YFIIPoolJson from '../clean_build/contracts/GRAPYFIIPool.json';
+import KNCPoolJson from '../clean_build/contracts/GRAPKNCPool.json';
+
 import MKRPoolJson from '../clean_build/contracts/GRAPMKRPool.json';
 import LENDPoolJson from '../clean_build/contracts/GRAPLENDPool.json';
 import COMPPoolJson from '../clean_build/contracts/GRAPCOMPPool.json';
@@ -49,8 +53,15 @@ export class Contracts {
     this.ycrv = new this.web3.eth.Contract(ERC20Json.abi);
     this.grap = new this.web3.eth.Contract(GRAPJson.abi);
 
-    this.yfi_pool = new this.web3.eth.Contract(YFIPoolJson.abi);
     this.eth_pool = new this.web3.eth.Contract(WETHPoolJson.abi);
+
+    this.yfi_pool = new this.web3.eth.Contract(YFIPoolJson.abi);
+    // TODO
+    this.yfii_pool = new this.web3.eth.Contract(YFIIPoolJson.abi);
+    this.yfii_pool.methods.yfii = this.yfii_pool.methods.yfi
+    this.knc_pool = new this.web3.eth.Contract(KNCPoolJson.abi);
+    this.knc_pool.methods.knc = this.yfii_pool.methods.yfi
+
     this.ampl_pool = new this.web3.eth.Contract(AMPLPoolJson.abi);
     this.ycrv_pool = new this.web3.eth.Contract(IncJson.abi);
 
@@ -99,6 +110,10 @@ export class Contracts {
       { contract: this.ycrv_pool, json: IncJson },
       { contract: this.eth_pool, json: WETHPoolJson },
       { contract: this.yfi_pool, json: YFIPoolJson },
+      // TODO
+      { contract: this.yfii_pool, json: YFIIPoolJson },
+      { contract: this.knc_pool, json: KNCPoolJson },
+
       { contract: this.ampl_pool, json: AMPLPoolJson },
       { contract: this.snx_pool, json: SNXPoolJson },
       { contract: this.mkr_pool, json: MKRPoolJson },
@@ -115,6 +130,10 @@ export class Contracts {
       ),
     );
     this.yfi.options.address = addressMap["YFI"];
+
+    // this.yfii.options.address = addressMap["YFI"];
+    // this.knc.options.address = addressMap["YFI"];
+
     this.ycrv.options.address = addressMap["YCRV"];
     this.weth.options.address = addressMap["WETH"];
     this.snx.options.address = addressMap["SNX"];
@@ -129,6 +148,11 @@ export class Contracts {
 
     this.pools = [
       {"tokenAddr": this.yfi.options.address, "poolAddr": this.yfi_pool.options.address},
+      // TODO
+      {"tokenAddr": this.yfi.options.address, "poolAddr": this.yfii_pool.options.address},
+      {"tokenAddr": this.yfi.options.address, "poolAddr": this.knc_pool.options.address},
+
+
       {"tokenAddr": this.snx.options.address, "poolAddr": this.snx_pool.options.address},
       {"tokenAddr": this.weth.options.address, "poolAddr": this.eth_pool.options.address},
       {"tokenAddr": this.comp.options.address, "poolAddr": this.comp_pool.options.address},
