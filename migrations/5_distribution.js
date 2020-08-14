@@ -82,7 +82,6 @@ async function deployDistribution(deployer, network, accounts) {
         eth_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         ampl_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         yfi_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
-        ycrv_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         lend_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         mkr_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         snx_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),

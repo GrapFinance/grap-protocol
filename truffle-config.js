@@ -46,11 +46,11 @@ module.exports = {
       network_id: '1',
       provider: () => new HDWalletProvider(
         [process.env.DEPLOYER_PRIVATE_KEY],
-        "https://mainnet.infura.io/v3/731a2b3d28e445b7ac56f23507614fea",
+        process.env.MAINNET_KOVAN_API,
         0,
         1,
       ),
-      gasPrice: 100000000000, // 100 gwei
+      gasPrice: 150000000000, // 150 gwei
       gas: 8000000,
       from: process.env.DEPLOYER_ACCOUNT,
       timeoutBlocks: 800,
@@ -59,7 +59,7 @@ module.exports = {
       network_id: '42',
       provider: () => new HDWalletProvider(
         [process.env.DEPLOYER_PRIVATE_KEY],
-        'https://kovan.infura.io/v3/04c5f76635f24c70b28488be34dbd838',
+        process.env.INFURA_KOVAN_API,
         0,
         1,
       ),
