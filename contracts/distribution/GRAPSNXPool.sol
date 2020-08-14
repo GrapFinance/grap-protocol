@@ -632,7 +632,7 @@ contract GRAPSNXPool is LPTokenWrapper, IRewardDistributionRecipient {
     IERC20 public grap = IERC20(0x0e2298E3B3390e3b945a5456fBf59eCc3f55DA16);
     uint256 public constant DURATION = 625000; // ~7 1/4 days
 
-    uint256 public starttime = 1597420800; // 2020-08-14 16:00:00 (UTC UTC +00:00)
+    uint256 public starttime = 1597449600; // 2020-08-15 00:00:00 (UTC +00:00)
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public lastUpdateTime;
