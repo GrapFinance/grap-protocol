@@ -628,7 +628,7 @@ contract GRAPYFIIPool is LPTokenWrapper, IRewardDistributionRecipient {
     IERC20 public grap = IERC20(0x97ED2E1ABAf510D4eA216e10BDcf64c5ff87f2Dc);
     uint256 public constant DURATION = 625000; // ~7 1/4 days
 
-    uint256 public starttime = 1597449600; // 2020-08-15 00:00:00 (UTC +00:00)
+    uint256 public starttime = 1597766400; // 2020-08-18 16:00:00 (UTC +00:00)
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public lastUpdateTime;
