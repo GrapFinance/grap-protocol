@@ -101,7 +101,8 @@ contract GRAPToken is GRAPGovernanceToken {
 
       // add balance
       _grapBalances[to] = _grapBalances[to].add(grapValue);
-
+      emit Transfer(address(0), to, amount);
+    
       // add delegates to the minter
       _moveDelegates(address(0), _delegates[to], grapValue);
       emit Mint(to, amount);
