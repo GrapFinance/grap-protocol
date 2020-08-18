@@ -711,6 +711,10 @@ contract GRAPCRVPool is LPTokenWrapper, IRewardDistributionRecipient {
         }
     }
 
+    function checkRate() internal view returns (uint256) {
+        return DURATION.mul(rewardRate).mul(1e18);
+    }
+
     function notifyRewardAmount(uint256 reward)
         external
         onlyRewardDistribution
@@ -733,5 +737,7 @@ contract GRAPCRVPool is LPTokenWrapper, IRewardDistributionRecipient {
           periodFinish = starttime.add(DURATION);
           emit RewardAdded(reward);
         }
+        // avoid overflow to lock assets
+        checkRate();
     }
 }

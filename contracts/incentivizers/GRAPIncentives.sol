@@ -634,7 +634,7 @@ contract GRAPIncentivizer is LPTokenWrapper, IRewardDistributionRecipient {
     uint256 public constant DURATION = 625000;
 
     uint256 public initreward = 15 * 10**5 * 10**18; // 1.5m
-    uint256 public starttime = 1597449600 + 24 hours ; // 2020-08-16 00:00:00 (UTC +00:00)
+    uint256 public starttime = 1597766400 + 24 hours ; // 2020-08-19 16:00:00 (UTC +00:00)
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public lastUpdateTime;
@@ -732,6 +732,9 @@ contract GRAPIncentivizer is LPTokenWrapper, IRewardDistributionRecipient {
         _;
     }
 
+    function checkRate() internal view returns (uint256) {
+        return DURATION.mul(rewardRate).mul(1e18);
+    }
 
     function notifyRewardAmount(uint256 reward)
         external
@@ -757,6 +760,8 @@ contract GRAPIncentivizer is LPTokenWrapper, IRewardDistributionRecipient {
           periodFinish = starttime.add(DURATION);
           emit RewardAdded(reward);
         }
+        // avoid overflow to lock assets
+        checkRate();
     }
 
 
