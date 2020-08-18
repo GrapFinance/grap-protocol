@@ -31,7 +31,7 @@ contract Timelock {
     /// @notice the length of time after the delay has passed that a transaction can be executed
     uint256 public constant GRACE_PERIOD = 14 days;
     /// @notice the minimum length of the timelock delay
-    uint256 public constant MINIMUM_DELAY = 12 hours + 2*60*15; // have to be present for 2 rebases
+    uint256 public constant MINIMUM_DELAY = 24 hours + 2*60*15; // have to be present for 2 rebases
     /// @notice the maximum length of the timelock delay
     uint256 public constant MAXIMUM_DELAY = 30 days;
 
