@@ -45,7 +45,7 @@ const Stake: React.FC<StakeProps> = ({
   const tokenBalance = useTokenBalance(tokenContract.options.address)
   const stakedBalance = useStakedBalance(poolContract)
 
-  const { onStake } = useStake(poolContract)
+  const { onStake } = useStake(poolContract, tokenName);
   const { onUnstake } = useUnstake(poolContract)
 
   const [onPresentDeposit] = useModal(
@@ -55,7 +55,7 @@ const Stake: React.FC<StakeProps> = ({
       tokenName={tokenName}
     />
   )
-  
+
   const [onPresentWithdraw] = useModal(
     <WithdrawModal
       max={stakedBalance}
@@ -99,9 +99,11 @@ const Stake: React.FC<StakeProps> = ({
                   <RemoveIcon />
                 </IconButton>
                 <StyledActionSpacer />
-                <IconButton onClick={onPresentDeposit}>
-                  <AddIcon />
-                </IconButton>
+                {tokenName !== 'UNI_LP' && (
+                  <IconButton onClick={onPresentDeposit}>
+                    <AddIcon />
+                  </IconButton>
+                )}
               </>
             )}
           </StyledCardActions>

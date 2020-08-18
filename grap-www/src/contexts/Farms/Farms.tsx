@@ -12,7 +12,7 @@ import { Farm } from './types'
 const NAME_FOR_POOL: { [key: string]: string } = {
   eth_pool: 'Weth Homestead',
   yam_pool: 'YAM',
-  ycrv_pool: 'Curvy Fields',
+  crv_pool: 'Curvy Fields',
   yfi_pool: 'YFI Farm',
   yfii_pool: 'YFII Farm',
   comp_pool: 'Compounding Hills',
@@ -20,6 +20,7 @@ const NAME_FOR_POOL: { [key: string]: string } = {
   lend_pool: 'Aave Agriculture',
   snx_pool: 'Spartan Grounds',
   mkr_pool: 'Maker Range',
+  ycrvUNIV_pool: 'Eternal Lands',
 }
 
 const ICON_FOR_POOL: { [key: string]: string } = {
@@ -27,12 +28,13 @@ const ICON_FOR_POOL: { [key: string]: string } = {
   yfii_pool: '🦈',
   yam_pool: '🍠',
   eth_pool: '🌎',
-  ycrv_pool: '🚜',
+  crv_pool: '🚜',
   comp_pool: '💸',
   link_pool: '🔗',
   lend_pool: '🏕️',
   snx_pool: '⚔️',
   mkr_pool: '🐮',
+  ycrvUNIV_pool: '🌈',
 }
 
 const Farms: React.FC = ({ children }) => {
@@ -52,8 +54,8 @@ const Farms: React.FC = ({ children }) => {
       let tokenKey = poolKey.replace('_pool', '')
       if (tokenKey === 'eth') {
         tokenKey = 'weth'
-      } else if (tokenKey === 'ampl') {
-        tokenKey = 'ampl_eth_uni_lp'
+      } else if (tokenKey === 'ycrvUNIV') {
+        tokenKey = 'uni_lp'
       }
 
       const method = pool.methods[tokenKey]
