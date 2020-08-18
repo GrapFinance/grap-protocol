@@ -54,7 +54,7 @@ async function deployDistribution(deployer, network, accounts) {
   let gov = await Gov.deployed();
   if (network != "test") {
     await deployer.deploy(GRAP_ETHPool);
-    await deployer.deploy(GRAP_uYAMPool);
+    await deployer.deploy(GRAP_YAMPool);
     await deployer.deploy(GRAP_YFIPool);
     await deployer.deploy(GRAPIncentivizer);
     await deployer.deploy(GRAP_LINKPool);
