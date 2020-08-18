@@ -24,7 +24,7 @@ module.exports = migration;
 
 
 async function deployRs(deployer, network) {
-  let reserveToken = "0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8";
+  let reserveToken = "0x5d6D4355776fffD46D83DCeDB8156D65c152a4ba";
   let uniswap_factory = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
   await deployer.deploy(GRAPReserves, reserveToken, GRAPProxy.address);
   await deployer.deploy(GRAPRebaser,
