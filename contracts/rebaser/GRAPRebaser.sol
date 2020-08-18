@@ -111,7 +111,7 @@ contract GRAPRebaser {
     bool public rebasingActive;
 
     /// @notice delays rebasing activation to facilitate liquidity
-    uint256 public constant rebaseDelay = 0 hours;
+    uint256 public constant rebaseDelay = 12 hours;
 
     /// @notice Time of TWAP initialization
     uint256 public timeOfTWAPInit;
@@ -152,8 +152,8 @@ contract GRAPRebaser {
     )
         public
     {
-          minRebaseTimeIntervalSec = 1 minutes;
-          rebaseWindowOffsetSec = 0; // 4PM-5PM UTC+0 rebases
+          minRebaseTimeIntervalSec = 24 hours;
+          rebaseWindowOffsetSec = 57600; // 4PM-5PM UTC+0 rebases
           reservesContract = reservesContract_;
           (address token0, address token1) = sortTokens(grapAddress_, reserveToken_);
 

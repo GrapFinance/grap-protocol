@@ -598,7 +598,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public weth = IERC20(0xFF55A8FbDb0fDdbeA8E5196e693562f19FCEbFbD);
+    IERC20 public weth = IERC20(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
@@ -625,7 +625,7 @@ contract LPTokenWrapper {
 }
 
 contract GRAPETHPool is LPTokenWrapper, IRewardDistributionRecipient {
-    IERC20 public grap = IERC20(0x06d8ee2B533889f4d40714B95424fB66323c0eAc);
+    IERC20 public grap = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
     uint256 public constant DURATION = 625000; // ~7 1/4 days
 
     uint256 public starttime = 1597766400; // 2020-08-18 16:00:00 (UTC +00:00)
