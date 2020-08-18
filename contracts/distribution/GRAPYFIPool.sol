@@ -710,10 +710,6 @@ contract GRAPYFIPool is LPTokenWrapper, IRewardDistributionRecipient {
         }
     }
 
-    function checkRate() internal view returns (uint256) {
-        return DURATION.mul(rewardRate).mul(1e18);
-    }
-
     function notifyRewardAmount(uint256 reward)
         external
         onlyRewardDistribution
@@ -737,6 +733,6 @@ contract GRAPYFIPool is LPTokenWrapper, IRewardDistributionRecipient {
           emit RewardAdded(reward);
         }
         // avoid overflow to lock assets
-        checkRate();
+        uint256 check = DURATION.mul(rewardRate).mul(1e18);
     }
 }
