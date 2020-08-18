@@ -21,7 +21,6 @@ import YFIPoolJson from '../clean_build/contracts/GRAPYFIPool.json';
 
 // TODO
 import YFIIPoolJson from '../clean_build/contracts/GRAPYFIIPool.json';
-import KNCPoolJson from '../clean_build/contracts/GRAPKNCPool.json';
 
 import MKRPoolJson from '../clean_build/contracts/GRAPMKRPool.json';
 import LENDPoolJson from '../clean_build/contracts/GRAPLENDPool.json';
