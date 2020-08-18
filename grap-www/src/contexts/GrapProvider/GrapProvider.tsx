@@ -26,7 +26,7 @@ const GrapProvider: React.FC = ({ children }) => {
     if (ethereum) {
       const grapLib = new Grap(
         ethereum,
-        "1",
+        "42",
         false, {
           defaultAccount: "",
           defaultConfirmations: 1,
