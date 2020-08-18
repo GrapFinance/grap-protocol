@@ -1,4 +1,4 @@
-# 🍠  GRAP Protocol  🍠
+# 🍇  GRAP Protocol  🍇
 ## The Protocol
 Yam is an experimental protocol building upon the most exciting innovations in programmable money and governance. Built by a team of DeFi natives, it seeks to create:
 
@@ -104,7 +104,6 @@ Much of this code base is modified from existing works, including:
 
 [Compound](https://compound.finance) - Jumping off point for token code and governance
 
-[Ampleforth](https://ampleforth.org) - Initial rebasing mechanism, modified to better suit the GRAP protocol
 
 [Synthetix](https://synthetix.io) - Rewards staking contract
 

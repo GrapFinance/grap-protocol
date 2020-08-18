@@ -11,7 +11,7 @@ import { Farm } from './types'
 
 const NAME_FOR_POOL: { [key: string]: string } = {
   eth_pool: 'Weth Homestead',
-  ampl_pool: 'Ample Soils',
+  yam_pool: 'YAM',
   ycrv_pool: 'Curvy Fields',
   yfi_pool: 'YFI Farm',
   yfii_pool: 'YFII Farm',
@@ -20,15 +20,13 @@ const NAME_FOR_POOL: { [key: string]: string } = {
   lend_pool: 'Aave Agriculture',
   snx_pool: 'Spartan Grounds',
   mkr_pool: 'Maker Range',
-  knc_pool: 'Kyber'
 }
 
 const ICON_FOR_POOL: { [key: string]: string } = {
   yfi_pool: '🐋',
   yfii_pool: '🦈',
-  knc_pool: '🔮',
+  yam_pool: '🍠',
   eth_pool: '🌎',
-  ampl_pool: '🌷',
   ycrv_pool: '🚜',
   comp_pool: '💸',
   link_pool: '🔗',

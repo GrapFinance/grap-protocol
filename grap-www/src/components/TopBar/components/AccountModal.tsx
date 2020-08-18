@@ -29,7 +29,7 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
       <ModalTitle text="My Account" />
 
       <StyledBalanceWrapper>
-        <CardIcon>🍠</CardIcon>
+        <CardIcon>🍇</CardIcon>
         <StyledBalance>
           <StyledValue>{displayBalance}</StyledValue>
           <Label text="GRAP Balance" />

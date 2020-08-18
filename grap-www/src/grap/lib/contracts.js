@@ -10,13 +10,13 @@ import GRAPReservesJson from '../clean_build/contracts/GRAPReserves.json';
 import GRAPGovJson from '../clean_build/contracts/GovernorAlpha.json';
 import GRAPTimelockJson from '../clean_build/contracts/Timelock.json';
 import WETHJson from './weth.json';
-import SNXJson from './snx.json';
+import YCRVJson from './ycrv.json';
 import UNIFactJson from './unifact2.json';
 import UNIPairJson from './uni2.json';
 import UNIRouterJson from './uniR.json';
 
 import WETHPoolJson from '../clean_build/contracts/GRAPETHPool.json';
-import AMPLPoolJson from '../clean_build/contracts/GRAPAMPLPool.json';
+import YAMPoolJson from '../clean_build/contracts/GRAPYAMPool.json';
 import YFIPoolJson from '../clean_build/contracts/GRAPYFIPool.json';
 
 // TODO
@@ -26,8 +26,10 @@ import KNCPoolJson from '../clean_build/contracts/GRAPKNCPool.json';
 import MKRPoolJson from '../clean_build/contracts/GRAPMKRPool.json';
 import LENDPoolJson from '../clean_build/contracts/GRAPLENDPool.json';
 import COMPPoolJson from '../clean_build/contracts/GRAPCOMPPool.json';
-import SNXPoolJson from '../clean_build/contracts/GRAPSNXPool.json';
+import CRVPoolJson from '../clean_build/contracts/GRAPCRVPool.json';
 import LINKPoolJson from '../clean_build/contracts/GRAPLINKPool.json';
+import SNXPoolJson from '../clean_build/contracts/GRAPSNXPool.json';
+
 
 import IncJson from '../clean_build/contracts/GRAPIncentivizer.json';
 
@@ -48,39 +50,30 @@ export class Contracts {
     this.uni_pair = new this.web3.eth.Contract(UNIPairJson);
     this.uni_router = new this.web3.eth.Contract(UNIRouterJson);
     this.uni_fact = new this.web3.eth.Contract(UNIFactJson);
-    this.yfi = new this.web3.eth.Contract(ERC20Json.abi);
-    this.UNIAmpl = new this.web3.eth.Contract(ERC20Json.abi);
-    this.ycrv = new this.web3.eth.Contract(ERC20Json.abi);
-    this.grap = new this.web3.eth.Contract(GRAPJson.abi);
 
     this.eth_pool = new this.web3.eth.Contract(WETHPoolJson.abi);
-
     this.yfi_pool = new this.web3.eth.Contract(YFIPoolJson.abi);
-    // TODO
     this.yfii_pool = new this.web3.eth.Contract(YFIIPoolJson.abi);
-    this.yfii_pool.methods.yfii = this.yfii_pool.methods.yfi
-    this.knc_pool = new this.web3.eth.Contract(KNCPoolJson.abi);
-    this.knc_pool.methods.knc = this.yfii_pool.methods.yfi
-
-    this.ampl_pool = new this.web3.eth.Contract(AMPLPoolJson.abi);
+    this.yam_pool = new this.web3.eth.Contract(YAMPoolJson.abi);
     this.ycrv_pool = new this.web3.eth.Contract(IncJson.abi);
-
     this.comp_pool = new this.web3.eth.Contract(COMPPoolJson.abi);
     this.link_pool = new this.web3.eth.Contract(LINKPoolJson.abi);
     this.lend_pool = new this.web3.eth.Contract(LENDPoolJson.abi);
-    this.snx_pool = new this.web3.eth.Contract(SNXPoolJson.abi);
     this.mkr_pool = new this.web3.eth.Contract(MKRPoolJson.abi);
+    this.snx_pool = new this.web3.eth.Contract(SNXPoolJson.abi);
 
+    this.yfi = new this.web3.eth.Contract(ERC20Json.abi);
+    this.yam = new this.web3.eth.Contract(ERC20Json.abi);
+    this.ycrv = new this.web3.eth.Contract(ERC20Json.abi);
+    this.grap = new this.web3.eth.Contract(GRAPJson.abi);
     this.comp = new this.web3.eth.Contract(ERC20Json.abi);
+    this.yam = new this.web3.eth.Contract(ERC20Json.abi);
     this.link = new this.web3.eth.Contract(ERC20Json.abi);
     this.lend = new this.web3.eth.Contract(ERC20Json.abi);
-    this.snx = new this.web3.eth.Contract(ERC20Json.abi);
     this.mkr = new this.web3.eth.Contract(ERC20Json.abi);
-
+    this.yfii = new this.web3.eth.Contract(ERC20Json.abi);
+    this.snx = new this.web3.eth.Contract(ERC20Json.abi);
     this.erc20 = new this.web3.eth.Contract(ERC20Json.abi);
-    this.pool = new this.web3.eth.Contract(LENDPoolJson.abi);
-
-
 
     this.rebaser = new this.web3.eth.Contract(GRAPRebaserJson.abi);
     this.reserves = new this.web3.eth.Contract(GRAPReservesJson.abi);
@@ -107,16 +100,13 @@ export class Contracts {
       { contract: this.reserves, json: GRAPReservesJson },
       { contract: this.gov, json: GRAPGovJson },
       { contract: this.timelock, json: GRAPTimelockJson },
-      { contract: this.ycrv_pool, json: IncJson },
       { contract: this.eth_pool, json: WETHPoolJson },
       { contract: this.yfi_pool, json: YFIPoolJson },
-      // TODO
       { contract: this.yfii_pool, json: YFIIPoolJson },
-      { contract: this.knc_pool, json: KNCPoolJson },
-
-      { contract: this.ampl_pool, json: AMPLPoolJson },
-      { contract: this.snx_pool, json: SNXPoolJson },
+      { contract: this.yam_pool, json: YAMPoolJson },
+      { contract: this.ycrv_pool, json: CRVPoolJson },
       { contract: this.mkr_pool, json: MKRPoolJson },
+      { contract: this.snx_pool, json: SNXPoolJson },
       { contract: this.lend_pool, json: LENDPoolJson },
       { contract: this.link_pool, json: LINKPoolJson },
       { contract: this.comp_pool, json: COMPPoolJson },
@@ -130,36 +120,30 @@ export class Contracts {
       ),
     );
     this.yfi.options.address = addressMap["YFI"];
-
-    // this.yfii.options.address = addressMap["YFI"];
-    // this.knc.options.address = addressMap["YFI"];
-
+    this.yfii.options.address = addressMap["YFII"];
     this.ycrv.options.address = addressMap["YCRV"];
+    this.yam.options.address = addressMap["YAM"];
     this.weth.options.address = addressMap["WETH"];
-    this.snx.options.address = addressMap["SNX"];
     this.comp.options.address = addressMap["COMP"];
     this.link.options.address = addressMap["LINK"];
     this.lend.options.address = addressMap["LEND"];
     this.mkr.options.address = addressMap["MKR"];
-    this.UNIAmpl.options.address = addressMap["UNIAmpl"];
+    this.snx.options.address = addressMap["SNX"];
     this.uni_fact.options.address = addressMap["uniswapFactoryV2"];
     this.uni_router.options.address = addressMap["UNIRouter"];
 
-
     this.pools = [
-      {"tokenAddr": this.yfi.options.address, "poolAddr": this.yfi_pool.options.address},
-      // TODO
-      {"tokenAddr": this.yfi.options.address, "poolAddr": this.yfii_pool.options.address},
-      {"tokenAddr": this.yfi.options.address, "poolAddr": this.knc_pool.options.address},
-
-
-      {"tokenAddr": this.snx.options.address, "poolAddr": this.snx_pool.options.address},
+      {"tokenAddr": this.yam.options.address, "poolAddr": this.yam_pool.options.address},
       {"tokenAddr": this.weth.options.address, "poolAddr": this.eth_pool.options.address},
+      {"tokenAddr": this.yfi.options.address, "poolAddr": this.yfi_pool.options.address},
+      {"tokenAddr": this.yfii.options.address, "poolAddr": this.yfii_pool.options.address},
+      {"tokenAddr": this.ycrv.options.address, "poolAddr": this.ycrv_pool.options.address},
       {"tokenAddr": this.comp.options.address, "poolAddr": this.comp_pool.options.address},
       {"tokenAddr": this.link.options.address, "poolAddr": this.link_pool.options.address},
       {"tokenAddr": this.lend.options.address, "poolAddr": this.lend_pool.options.address},
       {"tokenAddr": this.mkr.options.address, "poolAddr": this.mkr_pool.options.address},
-      {"tokenAddr": this.UNIAmpl.options.address, "poolAddr": this.ampl_pool.options.address},
+      {"tokenAddr": this.snx.options.address, "poolAddr": this.snx_pool.options.address},
+
     ]
   }
 
