@@ -598,7 +598,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public link = IERC20(0xFF55A8FbDb0fDdbeA8E5196e693562f19FCEbFbD);
+    IERC20 public link = IERC20(0x514910771AF9Ca656af840dff83E8264EcF986CA);
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
@@ -625,7 +625,7 @@ contract LPTokenWrapper {
 }
 
 contract GRAPLINKPool is LPTokenWrapper, IRewardDistributionRecipient {
-    IERC20 public grap = IERC20(0x06d8ee2B533889f4d40714B95424fB66323c0eAc);
+    IERC20 public grap = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
     uint256 public constant DURATION = 625000; // ~7 1/4 days
 
     uint256 public starttime = 1597766400; // 2020-08-18 16:00:00 (UTC +00:00)
