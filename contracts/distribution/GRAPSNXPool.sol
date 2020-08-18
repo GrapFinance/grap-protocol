@@ -1,7 +1,3 @@
-/**
- *Submitted for verification at Etherscan.io on 2020-07-17
-*/
-
 /*
    ____            __   __        __   _
   / __/__ __ ___  / /_ / /  ___  / /_ (_)__ __
