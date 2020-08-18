@@ -597,7 +597,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public uni_lp = IERC20(0xFBE89b419421B96B6474f9d6695f5E314BF47B71);
+    IERC20 public uni_lp = IERC20(0x4eFdFe92F7528Bd16b95083d7Ba1b247De32F549);
 
     uint256 private _totalSupply;
 
@@ -630,7 +630,7 @@ interface GRAP {
 }
 
 contract GRAPIncentivizer is LPTokenWrapper, IRewardDistributionRecipient {
-    IERC20 public grap = IERC20(0x97ED2E1ABAf510D4eA216e10BDcf64c5ff87f2Dc);
+    IERC20 public grap = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
     uint256 public constant DURATION = 625000;
 
     uint256 public initreward = 15 * 10**5 * 10**18; // 1.5m

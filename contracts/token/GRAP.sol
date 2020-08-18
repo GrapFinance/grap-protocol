@@ -88,7 +88,7 @@ contract GRAPToken is GRAPGovernanceToken {
         internal
     {
       // increase totalSupply
-      _totalSupply = _totalSupply.add(amount);
+      _totalSupply = _totalSupply.add(amount.mul(10**24/ (BASE)));
 
       // get underlying value
       uint256 grapValue = amount.mul(internalDecimals).div(grapsScalingFactor);
