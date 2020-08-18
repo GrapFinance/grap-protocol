@@ -19,10 +19,14 @@ module.exports = {
     },
   },
   networks: {
-    test: {
-      host: '0.0.0.0',
-      port: 8545,
+    mainnet_test: {
       network_id: '1001',
+      provider: () => new HDWalletProvider(
+        [process.env.DEPLOYER_PRIVATE_KEY],
+        "http://localhost:8545",
+        0,
+        1,
+      ),
       gasPrice: 50000000000,
       gas: 8000000,
       network_id: '1001',
