@@ -1,15 +1,3 @@
-/**
- *Submitted for verification at Etherscan.io on 2020-07-27
-*/
-
-/**
- *Submitted for verification at Etherscan.io on 2020-07-26
-*/
-
-/**
- *Submitted for verification at Etherscan.io on 2020-07-17
-*/
-
 /*
    ____            __   __        __   _
   / __/__ __ ___  / /_ / /  ___  / /_ (_)__ __
@@ -609,7 +597,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public uni_lp = IERC20(0x2C7a51A357d5739C5C74Bf3C96816849d2c9F726);
+    IERC20 public uni_lp = IERC20(0xFBE89b419421B96B6474f9d6695f5E314BF47B71);
 
     uint256 private _totalSupply;
 
@@ -642,7 +630,7 @@ interface GRAP {
 }
 
 contract GRAPIncentivizer is LPTokenWrapper, IRewardDistributionRecipient {
-    IERC20 public grap = IERC20(0x0e2298E3B3390e3b945a5456fBf59eCc3f55DA16);
+    IERC20 public grap = IERC20(0x97ED2E1ABAf510D4eA216e10BDcf64c5ff87f2Dc);
     uint256 public constant DURATION = 625000;
 
     uint256 public initreward = 15 * 10**5 * 10**18; // 1.5m
