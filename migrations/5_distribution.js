@@ -17,7 +17,7 @@ const Timelock = artifacts.require("Timelock");
 
 // deployed fourth
 const GRAP_ETHPool = artifacts.require("GRAPETHPool");
-const GRAP_uAMPLPool = artifacts.require("GRAPAMPLPool");
+const GRAP_YAMPool = artifacts.require("GRAPYAMPool");
 const GRAP_YFIPool = artifacts.require("GRAPYFIPool");
 const GRAP_LINKPool = artifacts.require("GRAPLINKPool");
 const GRAP_MKRPool = artifacts.require("GRAPMKRPool");
@@ -54,7 +54,7 @@ async function deployDistribution(deployer, network, accounts) {
   let gov = await Gov.deployed();
   if (network != "test") {
     await deployer.deploy(GRAP_ETHPool);
-    await deployer.deploy(GRAP_uAMPLPool);
+    await deployer.deploy(GRAP_uYAMPool);
     await deployer.deploy(GRAP_YFIPool);
     await deployer.deploy(GRAPIncentivizer);
     await deployer.deploy(GRAP_LINKPool);
@@ -66,7 +66,7 @@ async function deployDistribution(deployer, network, accounts) {
     await deployer.deploy(GRAP_CRVPool);
 
     let eth_pool = new web3.eth.Contract(GRAP_ETHPool.abi, GRAP_ETHPool.address);
-    let ampl_pool = new web3.eth.Contract(GRAP_uAMPLPool.abi, GRAP_uAMPLPool.address);
+    let yam_pool = new web3.eth.Contract(GRAP_YAMPool.abi, GRAP_YAMPool.address);
     let yfi_pool = new web3.eth.Contract(GRAP_YFIPool.abi, GRAP_YFIPool.address);
     let lend_pool = new web3.eth.Contract(GRAP_LENDPool.abi, GRAP_LENDPool.address);
     let mkr_pool = new web3.eth.Contract(GRAP_MKRPool.abi, GRAP_MKRPool.address);
@@ -80,7 +80,7 @@ async function deployDistribution(deployer, network, accounts) {
     console.log("setting distributor");
     await Promise.all([
         eth_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
-        ampl_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
+        yam_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         yfi_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         lend_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
         mkr_pool.methods.setRewardDistribution(accounts[0]).send({from: accounts[0], gas: 100000}),
@@ -99,7 +99,7 @@ async function deployDistribution(deployer, network, accounts) {
     console.log("eth");
     await Promise.all([
       grap.transfer(GRAP_ETHPool.address, twenty.toString()),
-      grap.transfer(GRAP_uAMPLPool.address, twenty.toString()),
+      grap.transfer(GRAP_YAMPool.address, twenty.toString()),
       grap.transfer(GRAP_YFIPool.address, twenty.toString()),
       grap.transfer(GRAP_LENDPool.address, twenty.toString()),
       grap.transfer(GRAP_MKRPool.address, twenty.toString()),
@@ -113,7 +113,7 @@ async function deployDistribution(deployer, network, accounts) {
 
     await Promise.all([
       eth_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
-      ampl_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
+      yam_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
       yfi_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
       lend_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
       mkr_pool.methods.notifyRewardAmount(twenty.toString()).send({from:accounts[0]}),
@@ -129,7 +129,7 @@ async function deployDistribution(deployer, network, accounts) {
 
     await Promise.all([
       eth_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
-      ampl_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
+      yam_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
       yfi_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
       lend_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
       mkr_pool.methods.setRewardDistribution(Timelock.address).send({from: accounts[0], gas: 100000}),
@@ -142,7 +142,7 @@ async function deployDistribution(deployer, network, accounts) {
     ]);
     await Promise.all([
       eth_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
-      ampl_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
+      yam_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
       yfi_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
       lend_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),
       mkr_pool.methods.transferOwnership(Timelock.address).send({from: accounts[0], gas: 100000}),

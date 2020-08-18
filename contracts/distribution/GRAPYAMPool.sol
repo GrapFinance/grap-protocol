@@ -602,7 +602,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public ampl_eth_uni_lp = IERC20(0xc5be99A02C6857f9Eac67BbCE58DF5572498F40c);
+    IERC20 public yam = IERC20(0x0e2298E3B3390e3b945a5456fBf59eCc3f55DA16);
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
@@ -618,17 +618,17 @@ contract LPTokenWrapper {
     function stake(uint256 amount) public {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
-        ampl_eth_uni_lp.safeTransferFrom(msg.sender, address(this), amount);
+        yam.safeTransferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
-        ampl_eth_uni_lp.safeTransfer(msg.sender, amount);
+        yam.safeTransfer(msg.sender, amount);
     }
 }
 
-contract GRAPAMPLPool is LPTokenWrapper, IRewardDistributionRecipient {
+contract GRAPYAMPool is LPTokenWrapper, IRewardDistributionRecipient {
     IERC20 public grap = IERC20(0x0e2298E3B3390e3b945a5456fBf59eCc3f55DA16);
     uint256 public constant DURATION = 625000; // ~7 1/4 days
 
