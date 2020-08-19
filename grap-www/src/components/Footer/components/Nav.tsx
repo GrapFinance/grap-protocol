@@ -5,7 +5,7 @@ const Nav: React.FC = () => {
   return (
     <StyledNav>
       <StyledLink href="https://github.com/grap-finance/grap-protocol">Github</StyledLink>
-      <StyledLink href="https://twitter.com/YamFinance">Twitter</StyledLink>
+      <StyledLink href="https://twitter.com/GrapFinance">Twitter</StyledLink>
     </StyledNav>
   )
 }

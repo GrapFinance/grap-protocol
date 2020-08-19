@@ -63,7 +63,7 @@ const Farms: React.FC = ({ children }) => {
         try {
           let tokenAddress = ''
           if (tokenKey === 'uni_lp') {
-            tokenAddress = '0x5a08047612De940F1e6Da5CE2A718D17260f6944'
+            tokenAddress = '0x4eFdFe92F7528Bd16b95083d7Ba1b247De32F549'
           } else {
             tokenAddress = await method().call()
           }
