@@ -153,7 +153,7 @@ contract GRAPRebaser {
         public
     {
           minRebaseTimeIntervalSec = 24 hours;
-          rebaseWindowOffsetSec = 57600; // 4PM-5PM UTC+0 rebases
+          rebaseWindowOffsetSec = 0; // 8AM UTC+0 rebases
           reservesContract = reservesContract_;
           (address token0, address token1) = sortTokens(grapAddress_, reserveToken_);
 
