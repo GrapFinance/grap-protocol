@@ -61,7 +61,12 @@ const Farms: React.FC = ({ children }) => {
       const method = pool.methods[tokenKey]
       if (method) {
         try {
-          const tokenAddress = await method().call()
+          let tokenAddress = ''
+          if (tokenKey === 'uni_lp') {
+            tokenAddress = '0x5a08047612De940F1e6Da5CE2A718D17260f6944'
+          } else {
+            tokenAddress = await method().call()
+          }
           farmsArr.push({
             contract: pool,
             name: NAME_FOR_POOL[poolKey],
