@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import Countdown from 'react-countdown';
+
 
 import Page from '../../components/Page'
 import PageHeader from '../../components/PageHeader'
@@ -34,9 +36,22 @@ const Home: React.FC = () => {
     }
   }, [grap])
 
+  const countdownBlock = () => {
+    const date = Date.parse("2020-08-20T00:00:00+0000");
+    if (Date.now() >= date) return "";
+    return (
+      <CountdownView>
+        <Countdown date={date} />
+      </CountdownView>
+    )
+  }
+
   return (
     <Page>
+      {countdownBlock()}
+
       <PageHeader icon="🍇" subtitle="It's a great day to farm GRAPs. (without wrong rebase)" title="Welcome" />
+
       <StyledOverview>
         <Rebase nextRebase={nextRebase} />
         <StyledSpacer />
@@ -54,6 +69,12 @@ const Home: React.FC = () => {
 const StyledOverview = styled.div`
   align-items: center;
   display: flex;
+`
+
+const CountdownView =  styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  color: #555;
 `
 
 const StyledSpacer = styled.div`
