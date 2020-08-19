@@ -14,7 +14,7 @@ import TransactionProvider from './contexts/Transactions'
 
 import Farms from './views/Farms'
 import Home from './views/Home'
-
+import Statics from './views/Statics'
 import theme from './theme'
 
 const App: React.FC = () => {
@@ -27,6 +27,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/farms">
             <Farms />
+          </Route>
+          <Route path="/statics">
+            <Statics />
           </Route>
         </Switch>
       </Router>
