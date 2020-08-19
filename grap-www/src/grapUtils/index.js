@@ -134,8 +134,8 @@ export const getCirculatingSupply = async (grap) => {
 export const getNextRebaseTimestamp = async (yam) => {
   try {
     let now = await yam.web3.eth.getBlock('latest').then(res => res.timestamp);
-    let interval = 43200; // 12 hours
-    let offset = 28800; // 8am/8pm utc
+    let interval = 86400; // 24 hours
+    let offset = 57600; // 4pm utc
     let secondsToRebase = 0;
     if (await yam.contracts.rebaser.methods.rebasingActive().call()) {
       if (now % interval > offset) {

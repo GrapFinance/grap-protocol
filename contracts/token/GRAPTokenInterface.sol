@@ -14,7 +14,7 @@ contract GRAPTokenInterface is GRAPTokenStorage, GRAPGovernanceStorage {
     /**
      * @notice Event emitted when tokens are rebased
      */
-    event Rebase(uint256 epoch, uint256 prevYamsScalingFactor, uint256 newYamsScalingFactor);
+    event Rebase(uint256 epoch, uint256 prevGrapsScalingFactor, uint256 newGrapsScalingFactor);
 
     /*** Gov Events ***/
 
