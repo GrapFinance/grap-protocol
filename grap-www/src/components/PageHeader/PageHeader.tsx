@@ -18,6 +18,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ icon, subtitle, title }) => {
 }
 
 const StyledPageHeader = styled.div`
+  text-align:center;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -27,10 +28,10 @@ const StyledPageHeader = styled.div`
 
 const StyledIcon = styled.div`
   font-size: 96px;
-  height: 96px;
+  height: 108px;
   line-height: 96px;
   text-align: center;
-  width: 96px;
+  width: 128px;
 `
 
 const StyledTitle = styled.h1`
