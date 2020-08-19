@@ -41,7 +41,7 @@ const Stake: React.FC<StakeProps> = ({
 
   const allowance = useAllowance(tokenContract, poolContract)
   const { onApprove } = useApprove(tokenContract, poolContract)
-
+  
   const tokenBalance = useTokenBalance(tokenContract.options.address)
   const stakedBalance = useStakedBalance(poolContract)
 
@@ -99,11 +99,9 @@ const Stake: React.FC<StakeProps> = ({
                   <RemoveIcon />
                 </IconButton>
                 <StyledActionSpacer />
-                {tokenName !== 'UNI_LP' && (
-                  <IconButton onClick={onPresentDeposit}>
-                    <AddIcon />
-                  </IconButton>
-                )}
+                <IconButton onClick={onPresentDeposit}>
+                  <AddIcon />
+                </IconButton>
               </>
             )}
           </StyledCardActions>
