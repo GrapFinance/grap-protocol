@@ -105,4 +105,8 @@ export class Grap {
   toBigN(a) {
     return BigNumber(a);
   }
+
+  getContracts() {
+    return this.contracts;
+  }
 }

@@ -8,11 +8,14 @@ import CardContent from '../../../components/CardContent'
 import Dial from '../../../components/Dial'
 import Label from '../../../components/Label'
 
+import useRebase from '../../../hooks/useRebase'
+
 interface RebaseProps {
   nextRebase?: number
 }
 
 const Rebase: React.FC<RebaseProps> = ({ nextRebase }) => {
+  const { onRebase } = useRebase()
 
   const renderer = (countdownProps: CountdownRenderProps) => {
     const { hours, minutes, seconds } = countdownProps
@@ -41,7 +44,7 @@ const Rebase: React.FC<RebaseProps> = ({ nextRebase }) => {
             </StyledCountdown>
           </Dial>
           <StyledSpacer />
-          <Button disabled text="Rebase" />
+          <Button disabled={!nextRebase || nextRebase > 0 } onClick={onRebase}  text="Rebase" />
         </CardContent>
       </Card>
     </StyledRebase>

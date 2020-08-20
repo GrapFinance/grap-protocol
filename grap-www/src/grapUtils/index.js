@@ -87,6 +87,10 @@ export const approve = async (tokenContract, poolContract, account) => {
     .send({ from: account, gas: 80000 })
 }
 
+export const rebase = async (grap, account) => {
+  return grap.contracts.rebaser.methods.rebase().send({ from: account })
+}
+
 export const getPoolContracts = async (grap) => {
   const pools = Object.keys(grap.contracts)
     .filter(c => c.indexOf('_pool') !== -1)
