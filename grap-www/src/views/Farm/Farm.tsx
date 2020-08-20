@@ -5,6 +5,9 @@ import { useParams } from 'react-router-dom'
 import { useWallet } from 'use-wallet'
 import { provider } from 'web3-core'
 
+import Countdown, { CountdownRenderProps} from 'react-countdown'
+
+
 import Button from '../../components/Button'
 import PageHeader from '../../components/PageHeader'
 import Spacer from '../../components/Spacer'
@@ -53,6 +56,29 @@ const Farm: React.FC = () => {
     return earnToken.toUpperCase()
   }, [earnToken])
 
+  const countdownBlock = () => {
+    const date = Date.parse('Sun Aug 23 2020 00:20:00 GMT+0800')
+    if (Date.now() >= date) return "";
+    return (
+      <CountdownView>
+        <Countdown date={date} />
+      </CountdownView>
+    )
+  }
+
+  const YamNotify = (token: String)=> {
+    if (token != "yam") return ""
+    return (
+      <YamNotifyView>
+        <p> Farm is good, but don't forget migration your YAM before Migration Deadline. </p>
+        <p>
+          <a href='https://yam.finance/'>https://yam.finance/</a>
+        </p>
+        {countdownBlock()}
+      </YamNotifyView>
+    )
+  }
+
   return (
     <>
       <PageHeader
@@ -60,6 +86,7 @@ const Farm: React.FC = () => {
         subtitle={`Deposit ${depositTokenName} and earn ${earnTokenName}`}
         title={name}
       />
+      {YamNotify(depositToken)}
       <StyledFarm>
         <StyledCardsWrapper>
           <StyledCardWrapper>
@@ -114,5 +141,18 @@ const StyledCardWrapper = styled.div`
     width: 80%;
   }
 `
+
+const CountdownView =  styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  color: rgb(209, 0, 75);
+  margin-bottom: 20px;
+`
+
+const YamNotifyView =  styled.div`
+  text-align: center;
+  color: #555;
+`
+
 
 export default Farm
