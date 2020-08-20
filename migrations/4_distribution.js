@@ -20,6 +20,7 @@ const GRAP_ETHPool = artifacts.require("GRAPETHPool");
 const GRAP_YAMPool = artifacts.require("GRAPYAMPool");
 const GRAP_YFIPool = artifacts.require("GRAPYFIPool");
 const GRAP_LINKPool = artifacts.require("GRAPLINKPool");
+const GRAP_BANDPool = artifacts.require("GRAPBANDPool");
 const GRAP_MKRPool = artifacts.require("GRAPMKRPool");
 const GRAP_LENDPool = artifacts.require("GRAPLENDPool");
 const GRAP_COMPPool = artifacts.require("GRAPCOMPPool");
@@ -58,6 +59,7 @@ async function deployDistribution(deployer, network, accounts) {
     await deployer.deploy(GRAP_YFIPool);
     await deployer.deploy(GRAPIncentivizer);
     await deployer.deploy(GRAP_LINKPool);
+    await deployer.deploy(GRAP_BANDPool);
     await deployer.deploy(GRAP_MKRPool);
     await deployer.deploy(GRAP_LENDPool);
     await deployer.deploy(GRAP_COMPPool);
@@ -73,6 +75,7 @@ async function deployDistribution(deployer, network, accounts) {
     let snx_pool = new web3.eth.Contract(GRAP_SNXPool.abi, GRAP_SNXPool.address);
     let comp_pool = new web3.eth.Contract(GRAP_COMPPool.abi, GRAP_COMPPool.address);
     let link_pool = new web3.eth.Contract(GRAP_LINKPool.abi, GRAP_LINKPool.address);
+    let band_pool = new web3.eth.Contract(GRAP_BANDPool.abi, GRAP_BANDPool.address);
     let yfii_pool = new web3.eth.Contract(GRAP_YFIIPool.abi, GRAP_YFIIPool.address);
     let crv_pool = new web3.eth.Contract(GRAP_CRVPool.abi, GRAP_CRVPool.address);
     let ycrv_pool = new web3.eth.Contract(GRAPIncentivizer.abi, GRAPIncentivizer.address);
@@ -87,6 +90,7 @@ async function deployDistribution(deployer, network, accounts) {
         snx_pool.methods.setRewardDistribution("0x00007569643bc1709561ec2E86F385Df3759e5DD").send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
         comp_pool.methods.setRewardDistribution("0x00007569643bc1709561ec2E86F385Df3759e5DD").send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
         link_pool.methods.setRewardDistribution("0x00007569643bc1709561ec2E86F385Df3759e5DD").send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
+        band_pool.methods.setRewardDistribution("0x00007569643bc1709561ec2E86F385Df3759e5DD").send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
         yfii_pool.methods.setRewardDistribution("0x00007569643bc1709561ec2E86F385Df3759e5DD").send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
         crv_pool.methods.setRewardDistribution("0x00007569643bc1709561ec2E86F385Df3759e5DD").send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
         ycrv_pool.methods.setRewardDistribution("0x00007569643bc1709561ec2E86F385Df3759e5DD").send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
@@ -106,6 +110,7 @@ async function deployDistribution(deployer, network, accounts) {
       grap.transfer(GRAP_SNXPool.address, twenty.toString()),
       grap.transfer(GRAP_COMPPool.address, twenty.toString()),
       grap.transfer(GRAP_LINKPool.address, twenty.toString()),
+      grap.transfer(GRAP_BANDPool.address, twenty.toString()),
       grap.transfer(GRAP_YFIIPool.address, twenty.toString()),
       grap.transfer(GRAP_CRVPool.address, twenty.toString()),
       grap._setIncentivizer(GRAPIncentivizer.address),
@@ -120,6 +125,7 @@ async function deployDistribution(deployer, network, accounts) {
       snx_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x00007569643bc1709561ec2E86F385Df3759e5DD"}),
       comp_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x00007569643bc1709561ec2E86F385Df3759e5DD"}),
       link_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x00007569643bc1709561ec2E86F385Df3759e5DD"}),
+      band_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x00007569643bc1709561ec2E86F385Df3759e5DD"}),
       yfii_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x00007569643bc1709561ec2E86F385Df3759e5DD"}),
       crv_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x00007569643bc1709561ec2E86F385Df3759e5DD"}),
 
@@ -136,6 +142,7 @@ async function deployDistribution(deployer, network, accounts) {
       snx_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
       comp_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
       link_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
+      band_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
       yfii_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
       crv_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
       ycrv_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
@@ -149,6 +156,7 @@ async function deployDistribution(deployer, network, accounts) {
       snx_pool.methods.transferOwnership(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
       comp_pool.methods.transferOwnership(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
       link_pool.methods.transferOwnership(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
+      band_pool.methods.transferOwnership(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
       yfii_pool.methods.transferOwnership(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
       crv_pool.methods.transferOwnership(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),
       ycrv_pool.methods.transferOwnership(Timelock.address).send({from: "0x00007569643bc1709561ec2E86F385Df3759e5DD", gas: 100000}),

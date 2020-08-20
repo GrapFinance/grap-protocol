@@ -63,6 +63,7 @@ async function deployDistribution(deployer, network, accounts) {
     let snx_pool = new web3.eth.Contract(GRAP_SNXPool.abi, GRAP_SNXPool.address);
     let comp_pool = new web3.eth.Contract(GRAP_COMPPool.abi, GRAP_COMPPool.address);
     let link_pool = new web3.eth.Contract(GRAP_LINKPool.abi, GRAP_LINKPool.address);
+    let band_pool = new web3.eth.Contract(GRAP_BANDPool.abi, GRAP_BANDPool.address);
     let yfii_pool = new web3.eth.Contract(GRAP_YFIIPool.abi, GRAP_YFIIPool.address);
     let knc_pool = new web3.eth.Contract(GRAP_KNCPool.abi, GRAP_KNCPool.address);
     let ycrv_pool = new web3.eth.Contract(GRAPIncentivizer.abi, GRAPIncentivizer.address);
@@ -78,6 +79,7 @@ async function deployDistribution(deployer, network, accounts) {
         snx_pool.methods.setRewardDistribution("0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84").send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
         comp_pool.methods.setRewardDistribution("0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84").send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
         link_pool.methods.setRewardDistribution("0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84").send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
+        band_pool.methods.setRewardDistribution("0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84").send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
         yfii_pool.methods.setRewardDistribution("0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84").send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
         knc_pool.methods.setRewardDistribution("0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84").send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
         ycrv_pool.methods.setRewardDistribution("0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84").send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
@@ -97,6 +99,7 @@ async function deployDistribution(deployer, network, accounts) {
       grap.transfer(GRAP_SNXPool.address, twenty.toString()),
       grap.transfer(GRAP_COMPPool.address, twenty.toString()),
       grap.transfer(GRAP_LINKPool.address, twenty.toString()),
+      grap.transfer(GRAP_BANDPool.address, twenty.toString()),
       grap.transfer(GRAP_YFIIPool.address, twenty.toString()),
       grap.transfer(GRAP_KNCPool.address, twenty.toString()),
       grap._setIncentivizer(GRAPIncentivizer.address),
@@ -111,6 +114,7 @@ async function deployDistribution(deployer, network, accounts) {
       snx_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84"}),
       comp_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84"}),
       link_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84"}),
+      band_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84"}),
       yfii_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84"}),
       knc_pool.methods.notifyRewardAmount(twenty.toString()).send({from:"0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84"}),
 
@@ -127,6 +131,7 @@ async function deployDistribution(deployer, network, accounts) {
       snx_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
       comp_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
       link_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
+      band_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
       yfii_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
       knc_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
       ycrv_pool.methods.setRewardDistribution(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
@@ -140,6 +145,7 @@ async function deployDistribution(deployer, network, accounts) {
       snx_pool.methods.transferOwnership(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
       comp_pool.methods.transferOwnership(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
       link_pool.methods.transferOwnership(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
+      band_pool.methods.transferOwnership(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
       yfii_pool.methods.transferOwnership(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
       knc_pool.methods.transferOwnership(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),
       ycrv_pool.methods.transferOwnership(Timelock.address).send({from: "0x683A78bA1f6b25E29fbBC9Cd1BFA29A51520De84", gas: 100000}),

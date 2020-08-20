@@ -24,7 +24,7 @@ async function deployToken(deployer, network) {
     "GRAP",
     "GRAP",
     18,
-    "2000000000000000000000000",
+    "2200000000000000000000000",
     GRAPImplementation.address,
     "0x"
   );
