@@ -16,7 +16,7 @@ import TransactionProvider from './contexts/Transactions'
 import Farms from './views/Farms'
 import Vote from './views/Vote'
 import Home from './views/Home'
-
+import Statics from './views/Statics'
 import theme from './theme'
 
 const App: React.FC = () => {
@@ -32,6 +32,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/vote">
             <Vote />
+          </Route>
+          <Route path="/statics">
+            <Statics />
           </Route>
         </Switch>
       </Router>
