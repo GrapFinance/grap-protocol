@@ -24,7 +24,7 @@ const Rebase: React.FC<RebaseProps> = ({ nextRebase }) => {
     )
   }
 
-  const dialValue = (nextRebase - Date.now()) / (1000 * 60 * 60 * 12) * 100
+  const dialValue = (nextRebase - Date.now()) / (1000 * 60 * 60 * 24) * 100
 
   return (
     <StyledRebase>
