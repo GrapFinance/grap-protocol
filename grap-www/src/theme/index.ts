@@ -3,8 +3,10 @@ import { black, green, grey, red, white } from './colors'
 const theme = {
   borderRadius: 12,
   color: {
+    green,
     black,
     grey,
+    red,
     primary: {
       light: red[200],
       main: red[500],
@@ -13,6 +15,9 @@ const theme = {
       main: green[500],
     },
     white,
+    ongoing: green[500],
+    successful: green[500],
+    fail: red[500]
   },
   siteWidth: 1200,
   spacing: {

@@ -2,6 +2,8 @@ import {ethers} from 'ethers'
 
 import BigNumber from 'bignumber.js'
 
+import {PROPOSALSTATUSCODE} from '../grap/lib/constants'
+
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
   DECIMAL_PLACES: 80,
@@ -181,4 +183,73 @@ export const getStats = async (grap) => {
     targetPrice,
     totalSupply
   }
+}
+
+
+// gov
+export const getProposals = async (grap) => {
+  let proposals = []
+  const filter = {
+    fromBlock: 0,
+    toBlock: 'latest',
+  }
+  const events = await grap.contracts.gov.getPastEvents("allEvents", filter)
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i]
+    if (event.type === "mined") {
+      switch (event.event) {
+        case "ProposalCreated":
+          proposals.push(
+            {
+              id: event.returnValues.id,
+              proposer: event.returnValues.proposer,
+              description: event.returnValues.description,
+              startBlock: Number(event.returnValues.startBlock),
+              endBlock: Number(event.returnValues.endBlock),
+              targets: event.returnValues.targets,
+              values: event.returnValues.values,
+              signatures: event.returnValues.signatures,
+              status: PROPOSALSTATUSCODE.CREATED,
+              transactionHash: event.transactionHash
+            }
+          )
+          break
+        // TODO
+        case "ProposalCanceled":
+          break
+        case "VoteCast":
+            break
+        case "ProposalExecuted":
+          break
+        default:
+          break
+      }
+    }
+  }
+  proposals.sort((a,b) => Number(b.endBlock) - Number(b.endBlock))
+  return proposals
+}
+
+export const getProposal = async (grap, id) => {
+  const proposals = await getProposals(grap)
+  const proposal = proposals.find(p => p.id === id )
+  return proposal
+}
+
+export const getProposalStatus = async (grap, id) => {
+  const proposalStatus = (await grap.contracts.gov.methods.proposals(id).call())
+  return proposalStatus
+}
+
+export const getQuorumVotes = async (grap) => {
+  return new BigNumber(await grap.contracts.gov.methods.quorumVotes().call()).div(10**6)
+}
+
+export const getVotes = async (grap, account) => {
+  const votesRaw = new BigNumber(await grap.contracts.grap.methods.getCurrentVotes(account).call()).div(10**6)
+  return votesRaw
+}
+
+export const delegate = async (grap, account) => {
+  return grap.contracts.grap.methods.delegate(account).send({from: account, gas: 320000 })
 }

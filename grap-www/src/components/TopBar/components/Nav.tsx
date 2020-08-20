@@ -7,6 +7,7 @@ const Nav: React.FC = () => {
     <StyledNav>
       <StyledLink exact activeClassName="active" to="/">Home</StyledLink>
       <StyledLink exact activeClassName="active" to="/farms">Farms</StyledLink>
+      <StyledLink exact activeClassName="active" to="/vote">Vote</StyledLink>
     </StyledNav>
   )
 }
@@ -28,6 +29,13 @@ const StyledLink = styled(NavLink)`
   &.active {
     color: ${props => props.theme.color.primary.main};
   }
+
+  @media (max-width: 768px) {
+    padding-left: ${props => props.theme.spacing[2]}px;
+    padding-right: ${props => props.theme.spacing[2]}px;
+  }
+
+
 `
 
 export default Nav
