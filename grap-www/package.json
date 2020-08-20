@@ -12,6 +12,7 @@
     "@uniswap/sdk": "^3.0.3-beta.1",
     "bignumber.js": "^9.0.0",
     "ethers": "^5.0.8",
+    "gh-pages": "^3.1.0",
     "numeral": "^2.0.6",
     "react": "^16.13.1",
     "react-circular-progressbar": "^2.0.3",
@@ -28,7 +29,8 @@
     "start": "react-scripts start",
     "build": "CI= GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
