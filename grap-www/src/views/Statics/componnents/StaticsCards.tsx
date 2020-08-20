@@ -129,9 +129,10 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
       if(token === 'uni_lp'){
         const UNI_TOKEN_ADDR = "0x4eFdFe92F7528Bd16b95083d7Ba1b247De32F549";
         const totalyCRVInUniswapPair = await grap.contracts['ycrv'].methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
-        const totalGRAPInUniswapPair = await Token.methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
+        const totalGRAPInUniswapPair = await GRAP_TOKEN.methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
         let yCRVPrice = stakingTokenPrice;
-        stakingTokenPrice = (yCRVPrice * totalyCRVInUniswapPair + price * totalGRAPInUniswapPair) / totalStakedAmount;
+        const totalSupplyOfStakingToken = await grap.contracts['ycrvUNIV'].methods.totalSupply().call() / 1e18;
+        stakingTokenPrice = (yCRVPrice * totalyCRVInUniswapPair + price * totalGRAPInUniswapPair) / totalSupplyOfStakingToken;
       }
     }
     let weeklyEstimate = rewardPerToken * amount;
