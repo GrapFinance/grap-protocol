@@ -22,6 +22,9 @@ const StyledText = styled.span`
   font-size: 18px;
   font-weight: 700;
   margin-left: ${props => props.theme.spacing[2]}px;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `
 
 export default Logo
