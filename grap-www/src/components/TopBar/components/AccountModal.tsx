@@ -1,9 +1,14 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { grap as grapAddress } from '../../../constants/tokenAddresses'
 import useTokenBalance from '../../../hooks/useTokenBalance'
 import { getDisplayBalance } from '../../../utils/formatBalance'
+
+import { getCurrentVotes } from '../../../grapUtils'
+import useGrap from '../../../hooks/useGrap'
+import useDelegate from '../../../hooks/useDelegate'
+import { useWallet } from 'use-wallet'
 
 import Button from '../../Button'
 import CardIcon from '../../CardIcon'
@@ -13,17 +18,36 @@ import Label from '../../Label'
 import Modal, { ModalProps } from '../../Modal'
 import ModalTitle from '../../ModalTitle'
 
+
 const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
+  const { account } = useWallet()
+  const grap = useGrap()
+
+  const [votes, setvotes] = useState("")
 
   const handleSignOutClick = useCallback(() => {
     onDismiss!()
   }, [onDismiss])
+
+  const { onDelegate } = useDelegate()
 
   const grapBalance = useTokenBalance(grapAddress)
   const displayBalance = useMemo(() => {
     return getDisplayBalance(grapBalance)
   }, [grapBalance])
 
+  const fetchVotes = useCallback(async () => {
+    const votes = await getCurrentVotes(grap, account)
+    setvotes(getDisplayBalance(votes))
+  }, [grap, setvotes])
+
+  useEffect(() => {
+    if (grap) {
+      fetchVotes()
+    }
+  }, [grap])
+  
+  
   return (
     <Modal>
       <ModalTitle text="My Account" />
@@ -35,22 +59,23 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
           <Label text="GRAP Balance" />
         </StyledBalance>
         <StyledBalanceActions>
-          <IconButton>
-            <RemoveIcon />
-          </IconButton>
-          <StyledSpacer />
-          <IconButton>
-            <AddIcon />
-          </IconButton>
+        </StyledBalanceActions>
+        <StyledBalance>
+          <StyledValue>{votes}</StyledValue>
+          <Label text="Current Votes" />
+        </StyledBalance>
+        <StyledBalanceActions>
         </StyledBalanceActions>
       </StyledBalanceWrapper>
 
       <StyledSpacer />
-      <Button
-        href=""
-        text="More info"
-        variant="secondary"
-      />
+      {votes != "" && votes == "0.000" &&
+        <Label text="Not yet?" /> && 
+        <Button
+          onClick={onDelegate}
+          text="Setup Vote"
+        />
+      }
       <StyledSpacer />
       <Button
         onClick={handleSignOutClick}

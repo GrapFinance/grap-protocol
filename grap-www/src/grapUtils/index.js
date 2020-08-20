@@ -249,11 +249,10 @@ export const getQuorumVotes = async (grap) => {
   return new BigNumber(await grap.contracts.gov.methods.quorumVotes().call()).div(10**6)
 }
 
-export const getVotes = async (grap, account) => {
-  const votesRaw = new BigNumber(await grap.contracts.grap.methods.getCurrentVotes(account).call()).div(10**6)
-  return votesRaw
-}
-
 export const delegate = async (grap, account) => {
   return grap.contracts.grap.methods.delegate(account).send({from: account, gas: 320000 })
+}
+
+export const getCurrentVotes = async (grap, account) => {
+  return grap.toBigN(await grap.contracts.grap.methods.getCurrentVotes(account).call()).div(10**6)
 }
