@@ -1,63 +1,189 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
+import { ChainId, Token, WETH, Fetcher, Route } from '@uniswap/sdk'
+import Web3 from 'web3';
+import useGrap from '../../../hooks/useGrap'
 
 import Card from '../../../components/Card'
 import CardContent from '../../../components/CardContent'
 import Loader from '../../../components/Loader'
-
 import useFarms from '../../../hooks/useFarms'
-
 import { Farm } from '../../../contexts/Farms'
-
 import { getPoolStartTime } from '../../../grapUtils'
+import { getDisplayBalance } from '../../../utils/formatBalance'
+import { getStats } from '../../../views/Home/utils'
+import { OverviewData } from '../../../views/Home/types'
+import { Grap } from '../../../grap'
+import BigNumber from 'bignumber.js'
+export interface GrapContext {
+  grap?: typeof Grap
+}
 
+const ADDRESS = '0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB';
+let currentPrice = 0;
+let grap: any;
 const FarmCards: React.FC = () => {
-  const [farms] = useFarms()
 
-  const rows = farms.reduce<Farm[][]>((farmRows, farm) => {
-    const newFarmRows = [...farmRows]
-    if (newFarmRows[newFarmRows.length - 1].length === 3) {
-      newFarmRows.push([farm])
-    } else {
-      newFarmRows[newFarmRows.length - 1].push(farm)
+  const [farms] = useFarms()
+  grap = useGrap()
+  const [{
+    circSupply,
+    curPrice,
+    nextRebase,
+    targetPrice,
+    totalSupply,
+  }, setStats] = useState<OverviewData>({})
+
+  const fetchStats = useCallback(async () => {
+    const statsData = await getStats(grap)
+    setStats(statsData)
+    currentPrice = parseFloat(getDisplayBalance(new BigNumber(statsData.curPrice)))
+  }, [grap, setStats])
+
+  useEffect(() => {
+    if (grap) {
+      fetchStats()
     }
-    return newFarmRows
-  }, [[]])
+  }, [grap])
+
+
+  const priceBlock = () => {
+    return <TitleView>Current price: ${currentPrice}</TitleView>
+  }
+
+
+  if (!loaded) {
+    loaded = true;
+  }
 
   return (
-    <StyledCards>
-      {!!rows[0].length ? rows.map((farmRow, i) => (
-          farmRow.map((farm, j) => (
-            <React.Fragment key={j}>
-              <StaticsCard farm={farm} />
-            </React.Fragment>
-          ))
-      )) : (
-          <StyledLoadingWrapper>
-            <Loader text="Loading farms" />
-          </StyledLoadingWrapper>
-        )}
-    </StyledCards>
+    <div>
+      {currentPrice ? priceBlock() : ''}
+      <StyledCards>
+        {farms.length ? farms.map((farm, i) => (
+          <React.Fragment key={i}>
+            <StaticsCard farm={farm} price={currentPrice}/>
+          </React.Fragment>
+        )) : (
+            <StyledLoadingWrapper>
+              <Loader text="Loading farms" />
+            </StyledLoadingWrapper>
+          )}
+      </StyledCards>
+    </div>
   )
 }
 
 interface StaticsCardProps {
   farm: Farm,
+  price: number,
 }
+let loaded = false;
 
-const StaticsCard: React.FC<StaticsCardProps> = ({ farm }) => {
-  const [startTime, setStartTime] = useState(0)
+const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
+  const [data, setData] = useState(null)
 
-  const getStartTime = useCallback(async () => {
-    const startTime = await getPoolStartTime(farm.contract)
-    setStartTime(startTime)
-  }, [farm, setStartTime])
+
+  const getData = useCallback(async () => {
+    const selfAddress = grap.web3.currentProvider.selectedAddress;
+    const token = farm.depositToken;
+    let ah:any = {'weth': 'eth_pool', 'uni_lp': 'ycrvUNIV_pool'};
+    let key = ah[token] || `${token}_pool`
+
+    const STAKING_POOL = grap.contracts[key];
+    const Token = grap.contracts[token];
+    const GRAP_TOKEN = grap.contracts.grap;
+    const rewardTokenTicker = "GRAP"
+    const stakingTokenTicker = token
+    const grapScale = await GRAP_TOKEN.methods.grapsScalingFactor().call() / 1e18;
+    const rewardPoolAddr = STAKING_POOL._address
+    const amount = await STAKING_POOL.methods.balanceOf(selfAddress).call() / 1e18;
+    const earned = grapScale * await STAKING_POOL.methods.earned(selfAddress).call() / 1e18;
+    const totalSupply = await Token.methods.totalSupply().call() / 1e18;
+    const totalStakedAmount = await Token.methods.balanceOf(rewardPoolAddr).call() / 1e18;
+
+
+    const weekly_reward = (Math.round((await STAKING_POOL.methods.rewardRate().call() * 604800)) * grapScale) / 1e18;
+    const rewardPerToken = weekly_reward / totalStakedAmount;
+
+
+    let hash: any = {
+      yfi: ["yearn-finance"],
+      yfii: ["yfii-finance"],
+      crv: ["yearn-finance"],
+      weth: ["ethereum"],
+      link: ["chainlink"],
+      mkr: ["maker"],
+      comp: ["compound-governance-token"],
+      snx: ["havven"],
+      lend: ["ethlend"],
+    }
+    let stakingTokenPrice = 1;
+    if (Object.keys(hash).includes(token))  {
+      let d = await lookUpPrices(hash[token]);
+      let data:any = Object.values(d[0] || d)[0];
+      data = data.usd || data;
+      stakingTokenPrice = parseFloat(data.toString());
+      if(token == 'yfi') debugger;
+    }
+    let weeklyEstimate = rewardPerToken * amount;
+    let weeklyROI = (rewardPerToken * price) * 100 / (stakingTokenPrice);
+
+
+    setData({
+      token,
+      weekly_reward,
+      amount,
+      totalSupply,
+      totalStakedAmount,
+      earned,
+      price,
+      stakingTokenPrice,
+      weeklyEstimate,
+      stakingTokenTicker,
+      rewardTokenTicker,
+      weeklyROI
+    })
+
+  }, [farm, setData]);
+
 
   useEffect(() => {
-    if (farm && farm.id === 'uni_lp') {
-      getStartTime()
-    }
-  }, [farm, getStartTime])
+    getData()
+  }, [farm, getData])
+
+
+  const DataDetail = (data: any) => {
+
+    const {totalSupply, totalStakedAmount, weekly_reward, amount, earned, weeklyEstimate, rewardTokenTicker, stakingTokenTicker, stakingTokenPrice, price, weeklyROI} = data
+    debugger
+    return (
+      <div>
+        <pre>
+        ========== PRICES ==========<br/>
+    1 {rewardTokenTicker}   = {price}$<br/>
+    1 {stakingTokenTicker}   = {stakingTokenPrice}$<br/>
+    <br/>
+    ========== STAKING =========<br/>
+    There are total   : {totalSupply} {stakingTokenTicker}.<br/>
+    There are total   : {totalStakedAmount} {stakingTokenTicker} staked in {rewardTokenTicker}'s {stakingTokenTicker} staking pool.<br/>
+                      = {toDollar(totalStakedAmount * stakingTokenPrice)}<br/>
+    You are staking   : {amount} {stakingTokenTicker} ({toFixed(amount * 100 / totalStakedAmount, 3)}% of the pool)<br/>
+                      = {toDollar(amount * stakingTokenPrice)}<br/>
+                      <br/>
+    ======== {rewardTokenTicker} REWARDS ========<br/>
+    Claimable Rewards : {toFixed(earned, 4)} {rewardTokenTicker} = ${toFixed(earned * price, 2)}<br/>
+    Hourly estimate   : {toFixed(weeklyEstimate / (24 * 7), 4)} {rewardTokenTicker} = {toDollar((weeklyEstimate / (24 * 7)) * price)} <br/>
+    Daily estimate    : {toFixed(weeklyEstimate / 7, 2)} {rewardTokenTicker} = {toDollar((weeklyEstimate / 7) * price)} <br/>
+    Weekly estimate   : {toFixed(weeklyEstimate, 2)} {rewardTokenTicker} = {toDollar(weeklyEstimate * price)} <br/>
+    Hourly ROI in USD : {toFixed((weeklyROI / 7) / 24, 4)}%<br/>
+    Daily ROI in USD  : {toFixed(weeklyROI / 7, 4)}%<br/>
+    Weekly ROI in USD : {toFixed(weeklyROI, 4)}%<br/>
+    APY (unstable)    : {toFixed(weeklyROI * 52, 4)}%<br/>
+        </pre>
+      </div>
+    )
+  }
 
   return (
     <StyledCardWrapper>
@@ -69,11 +195,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm }) => {
           <StyledContent>
             <StyledTitle>{farm.icon}{farm.name}</StyledTitle>
             <StyledDetails>
-              <p>Total Staked: {}</p>
-              <p>Earned GRAPs: {}</p>
-              <p>Return per Hour: {}</p>
-              <p>Return per Day: {}</p>
-              <p>APY: {}</p>
+              {data ? DataDetail(data) : "Loading..."}
             </StyledDetails>
           </StyledContent>
         </CardContent>
@@ -120,13 +242,12 @@ const StyledRow = styled.div`
   margin-bottom: ${props => props.theme.spacing[4]}px;
   @media (max-width: 768px) {
     width: 100%;
-    flex-flow: column nowrap;
     align-items: center;
   }
 `
 
 const StyledCardWrapper = styled.div`
-  width: calc((900px - ${props => props.theme.spacing[4]}px * 2) / 3);
+  width: 100%;
   position: relative;
   display: inline-block;
   margin: 15px;
@@ -144,6 +265,11 @@ const StyledContent = styled.div`
   align-items: center;
 `
 
+const TitleView = styled.div`
+  width: 100%;
+  font-size: 24px;
+  font-weight: 700;
+`
 const StyledSpacer = styled.div`
   height: ${props => props.theme.spacing[4]}px;
   width: ${props => props.theme.spacing[4]}px;
@@ -152,10 +278,38 @@ const StyledSpacer = styled.div`
 const StyledDetails = styled.div`
   margin-bottom: ${props => props.theme.spacing[6]}px;
   margin-top: ${props => props.theme.spacing[2]}px;
-  text-align: center;
+  text-align: left;
 `
 
 const StyledDetail = styled.div`
   color: ${props => props.theme.color.grey[500]};
 `
+const StyledDetailView = styled.div`
+  color: ${props => props.theme.color.grey[500]};
+  display: flex;
+  flex: 1;
+`
+const StyledDetailSpan =  styled.div`
+  text-align: right;
+  width: 200px;
+  padding-right: 10px;
+  display: inline-block;
+`
+
+
+const toFixed = function(num: any, fixed: any) {
+  num = num * 100
+  return num.toFixed(fixed)
+}
+const toDollar = (str: any) => {
+  return `$${str}`
+}
+
+const lookUpPrices = async function(id_array: any) {
+  let ids = id_array.join('%2C')
+  let res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=' + ids + '&vs_currencies=usd')
+  return res.json()
+}
+
 export default FarmCards
+

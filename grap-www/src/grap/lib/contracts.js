@@ -49,6 +49,7 @@ export class Contracts {
     this.uni_fact = new this.web3.eth.Contract(UNIFactJson);
 
     this.eth_pool = new this.web3.eth.Contract(WETHPoolJson.abi);
+    // this.weth_pool = this.eth_pool;
     this.yfi_pool = new this.web3.eth.Contract(YFIPoolJson.abi);
     this.yfii_pool = new this.web3.eth.Contract(YFIIPoolJson.abi);
     this.yam_pool = new this.web3.eth.Contract(YAMPoolJson.abi);
@@ -60,6 +61,7 @@ export class Contracts {
     this.snx_pool = new this.web3.eth.Contract(SNXPoolJson.abi);
 
     this.ycrvUNIV_pool = new this.web3.eth.Contract(IncJson.abi);
+    // this.uni_lp_pool = this.ycrvUNIV_pool;
 
     this.yfi = new this.web3.eth.Contract(ERC20Json.abi);
     this.yam = new this.web3.eth.Contract(ERC20Json.abi);
@@ -75,6 +77,7 @@ export class Contracts {
     this.erc20 = new this.web3.eth.Contract(ERC20Json.abi);
 
     this.ycrvUNIV = new this.web3.eth.Contract(ERC20Json.abi);
+    this.uni_lp = this.ycrvUNIV;
 
     this.rebaser = new this.web3.eth.Contract(GRAPRebaserJson.abi);
     this.reserves = new this.web3.eth.Contract(GRAPReservesJson.abi);
