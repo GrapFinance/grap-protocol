@@ -7,12 +7,14 @@ import {
 import { ThemeProvider } from 'styled-components'
 import { UseWalletProvider } from 'use-wallet'
 
+import ProposalsProvider from './contexts/Proposals'
 import FarmsProvider from './contexts/Farms'
 import ModalsProvider from './contexts/Modals'
 import GrapProvider from './contexts/GrapProvider'
 import TransactionProvider from './contexts/Transactions'
 
 import Farms from './views/Farms'
+import Vote from './views/Vote'
 import Home from './views/Home'
 
 import theme from './theme'
@@ -28,6 +30,9 @@ const App: React.FC = () => {
           <Route path="/farms">
             <Farms />
           </Route>
+          <Route path="/vote">
+            <Vote />
+          </Route>
         </Switch>
       </Router>
     </Providers>
@@ -42,7 +47,9 @@ const Providers: React.FC = ({ children }) => {
           <TransactionProvider>
             <ModalsProvider>
               <FarmsProvider>
-                {children}
+                <ProposalsProvider>
+                  {children}
+                </ProposalsProvider>
               </FarmsProvider>
             </ModalsProvider>
           </TransactionProvider>

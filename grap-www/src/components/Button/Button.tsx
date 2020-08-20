@@ -11,6 +11,7 @@ interface ButtonProps {
   size?: 'sm' | 'md' | 'lg',
   text?: string,
   to?: string,
+  state?: any,
   variant?: 'default' | 'secondary' | 'tertiary'
 }
 
@@ -22,6 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   size,
   text,
   to,
+  state,
   variant,
 }) => {
   const { color, spacing } = useContext(ThemeContext)
@@ -66,7 +68,7 @@ const Button: React.FC<ButtonProps> = ({
 
   const ButtonChild = useMemo(() => {
     if (to) {
-      return <StyledLink to={to}>{text}</StyledLink>
+      return <StyledLink to={{ pathname: to, state }}>{text}</StyledLink>
     } else if (href) {
       return <StyledExternalLink href={href} target="__blank">{text}</StyledExternalLink>
     } else {

@@ -22,6 +22,13 @@ export const INTEGERS = {
   INTEREST_RATE_BASE: new BigNumber('1e18'),
 };
 
+export const PROPOSALSTATUSCODE = {
+  CREATED: 0,
+  CANCELED: 1,
+  VOTECAST: 2,
+  EXECUTED: 3,
+};
+
 export const addressMap = {
   uniswapFactory : "0xc0a47dFe034B400B47bDaD5FecDa2621de6c4d95",
   uniswapFactoryV2: "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
