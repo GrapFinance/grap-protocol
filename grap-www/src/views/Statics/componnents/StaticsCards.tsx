@@ -124,7 +124,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
       let data:any = Object.values(d[0] || d)[0];
       data = data.usd || data;
       stakingTokenPrice = parseFloat(data.toString());
-      if(token == 'yfi') debugger;
+      // if(token == 'yfi') debugger;
     }
     let weeklyEstimate = rewardPerToken * amount;
     let weeklyROI = (rewardPerToken * price) * 100 / (stakingTokenPrice);
