@@ -61,7 +61,8 @@ const ProposalPage: React.FC = () => {
 
   return (
     <Card>
-      <CardContent>
+      {proposal ? (
+        <CardContent>
         <StyledTitle>For votes: {new BigNumber(forVotes).toFixed(2)}</StyledTitle>
         <StyledTitle>Against votes: {new BigNumber(againstVotes).toFixed(2)}</StyledTitle>
         <StyledTitle>Total votes: {new BigNumber(totalVotes).toFixed(2)}</StyledTitle>
@@ -127,6 +128,12 @@ const ProposalPage: React.FC = () => {
           }}>
         </div>
       </CardContent>
+      ) : (
+        <Button
+          size="sm"
+          text="My Wallet"
+        />
+      )}
     </Card>
   )
 }
