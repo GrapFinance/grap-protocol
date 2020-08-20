@@ -167,7 +167,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
     // debugger
     return (
       <div>
-        <pre>
+        <StyledPre>
         ========== PRICES ==========<br/>
     1 {rewardTokenTicker}   = {price}$<br/>
     1 {stakingTokenTicker}   = {stakingTokenPrice}$<br/>
@@ -188,7 +188,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
     Daily ROI in USD  : {toFixed(weeklyROI / 7, 4)}%<br/>
     Weekly ROI in USD : {toFixed(weeklyROI, 4)}%<br/>
     APY (unstable)    : {toFixed(weeklyROI * 52, 4)}%<br/>
-        </pre>
+        </StyledPre>
       </div>
     )
   }
@@ -232,6 +232,12 @@ const StyledCardAccent = styled.div`
   position: absolute;
   top: -2px; right: -2px; bottom: -2px; left: -2px;
   z-index: -1;
+`
+const StyledPre = styled.pre`
+  @media (max-width: 768px) {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
 `
 
 const StyledCards = styled.div`
@@ -281,6 +287,9 @@ const TitleView = styled.div`
 const StyledSpacer = styled.div`
   height: ${props => props.theme.spacing[4]}px;
   width: ${props => props.theme.spacing[4]}px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 
 const StyledDetails = styled.div`
