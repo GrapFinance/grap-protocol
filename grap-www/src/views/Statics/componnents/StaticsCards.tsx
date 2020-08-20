@@ -110,7 +110,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
     let hash: any = {
       yfi: ["yearn-finance"],
       yfii: ["yfii-finance"],
-      crv: ["yearn-finance"],
+      crv: ["curve-dao-token"],
       weth: ["ethereum"],
       link: ["chainlink"],
       mkr: ["maker"],
@@ -298,7 +298,6 @@ const StyledDetailSpan =  styled.div`
 
 
 const toFixed = function(num: any, fixed: any) {
-  num = num * 100
   return num.toFixed(fixed)
 }
 const toDollar = (str: any) => {
