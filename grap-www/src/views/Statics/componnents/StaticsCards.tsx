@@ -117,6 +117,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
       comp: ["compound-governance-token"],
       snx: ["havven"],
       lend: ["ethlend"],
+      uni_lp: ["curve-fi-ydai-yusdc-yusdt-ytusd"]
     }
     let stakingTokenPrice = 1;
     if (Object.keys(hash).includes(token))  {
@@ -125,6 +126,13 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
       data = data.usd || data;
       stakingTokenPrice = parseFloat(data.toString());
       // if(token == 'yfi') debugger;
+      if(token === 'uni_lp'){
+        const UNI_TOKEN_ADDR = "0x4eFdFe92F7528Bd16b95083d7Ba1b247De32F549";
+        const totalyCRVInUniswapPair = await grap.contracts['ycrv'].methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
+        const totalGRAPInUniswapPair = await Token.methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
+        let yCRVPrice = stakingTokenPrice;
+        stakingTokenPrice = (yCRVPrice * totalyCRVInUniswapPair + price * totalGRAPInUniswapPair) / totalStakedAmount;
+      }
     }
     let weeklyEstimate = rewardPerToken * amount;
     let weeklyROI = (rewardPerToken * price) * 100 / (stakingTokenPrice);
@@ -156,7 +164,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
   const DataDetail = (data: any) => {
 
     const {totalSupply, totalStakedAmount, weekly_reward, amount, earned, weeklyEstimate, rewardTokenTicker, stakingTokenTicker, stakingTokenPrice, price, weeklyROI} = data
-    debugger
+    // debugger
     return (
       <div>
         <pre>

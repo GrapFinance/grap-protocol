@@ -74,6 +74,7 @@ export class Contracts {
     this.mkr = new this.web3.eth.Contract(ERC20Json.abi);
     this.yfii = new this.web3.eth.Contract(ERC20Json.abi);
     this.snx = new this.web3.eth.Contract(ERC20Json.abi);
+    this.ycrv = new this.web3.eth.Contract(ERC20Json.abi);
     this.erc20 = new this.web3.eth.Contract(ERC20Json.abi);
 
     this.ycrvUNIV = new this.web3.eth.Contract(ERC20Json.abi);
@@ -134,6 +135,7 @@ export class Contracts {
     this.lend.options.address = addressMap["LEND"];
     this.mkr.options.address = addressMap["MKR"];
     this.snx.options.address = addressMap["SNX"];
+    this.ycrv.options.address = addressMap["YCRV"];
     this.ycrvUNIV.options.address = addressMap["YCRVUNIV"];
     this.uni_fact.options.address = addressMap["uniswapFactoryV2"];
     this.uni_router.options.address = addressMap["UNIRouter"];
