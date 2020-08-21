@@ -10,7 +10,7 @@ const useDelegate = (address?: string) => {
   const grap = useGrap()
 
   const handleDelegate = useCallback(async () => {
-    const txHash = await delegate(grap, address || account)
+    const txHash = await delegate(grap ,address || account, account)
     console.log(txHash)
   }, [account, address])
 

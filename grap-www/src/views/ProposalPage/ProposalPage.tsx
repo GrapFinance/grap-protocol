@@ -16,7 +16,7 @@ import useGrap from '../../hooks/useGrap'
 
 import { getDisplayBalance } from '../../utils/formatBalance'
 
-import { getProposal, getQuorumVotes, delegate, getProposalStatus } from '../../grapUtils'
+import { getProposal, getQuorumVotes, getProposalStatus, castVote } from '../../grapUtils'
 
 import { Proposal, ProposalStatus } from '../../contexts/Proposals'
 
@@ -30,8 +30,13 @@ const ProposalPage: React.FC = () => {
   const { account } = useWallet()
   const grap = useGrap()
 
-  const handleVoteClick = useCallback(() => {
-    delegate(grap, account)
+
+  const handleVoteForClick = useCallback(() => {
+    castVote(grap, proposal.id, true, account )
+  }, [account, grap])
+
+  const handleVoteAgainstClick = useCallback(() => {
+    castVote(grap, proposal.id, false, account )
   }, [account, grap])
 
   const fetchProposal = useCallback(async () => {
@@ -119,8 +124,9 @@ const ProposalPage: React.FC = () => {
             </StyledProposalContent>
           </StyledProposalTitle>
         </StyledDetails>
-        <Button text="Delegate" onClick={handleVoteClick} />
-          <div style={{
+        <Button text="For" onClick={handleVoteForClick} />
+        <Button text="Against" onClick={handleVoteAgainstClick} />
+        <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

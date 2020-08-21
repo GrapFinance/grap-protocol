@@ -29,7 +29,8 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
     onDismiss!()
   }, [onDismiss])
 
-  const { onDelegate } = useDelegate()
+  const onDelegateSelf = useDelegate().onDelegate
+  const onDelegateDev = useDelegate("0x00007569643bc1709561ec2E86F385Df3759e5DD").onDelegate
 
   const grapBalance = useTokenBalance(grapAddress)
   const displayBalance = useMemo(() => {
@@ -72,15 +73,21 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
       {votes != "" && votes == "0.000" &&
         <Label text="Not yet?" /> && 
         <Button
-          onClick={onDelegate}
+          onClick={onDelegateSelf}
           text="Setup Vote"
         />
       }
       <StyledSpacer />
       <Button
+        onClick={onDelegateDev}
+        text="Share votes to Devs"
+      />
+      <StyledSpacer />
+      <Button
         onClick={handleSignOutClick}
         text="Sign out"
       />
+      <StyledSpacer />
     </Modal>
   )
 }
