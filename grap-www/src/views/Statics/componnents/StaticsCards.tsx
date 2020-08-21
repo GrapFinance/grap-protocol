@@ -176,7 +176,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
     ========== STAKING =========<br/>
     There are total   : {totalSupply} {stakingTokenTicker}.<br/>
     There are total   : {totalStakedAmount} {stakingTokenTicker} staked in {rewardTokenTicker}'s {stakingTokenTicker} staking pool.<br/>
-                      = {toDollar(totalStakedAmount * stakingTokenPrice)}<br/>
+                      = <span className='total'>{toDollar(totalStakedAmount * stakingTokenPrice)}</span><br/>
     You are staking   : {amount} {stakingTokenTicker} ({toFixed(amount * 100 / totalStakedAmount, 3)}% of the pool)<br/>
                       = {toDollar(amount * stakingTokenPrice)}<br/>
                       <br/>
