@@ -249,6 +249,10 @@ export const getQuorumVotes = async (grap) => {
   return new BigNumber(await grap.contracts.gov.methods.quorumVotes().call()).div(10**6)
 }
 
+export const getProposalThreshold = async (grap) => {
+  return new BigNumber(await grap.contracts.gov.methods.proposalThreshold().call()).div(10**6)
+}
+
 export const getCurrentVotes = async (grap, account) => {
   return grap.toBigN(await grap.contracts.grap.methods.getCurrentVotes(account).call()).div(10**6)
 }
