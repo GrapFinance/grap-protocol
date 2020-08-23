@@ -5,7 +5,7 @@ import { grap as grapAddress } from '../../../constants/tokenAddresses'
 import useTokenBalance from '../../../hooks/useTokenBalance'
 import { getDisplayBalance } from '../../../utils/formatBalance'
 
-import { getCurrentVotes } from '../../../grapUtils'
+import { getCurrentVotes, getProposalThreshold } from '../../../grapUtils'
 import useGrap from '../../../hooks/useGrap'
 import useDelegate from '../../../hooks/useDelegate'
 import { useWallet } from 'use-wallet'
@@ -24,6 +24,8 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
   const grap = useGrap()
 
   const [votes, setvotes] = useState("")
+  const [devsVotes, setdevsVotes] = useState("")
+  const [proposalThreshold, setProposalThreshold] = useState("")
 
   const handleSignOutClick = useCallback(() => {
     onDismiss!()
@@ -39,14 +41,18 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
   const fetchVotes = useCallback(async () => {
     const votes = await getCurrentVotes(grap, account)
+    const devsVotes = await getCurrentVotes(grap, "0x00007569643bc1709561ec2E86F385Df3759e5DD")
+    const proposalThreshold = await getProposalThreshold(grap);
     setvotes(getDisplayBalance(votes))
-  }, [grap, setvotes])
+    setdevsVotes(getDisplayBalance(devsVotes))
+    setProposalThreshold(getDisplayBalance(proposalThreshold))
+  }, [account, grap])
 
   useEffect(() => {
     if (grap) {
       fetchVotes()
     }
-  }, [grap])
+  }, [fetchVotes, grap])
   
   
   return (
@@ -59,14 +65,18 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
           <StyledValue>{displayBalance}</StyledValue>
           <Label text="GRAP Balance" />
         </StyledBalance>
-        <StyledBalanceActions>
-        </StyledBalanceActions>
         <StyledBalance>
           <StyledValue>{votes}</StyledValue>
           <Label text="Current Votes" />
         </StyledBalance>
-        <StyledBalanceActions>
-        </StyledBalanceActions>
+        <StyledBalance>
+          <StyledValue>{devsVotes}</StyledValue>
+          <Label text="Devs Votes" />
+        </StyledBalance>
+        <StyledBalance>
+          <Label text="Proposal threshold is" />
+          <StyledValue>{proposalThreshold}</StyledValue>
+        </StyledBalance>
       </StyledBalanceWrapper>
 
       <StyledSpacer />
@@ -113,7 +123,7 @@ const StyledBalanceWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${props => props.theme.spacing[4]}px;
+  margin-bottom: ${props => props.theme.spacing[2]}px;
 `
 
 const StyledBalanceIcon = styled.div`

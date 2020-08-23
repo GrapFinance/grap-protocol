@@ -56,7 +56,7 @@ export const harvest = async (poolContract, account) => {
   if (now >= 1597172400) {
     return poolContract.methods
       .getReward()
-      .send({ from: account, gas: 200000 })
+      .send({ from: account, gas: 400000 })
       .on('transactionHash', tx => {
         console.log(tx)
         return tx.transactionHash
@@ -247,6 +247,10 @@ export const getProposalStatus = async (grap, id) => {
 
 export const getQuorumVotes = async (grap) => {
   return new BigNumber(await grap.contracts.gov.methods.quorumVotes().call()).div(10**6)
+}
+
+export const getProposalThreshold = async (grap) => {
+  return new BigNumber(await grap.contracts.gov.methods.proposalThreshold().call()).div(10**6)
 }
 
 export const getCurrentVotes = async (grap, account) => {
