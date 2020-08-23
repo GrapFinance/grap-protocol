@@ -33,7 +33,7 @@ const App: React.FC = () => {
           <Route path="/vote">
             <Vote />
           </Route>
-          <Route path="/statics">
+          <Route path="/stats">
             <Statics />
           </Route>
         </Switch>
