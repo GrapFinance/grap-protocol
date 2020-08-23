@@ -147,9 +147,11 @@ const StyledSpacer = styled.div`
   width: ${props => props.theme.spacing[4]}px;
 `
 
-const StyledDetails = styled.div`
-  margin-bottom: ${props => props.theme.spacing[4]}px;
-  margin-top: ${props => props.theme.spacing[2]}px;
+const StyledDetails = styled.h5`
+  maring: ${props => props.theme.spacing[4]}px;
+  padding: 5px;
+  width: 100%;
+  word-wrap: break-word;
   text-align: center;
 `
 

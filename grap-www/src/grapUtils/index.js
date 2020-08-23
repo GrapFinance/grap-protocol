@@ -200,7 +200,8 @@ export const getProposals = async (grap) => {
   const events = await grap.contracts.gov.getPastEvents("allEvents", filter)
   for (let i = 0; i < events.length; i++) {
     const event = events[i]
-    if (event.type === "mined") {
+    console.log(event)
+    if (event.removed === false) {
       switch (event.event) {
         case "ProposalCreated":
           proposals.push(
