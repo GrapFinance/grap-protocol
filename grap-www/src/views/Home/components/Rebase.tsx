@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import Countdown, { CountdownRenderProps} from 'react-countdown'
 
@@ -8,14 +8,19 @@ import CardContent from '../../../components/CardContent'
 import Dial from '../../../components/Dial'
 import Label from '../../../components/Label'
 
+import useGrap from '../../../hooks/useGrap'
 import useRebase from '../../../hooks/useRebase'
+
+import { getRebaseStatus } from '../../../grapUtils'
 
 interface RebaseProps {
   nextRebase?: number
 }
 
 const Rebase: React.FC<RebaseProps> = ({ nextRebase }) => {
+  const grap = useGrap()
   const { onRebase } = useRebase()
+  const [canRebase, setStats] = useState(Boolean)
 
   const renderer = (countdownProps: CountdownRenderProps) => {
     const { hours, minutes, seconds } = countdownProps
@@ -26,6 +31,16 @@ const Rebase: React.FC<RebaseProps> = ({ nextRebase }) => {
       <span>{paddedHours}:{paddedMinutes}:{paddedSeconds}</span>
     )
   }
+  const fetchStats = useCallback(async () => {
+    const canRebase = await getRebaseStatus(grap)
+    setStats(canRebase)
+  }, [grap, setStats])
+
+  useEffect(() => {
+    if (grap) {
+      fetchStats()
+    }
+  }, [fetchStats, grap])
 
   const dialValue = (nextRebase - Date.now()) / (1000 * 60 * 60 * 24) * 100
 
@@ -44,7 +59,7 @@ const Rebase: React.FC<RebaseProps> = ({ nextRebase }) => {
             </StyledCountdown>
           </Dial>
           <StyledSpacer />
-          <Button disabled={!nextRebase || nextRebase > 0} onClick={onRebase}  text="Rebase" />
+          <Button disabled={!canRebase} onClick={onRebase}  text="Rebase" />
         </CardContent>
       </Card>
     </StyledRebase>

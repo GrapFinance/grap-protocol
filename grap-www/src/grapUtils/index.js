@@ -137,22 +137,28 @@ export const getCirculatingSupply = async (grap) => {
   return circulating
 }
 
-export const getNextRebaseTimestamp = async (yam) => {
+export const getRebaseStatus = async (grap) => {
+  let now = await grap.web3.eth.getBlock('latest').then(res => res.timestamp);
+  let lastRebaseTimestampSec = await grap.contracts.rebaser.methods.lastRebaseTimestampSec().call();
+  return now >= lastRebaseTimestampSec + 60 * 60 * 24 * 1000;
+}
+
+export const getNextRebaseTimestamp = async (grap) => {
   try {
-    let now = await yam.web3.eth.getBlock('latest').then(res => res.timestamp);
+    let now = await grap.web3.eth.getBlock('latest').then(res => res.timestamp);
     let interval = 86400; // 24 hours
     let offset = 0; // 0AM utc
     let secondsToRebase = 0;
-    if (await yam.contracts.rebaser.methods.rebasingActive().call()) {
+    if (await grap.contracts.rebaser.methods.rebasingActive().call()) {
       if (now % interval > offset) {
           secondsToRebase = (interval - (now % interval)) + offset;
        } else {
           secondsToRebase = offset - (now % interval);
       }
     } else {
-      let twap_init = yam.toBigN(await yam.contracts.rebaser.methods.timeOfTWAPInit().call()).toNumber();
+      let twap_init = grap.toBigN(await grap.contracts.rebaser.methods.timeOfTWAPInit().call()).toNumber();
       if (twap_init > 0) {
-        let delay = yam.toBigN(await yam.contracts.rebaser.methods.rebaseDelay().call()).toNumber();
+        let delay = grap.toBigN(await grap.contracts.rebaser.methods.rebaseDelay().call()).toNumber();
         let endTime = twap_init + delay;
         if (endTime % interval > offset) {
             secondsToRebase = (interval - (endTime % interval)) + offset;
