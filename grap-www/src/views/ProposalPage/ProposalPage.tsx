@@ -20,6 +20,8 @@ import { getProposal, getQuorumVotes, getProposalStatus, castVote } from '../../
 
 import { Proposal, ProposalStatus } from '../../contexts/Proposals'
 
+import {PROPOSALSTATUSCODE} from '../../grap/lib/constants'
+
 
 const METER_TOTAL = 80000
 
@@ -33,16 +35,16 @@ const ProposalPage: React.FC = () => {
 
   const handleVoteForClick = useCallback(() => {
     castVote(grap, proposal.id, true, account )
-  }, [account, grap])
+  }, [account, grap, proposal.id])
 
   const handleVoteAgainstClick = useCallback(() => {
     castVote(grap, proposal.id, false, account )
-  }, [account, grap])
+  }, [account, grap, proposal.id])
 
   const fetchProposal = useCallback(async () => {
     const proposal = await getProposal(grap, proposalId)
     setProposal(proposal)
-  }, [grap, setProposal])
+  }, [grap, proposalId])
 
   const fetchVotes = useCallback(async () => {
     const proposalStatus:ProposalStatus = await getProposalStatus(grap, proposalId)
@@ -55,14 +57,14 @@ const ProposalPage: React.FC = () => {
       totalVotes: Number(getDisplayBalance(forVotes.plus(againstVotes))),
       quorumVotes: Number(getDisplayBalance(quorumCount))
     })
-  }, [grap, setVotes])
+  }, [grap, proposalId])
 
   useEffect(() => {
     if (grap) {
       fetchProposal()
       fetchVotes()
     }
-  }, [fetchVotes, grap])
+  }, [fetchProposal, fetchVotes, grap])
 
   return (
     <Card>
@@ -124,8 +126,13 @@ const ProposalPage: React.FC = () => {
             </StyledProposalContent>
           </StyledProposalTitle>
         </StyledDetails>
-        <Button text="For" onClick={handleVoteForClick} />
-        <Button text="Against" onClick={handleVoteAgainstClick} />
+        { proposal.status === PROPOSALSTATUSCODE.CREATED 
+          &&
+          <div>
+            <Button text="For" onClick={handleVoteForClick} />
+            <Button text="Against" onClick={handleVoteAgainstClick} />
+          </div>
+        }
         <div style={{
             display: 'flex',
             alignItems: 'center',

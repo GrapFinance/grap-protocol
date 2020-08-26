@@ -200,7 +200,7 @@ export const getProposals = async (grap) => {
   const events = await grap.contracts.gov.getPastEvents("allEvents", filter)
   for (let i = 0; i < events.length; i++) {
     const event = events[i]
-    console.log(event)
+    let index = 0;
     if (event.removed === false) {
       switch (event.event) {
         case "ProposalCreated":
@@ -221,6 +221,12 @@ export const getProposals = async (grap) => {
           break
         // TODO
         case "ProposalCanceled":
+          index = proposals.findIndex((proposal) => proposal.id === event.returnValues.id)
+          proposals[index].status = PROPOSALSTATUSCODE.CANCELED
+          break
+        case "ProposalQueued":
+          index = proposals.findIndex((proposal) => proposal.id === event.returnValues.id)
+          proposals[index].status = PROPOSALSTATUSCODE.QUEUED
           break
         case "VoteCast":
             break

@@ -25,8 +25,9 @@ export const INTEGERS = {
 export const PROPOSALSTATUSCODE = {
   CREATED: 0,
   CANCELED: 1,
-  VOTECAST: 2,
-  EXECUTED: 3,
+  QUEUED: 2,
+  VOTECAST: 3,
+  EXECUTED: 4,
 };
 
 export const addressMap = {
