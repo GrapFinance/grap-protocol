@@ -30,6 +30,9 @@ import SNXPoolJson from '../clean_build/contracts/GRAPSNXPool.json';
 // uniswap pool
 import IncJson from '../clean_build/contracts/GRAPIncentivizer.json';
 
+// advanced pool
+import YFFIPoolJson from '../clean_build/contracts/GRAPYFFIUNIVPool.json';
+
 export class Contracts {
   constructor(
     provider,
@@ -62,6 +65,7 @@ export class Contracts {
 
     this.ycrvUNIV_pool = new this.web3.eth.Contract(IncJson.abi);
     // this.uni_lp_pool = this.ycrvUNIV_pool;
+    this.yffi_grap_univ_pool = new this.web3.eth.Contract(YFFIPoolJson.abi);
 
     this.yfi = new this.web3.eth.Contract(ERC20Json.abi);
     this.yam = new this.web3.eth.Contract(ERC20Json.abi);
@@ -79,6 +83,8 @@ export class Contracts {
 
     this.ycrvUNIV = new this.web3.eth.Contract(ERC20Json.abi);
     this.uni_lp = this.ycrvUNIV;
+
+    this.yffiUNIV = new this.web3.eth.Contract(ERC20Json.abi);
 
     this.rebaser = new this.web3.eth.Contract(GRAPRebaserJson.abi);
     this.reserves = new this.web3.eth.Contract(GRAPReservesJson.abi);
@@ -116,6 +122,8 @@ export class Contracts {
       { contract: this.link_pool, json: LINKPoolJson },
       { contract: this.comp_pool, json: COMPPoolJson },
       { contract: this.ycrvUNIV_pool, json: IncJson },
+      // advanced pool
+      { contract: this.yffi_grap_univ_pool, json: YFFIPoolJson },
     ]
 
     contracts.forEach(contract => this.setContractProvider(
@@ -137,6 +145,7 @@ export class Contracts {
     this.snx.options.address = addressMap["SNX"];
     this.ycrv.options.address = addressMap["YCRV"];
     this.ycrvUNIV.options.address = addressMap["YCRVUNIV"];
+    this.yffiUNIV.options.address = addressMap["YFFIUNIV"];
     this.uni_fact.options.address = addressMap["uniswapFactoryV2"];
     this.uni_router.options.address = addressMap["UNIRouter"];
 
@@ -152,6 +161,8 @@ export class Contracts {
       {"tokenAddr": this.mkr.options.address, "poolAddr": this.mkr_pool.options.address},
       {"tokenAddr": this.snx.options.address, "poolAddr": this.snx_pool.options.address},
       {"tokenAddr": this.ycrvUNIV.options.address, "poolAddr": this.ycrvUNIV_pool.options.address},
+      // advanced pool
+      {"tokenAddr": this.yffiUNIV.options.address, "poolAddr": this.yffi_grap_univ_pool.options.address},
     ]
   }
 

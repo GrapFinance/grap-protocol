@@ -21,6 +21,7 @@ const NAME_FOR_POOL: { [key: string]: string } = {
   snx_pool: 'Spartan Grounds',
   mkr_pool: 'Maker Range',
   ycrvUNIV_pool: 'Eternal Lands',
+  yffi_grap_univ_pool: 'Oh. YFFI'
 }
 
 const ICON_FOR_POOL: { [key: string]: string } = {
@@ -35,7 +36,10 @@ const ICON_FOR_POOL: { [key: string]: string } = {
   snx_pool: '⚔️',
   mkr_pool: '🐮',
   ycrvUNIV_pool: '🌈',
+  yffi_grap_univ_pool: '🔥',
 }
+
+const isAdvPool: [string] = ['yffi_grap_univ_pool']
 
 const Farms: React.FC = ({ children }) => {
 
@@ -59,14 +63,11 @@ const Farms: React.FC = ({ children }) => {
       }
 
       const method = pool.methods[tokenKey]
+
       if (method) {
         try {
           let tokenAddress = ''
-          if (tokenKey === 'uni_lp') {
-            tokenAddress = '0x4eFdFe92F7528Bd16b95083d7Ba1b247De32F549'
-          } else {
-            tokenAddress = await method().call()
-          }
+          tokenAddress = await method().call()
           farmsArr.push({
             contract: pool,
             name: NAME_FOR_POOL[poolKey],
@@ -75,7 +76,8 @@ const Farms: React.FC = ({ children }) => {
             earnToken: 'grap',
             earnTokenAddress: grapAddress,
             icon: ICON_FOR_POOL[poolKey],
-            id: tokenKey
+            id: tokenKey,
+            isAdv: isAdvPool.includes(poolKey)
           })
         } catch (e) {
           console.log(e)

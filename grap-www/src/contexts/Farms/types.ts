@@ -9,6 +9,7 @@ export interface Farm {
   earnTokenAddress: string,
   icon: React.ReactNode,
   id: string,
+  isAdv: boolean
 }
 
 export interface FarmsContext {

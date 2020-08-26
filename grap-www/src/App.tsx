@@ -17,6 +17,7 @@ import GrapProvider from './contexts/GrapProvider'
 import TransactionProvider from './contexts/Transactions'
 
 import Farms from './views/Farms'
+import Advancements from './views/Advancements'
 import Vote from './views/Vote'
 import Home from './views/Home'
 import Statics from './views/Statics'
@@ -43,6 +44,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/farms">
             <Farms />
+          </Route>
+          <Route path="/advancements">
+            <Advancements />
           </Route>
           <Route path="/vote">
             <Vote />
