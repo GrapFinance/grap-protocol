@@ -15,7 +15,7 @@ import { Farm } from '../../../contexts/Farms'
 import { getPoolStartTime } from '../../../grapUtils'
 
 const FarmCards: React.FC = () => {
-  const [farms] = useFarms()
+  const [farms] = useFarms(false)
 
   const rows = farms.reduce<Farm[][]>((farmRows, farm) => {
     const newFarmRows = [...farmRows]

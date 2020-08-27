@@ -10,6 +10,7 @@ import Context from './context'
 import { Farm } from './types'
 
 const NAME_FOR_POOL: { [key: string]: string } = {
+  yffi_grap_univ_pool: 'Oh. YFFI',
   eth_pool: 'Weth Homestead',
   yam_pool: 'YAM',
   crv_pool: 'Curvy Fields',
@@ -21,10 +22,10 @@ const NAME_FOR_POOL: { [key: string]: string } = {
   snx_pool: 'Spartan Grounds',
   mkr_pool: 'Maker Range',
   ycrvUNIV_pool: 'Eternal Lands',
-  yffi_grap_univ_pool: 'Oh. YFFI'
 }
 
 const ICON_FOR_POOL: { [key: string]: string } = {
+  yffi_grap_univ_pool: '🔥',
   yfi_pool: '🐋',
   yfii_pool: '🦈',
   yam_pool: '🍠',
@@ -35,8 +36,7 @@ const ICON_FOR_POOL: { [key: string]: string } = {
   lend_pool: '🏕️',
   snx_pool: '⚔️',
   mkr_pool: '🐮',
-  ycrvUNIV_pool: '🌈',
-  yffi_grap_univ_pool: '🔥',
+  ycrvUNIV_pool: '🌈'
 }
 
 const isAdvPool: [string] = ['yffi_grap_univ_pool']

@@ -38,13 +38,13 @@ const FarmCards: React.FC = () => {
     const statsData = await getStats(grap)
     setStats(statsData)
     currentPrice = parseFloat(getDisplayBalance(new BigNumber(statsData.curPrice)))
-  }, [grap, setStats])
+  }, [setStats])
 
   useEffect(() => {
     if (grap) {
       fetchStats()
     }
-  }, [grap])
+  }, [fetchStats])
 
 
   const priceBlock = () => {
@@ -87,9 +87,8 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
   const getData = useCallback(async () => {
     const selfAddress = grap.web3.currentProvider.selectedAddress;
     const token = farm.depositToken;
-    let ah:any = {'weth': 'eth_pool', 'uni_lp': 'ycrvUNIV_pool'};
+    let ah:any = {'weth': 'eth_pool', 'uni_lp': 'ycrvUNIV_pool', 'yffi_grap_univ': 'yffi_grap_univ_pool'};
     let key = ah[token] || `${token}_pool`
-
     const STAKING_POOL = grap.contracts[key];
     const Token = grap.contracts[token];
     const GRAP_TOKEN = grap.contracts.grap;
@@ -106,8 +105,21 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
     const weekly_reward = (Math.round((await STAKING_POOL.methods.rewardRate().call() * 604800)) * grapScale) / 1e18;
     const rewardPerToken = weekly_reward / totalStakedAmount;
 
+    let tokenList: {[index: string]: {[index: string]: string}} = {
+      'uni_lp': {
+        uni_token_addr:'0x4eFdFe92F7528Bd16b95083d7Ba1b247De32F549',
+        token_name: 'ycrv',
+        uni_token_name: 'ycrvUNIV'
+      },
+      'yffi_grap_univ': {
+        uni_token_addr:'0x79A3919d86e90Eb101C5fBbcaDB06B546667B323',
+        token_name: 'yffi',
+        uni_token_name: 'yffi_grap_univ'
+      },
+    }
 
     let hash: any = {
+      yffi_grap_univ: ["yffi-finance"],
       yfi: ["yearn-finance"],
       yfii: ["yfii-finance"],
       crv: ["curve-dao-token"],
@@ -117,7 +129,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
       comp: ["compound-governance-token"],
       snx: ["havven"],
       lend: ["ethlend"],
-      uni_lp: ["curve-fi-ydai-yusdc-yusdt-ytusd"]
+      uni_lp: ["curve-fi-ydai-yusdc-yusdt-ytusd"],
     }
     let stakingTokenPrice = 1;
     if (Object.keys(hash).includes(token))  {
@@ -126,12 +138,12 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
       data = data.usd || data;
       stakingTokenPrice = parseFloat(data.toString());
       // if(token == 'yfi') debugger;
-      if(token === 'uni_lp'){
-        const UNI_TOKEN_ADDR = "0x4eFdFe92F7528Bd16b95083d7Ba1b247De32F549";
-        const totalyCRVInUniswapPair = await grap.contracts['ycrv'].methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
+      if(Object.keys(tokenList).includes(token)){
+        const UNI_TOKEN_ADDR = tokenList[token].uni_token_addr;
+        const totalyCRVInUniswapPair = await grap.contracts[tokenList[token].token_name].methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
         const totalGRAPInUniswapPair = await GRAP_TOKEN.methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
         let yCRVPrice = stakingTokenPrice;
-        const totalSupplyOfStakingToken = await grap.contracts['ycrvUNIV'].methods.totalSupply().call() / 1e18;
+        const totalSupplyOfStakingToken = await grap.contracts[tokenList[token].uni_token_name].methods.totalSupply().call() / 1e18;
         stakingTokenPrice = (yCRVPrice * totalyCRVInUniswapPair + price * totalGRAPInUniswapPair) / totalSupplyOfStakingToken;
       }
     }
@@ -154,7 +166,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
       weeklyROI
     })
 
-  }, [farm, setData]);
+  }, [farm.depositToken, price]);
 
 
   useEffect(() => {

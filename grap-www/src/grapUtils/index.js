@@ -138,9 +138,13 @@ export const getCirculatingSupply = async (grap) => {
 }
 
 export const getRebaseStatus = async (grap) => {
-  let now = await grap.web3.eth.getBlock('latest').then(res => res.timestamp);
-  let lastRebaseTimestampSec = await grap.contracts.rebaser.methods.lastRebaseTimestampSec().call();
-  return now >= lastRebaseTimestampSec + 60 * 60 * 24 * 1000;
+  try {
+    let now = await grap.web3.eth.getBlock('latest').then(res => res.timestamp);
+    let lastRebaseTimestampSec = await grap.contracts.rebaser.methods.lastRebaseTimestampSec().call();
+    return now >= lastRebaseTimestampSec + 60 * 60 * 24 * 1000;
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export const getNextRebaseTimestamp = async (grap) => {
