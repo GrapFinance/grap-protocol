@@ -61,9 +61,6 @@ const ProposalCard: React.FC<ProposalCards> = ({ proposal }) => {
       <span style={{ width: '100%' }}>{paddedHours}:{paddedMinutes}:{paddedSeconds}</span>
     )
   }
-
-  useEffect(() => {
-  }, [])
   
   const poolActive = startTime * 1000 - Date.now() <= 0
   

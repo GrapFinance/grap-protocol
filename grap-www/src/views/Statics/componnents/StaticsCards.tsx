@@ -22,6 +22,19 @@ export interface GrapContext {
 const ADDRESS = '0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB';
 let currentPrice = 0;
 let grap: any;
+let tokenList: {[index: string]: {[index: string]: string}} = {
+  'uni_lp': {
+    uni_token_addr:'0x4eFdFe92F7528Bd16b95083d7Ba1b247De32F549',
+    token_name: 'ycrv',
+    uni_token_name: 'ycrvUNIV'
+  },
+  'yffi_grap_univ': {
+    uni_token_addr:'0x79A3919d86e90Eb101C5fBbcaDB06B546667B323',
+    token_name: 'yffi',
+    uni_token_name: 'yffi_grap_univ'
+  },
+}
+
 const FarmCards: React.FC = () => {
 
   const [farms] = useFarms()
@@ -60,7 +73,7 @@ const FarmCards: React.FC = () => {
     <div>
       {currentPrice ? priceBlock() : ''}
       <StyledCards>
-        {farms.length ? farms.map((farm, i) => (
+        {farms.length ? farms.filter((farm)=>Object.keys(tokenList).includes(farm.depositToken)).map((farm, i) => (
           <React.Fragment key={i}>
             <StaticsCard farm={farm} price={currentPrice}/>
           </React.Fragment>
@@ -104,19 +117,6 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
 
     const weekly_reward = (Math.round((await STAKING_POOL.methods.rewardRate().call() * 604800)) * grapScale) / 1e18;
     const rewardPerToken = weekly_reward / totalStakedAmount;
-
-    let tokenList: {[index: string]: {[index: string]: string}} = {
-      'uni_lp': {
-        uni_token_addr:'0x4eFdFe92F7528Bd16b95083d7Ba1b247De32F549',
-        token_name: 'ycrv',
-        uni_token_name: 'ycrvUNIV'
-      },
-      'yffi_grap_univ': {
-        uni_token_addr:'0x79A3919d86e90Eb101C5fBbcaDB06B546667B323',
-        token_name: 'yffi',
-        uni_token_name: 'yffi_grap_univ'
-      },
-    }
 
     let hash: any = {
       yffi_grap_univ: ["yffi-finance"],

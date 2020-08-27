@@ -21,7 +21,7 @@ const useStakedBalance = (pool: Contract) => {
     if (account && pool && grap) {
       fetchBalance()
     }
-  }, [account, pool, setBalance, grap])
+  }, [account, pool, setBalance, grap, fetchBalance])
 
   return balance
 }

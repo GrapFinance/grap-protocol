@@ -9,12 +9,15 @@ import { UseWalletProvider } from 'use-wallet'
 
 import MobileMenu from './components/MobileMenu'
 import TopBar from './components/TopBar'
+import DisclaimerModal from './components/DisclaimerModal'
 
 import ProposalsProvider from './contexts/Proposals'
 import FarmsProvider from './contexts/Farms'
 import ModalsProvider from './contexts/Modals'
 import GrapProvider from './contexts/GrapProvider'
 import TransactionProvider from './contexts/Transactions'
+
+import useModal from './hooks/useModal'
 
 import Farms from './views/Farms'
 import Advancements from './views/Advancements'
@@ -56,6 +59,7 @@ const App: React.FC = () => {
           </Route>
         </Switch>
       </Router>
+      <Disclaimer />
     </Providers>
   )
 }
@@ -66,17 +70,37 @@ const Providers: React.FC = ({ children }) => {
       <UseWalletProvider chainId={1}>
         <GrapProvider>
           <TransactionProvider>
-            <ModalsProvider>
-              <FarmsProvider>
-                <ProposalsProvider>
+            <FarmsProvider>
+              <ProposalsProvider>
+                <ModalsProvider>
                   {children}
-                </ProposalsProvider>
-              </FarmsProvider>
-            </ModalsProvider>
+                </ModalsProvider>
+              </ProposalsProvider>
+            </FarmsProvider>
           </TransactionProvider>
         </GrapProvider>
       </UseWalletProvider>
     </ThemeProvider>
+  )
+}
+
+const Disclaimer: React.FC = () => {
+
+  const markSeen = useCallback(() => {
+    localStorage.setItem('disclaimer', 'seen')
+  }, [])
+
+  const [onPresentDisclaimerModal] = useModal(<DisclaimerModal onConfirm={markSeen} />)
+
+  useEffect(() => {
+    const seenDisclaimer = localStorage.getItem('disclaimer')
+    // if (!seenDisclaimer) {
+      onPresentDisclaimerModal()
+    // }
+  }, [])
+
+  return (
+    <div />
   )
 }
 

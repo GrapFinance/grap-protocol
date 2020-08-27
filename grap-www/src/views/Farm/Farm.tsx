@@ -36,6 +36,11 @@ const Farm: React.FC = () => {
     icon: ''
   }
 
+  const tokenList: {[index: string]: string} = {
+    'uni_lp': '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8',
+    'yffi_grap_univ': '0xCee1d3c3A02267e37E6B373060F79d5d7b9e1669',
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, []);
@@ -66,31 +71,24 @@ const Farm: React.FC = () => {
     )
   }
 
-  const YamNotify = (token: String)=> {
-    if (token !== "yam") return ""
+  const Notify = (token: string)=> {
+    if (Object.keys(tokenList).includes(token)) return ""
     return (
-      <YamNotifyView>
-        <p> Farm is good, but don't forget migration your YAM before Migration Deadline. </p>
-        <p>
-          <a href='https://yam.finance/'>https://yam.finance/</a>
-        </p>
-        {countdownBlock()}
-      </YamNotifyView>
+      <NotifyView>
+        <p>The all basic farms are end of distribution</p>
+        <p>Harvest & Withdraw your token with those pool</p>
+      </NotifyView>
     )
   }
 
   const lpPoolTips = (token: string)=> {
-    let tokenList: {[index: string]: string} = {
-      'uni_lp': '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8',
-      'yffi_grap_univ': '0xCee1d3c3A02267e37E6B373060F79d5d7b9e1669',
-    }
     if (!Object.keys(tokenList).includes(token)) return ""
     return (
-      <YamNotifyView>
+      <NotifyView>
         <p>
           If you want Add liquidity to Uniswap, please use this <a href={`https://app.uniswap.org/#/add/0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB/${tokenList[token]}`}>Uniswap link</a>.
         </p>
-      </YamNotifyView>
+      </NotifyView>
     )
   }
 
@@ -102,7 +100,7 @@ const Farm: React.FC = () => {
         subtitle={`Deposit ${depositTokenName} and earn ${earnTokenName}`}
         title={name}
       />
-      {YamNotify(depositToken)}
+      {Notify(depositToken)}
       <StyledFarm>
         {
           lpPoolTips(depositToken)
@@ -168,9 +166,10 @@ const CountdownView =  styled.div`
   margin-bottom: 20px;
 `
 
-const YamNotifyView =  styled.div`
+const NotifyView =  styled.div`
+  font-size: 30px;
   text-align: center;
-  color: #555;
+  color: rgb(209, 0, 75);
 `
 
 
