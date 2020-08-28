@@ -20,7 +20,6 @@ export interface GrapContext {
 }
 
 const ADDRESS = '0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB';
-let currentPrice = 0;
 let grap: any;
 let tokenList: {[index: string]: {[index: string]: string}} = {
   'uni_lp': {
@@ -39,30 +38,9 @@ const FarmCards: React.FC = () => {
 
   const [farms] = useFarms()
   grap = useGrap()
-  const [{
-    circSupply,
-    curPrice,
-    nextRebase,
-    targetPrice,
-    totalSupply,
-  }, setStats] = useState<OverviewData>({})
-
-  const fetchStats = useCallback(async () => {
-    const statsData = await getStats(grap)
-    setStats(statsData)
-    currentPrice = parseFloat(getDisplayBalance(new BigNumber(statsData.curPrice)))
-  }, [setStats])
 
   useEffect(() => {
-    if (grap) {
-      fetchStats()
-    }
-  }, [fetchStats])
-
-
-  const priceBlock = () => {
-    return <TitleView>Current price: ${currentPrice}</TitleView>
-  }
+  }, [])
 
 
   if (!loaded) {
@@ -71,11 +49,10 @@ const FarmCards: React.FC = () => {
 
   return (
     <div>
-      {currentPrice ? priceBlock() : ''}
       <StyledCards>
         {farms.length ? farms.filter((farm)=>Object.keys(tokenList).includes(farm.depositToken)).map((farm, i) => (
           <React.Fragment key={i}>
-            <StaticsCard farm={farm} price={currentPrice}/>
+            <StaticsCard farm={farm} />
           </React.Fragment>
         )) : (
             <StyledLoadingWrapper>
@@ -89,15 +66,15 @@ const FarmCards: React.FC = () => {
 
 interface StaticsCardProps {
   farm: Farm,
-  price: number,
 }
 let loaded = false;
 
-const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
+const StaticsCard: React.FC<StaticsCardProps> = ({ farm }) => {
   const [data, setData] = useState(null)
 
-
   const getData = useCallback(async () => {
+    const price = (await lookUpPrices(["grap-finance"]))['grap-finance'].usd;
+    console.log(price)
     const selfAddress = grap.web3.currentProvider.selectedAddress;
     const token = farm.depositToken;
     let ah:any = {'weth': 'eth_pool', 'uni_lp': 'ycrvUNIV_pool', 'yffi_grap_univ': 'yffi_grap_univ_pool'};
@@ -166,7 +143,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm, price }) => {
       weeklyROI
     })
 
-  }, [farm.depositToken, price]);
+  }, [farm.depositToken]);
 
 
   useEffect(() => {
