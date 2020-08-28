@@ -140,8 +140,8 @@ export const getCirculatingSupply = async (grap) => {
 export const getRebaseStatus = async (grap) => {
   try {
     let now = await grap.web3.eth.getBlock('latest').then(res => res.timestamp);
-    let lastRebaseTimestampSec = await grap.contracts.rebaser.methods.lastRebaseTimestampSec().call();
-    return now >= lastRebaseTimestampSec + 60 * 60 * 24 * 1000;
+    let lastRebaseTimestampSec = Number(await grap.contracts.rebaser.methods.lastRebaseTimestampSec().call());
+    return now >= lastRebaseTimestampSec + 60 * 60 * 24 && (now % 86400) <= 60 * 60;
   } catch (e) {
     console.log(e)
   }
