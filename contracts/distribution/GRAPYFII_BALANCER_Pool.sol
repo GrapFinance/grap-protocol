@@ -1,7 +1,3 @@
-/**
- *Submitted for verification at Etherscan.io on 2020-08-23
-*/
-
 pragma solidity ^0.5.0;
 
 
@@ -595,7 +591,7 @@ contract LPTokenWrapper {
     }
 }
 
-contract GRAPYFFI_UNIV_Pool is LPTokenWrapper, IRewardDistributionRecipient {
+contract GRAPYFII_BALANCER_Pool is LPTokenWrapper, IRewardDistributionRecipient {
     IERC20 public grap = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
     uint256 public constant DURATION = 3024000; // 5 weeks
 
