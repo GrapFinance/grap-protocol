@@ -25,6 +25,7 @@ import LENDPoolJson from '../clean_build/contracts/GRAPLENDPool.json';
 import COMPPoolJson from '../clean_build/contracts/GRAPCOMPPool.json';
 import CRVPoolJson from '../clean_build/contracts/GRAPCRVPool.json';
 import LINKPoolJson from '../clean_build/contracts/GRAPLINKPool.json';
+import BANDPoolJson from '../clean_build/contracts/GRAPBANDPool.json';
 import SNXPoolJson from '../clean_build/contracts/GRAPSNXPool.json';
 
 // uniswap pool
@@ -62,6 +63,7 @@ export class Contracts {
     this.crv_pool = new this.web3.eth.Contract(CRVPoolJson.abi);
     this.comp_pool = new this.web3.eth.Contract(COMPPoolJson.abi);
     this.link_pool = new this.web3.eth.Contract(LINKPoolJson.abi);
+    this.band_pool = new this.web3.eth.Contract(BANDPoolJson.abi);
     this.lend_pool = new this.web3.eth.Contract(LENDPoolJson.abi);
     this.mkr_pool = new this.web3.eth.Contract(MKRPoolJson.abi);
     this.snx_pool = new this.web3.eth.Contract(SNXPoolJson.abi);
@@ -75,6 +77,7 @@ export class Contracts {
     this.comp = new this.web3.eth.Contract(ERC20Json.abi);
     this.yam = new this.web3.eth.Contract(ERC20Json.abi);
     this.link = new this.web3.eth.Contract(ERC20Json.abi);
+    this.band = new this.web3.eth.Contract(ERC20Json.abi);
     this.lend = new this.web3.eth.Contract(ERC20Json.abi);
     this.mkr = new this.web3.eth.Contract(ERC20Json.abi);
     this.yfii = new this.web3.eth.Contract(ERC20Json.abi);
@@ -125,6 +128,7 @@ export class Contracts {
       { contract: this.snx_pool, json: SNXPoolJson },
       { contract: this.lend_pool, json: LENDPoolJson },
       { contract: this.link_pool, json: LINKPoolJson },
+      { contract: this.band_pool, json: BANDPoolJson },
       { contract: this.comp_pool, json: COMPPoolJson },
       { contract: this.ycrvUNIV_pool, json: IncJson },
     ]
@@ -143,6 +147,7 @@ export class Contracts {
     this.weth.options.address = addressMap["WETH"];
     this.comp.options.address = addressMap["COMP"];
     this.link.options.address = addressMap["LINK"];
+    this.band.options.address = addressMap["BAND"];
     this.lend.options.address = addressMap["LEND"];
     this.mkr.options.address = addressMap["MKR"];
     this.snx.options.address = addressMap["SNX"];
@@ -164,6 +169,7 @@ export class Contracts {
       {"tokenAddr": this.crv.options.address, "poolAddr": this.crv_pool.options.address},
       {"tokenAddr": this.comp.options.address, "poolAddr": this.comp_pool.options.address},
       {"tokenAddr": this.link.options.address, "poolAddr": this.link_pool.options.address},
+      {"tokenAddr": this.band.options.address, "poolAddr": this.band_pool.options.address},
       {"tokenAddr": this.lend.options.address, "poolAddr": this.lend_pool.options.address},
       {"tokenAddr": this.mkr.options.address, "poolAddr": this.mkr_pool.options.address},
       {"tokenAddr": this.snx.options.address, "poolAddr": this.snx_pool.options.address},
