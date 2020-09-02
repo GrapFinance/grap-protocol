@@ -593,7 +593,7 @@ contract LPTokenWrapper {
 
 contract GRAPETH_UNIV_Pool is LPTokenWrapper, IRewardDistributionRecipient {
     IERC20 public grap = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
-    uint256 public constant DURATION = 625000; // ~7 1/4 days
+    uint256 public constant DURATION = 3024000; // ~5 weeks
 
     uint256 public starttime = 1599436800; // 2020-09-07 00:00:00 (UTC +00:00)
     uint256 public periodFinish = 0;
