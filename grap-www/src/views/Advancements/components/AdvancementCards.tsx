@@ -55,19 +55,18 @@ const AdvancementCard: React.FC<AdvancementCardProps> = ({ farm }) => {
   const [startTime, setStartTime] = useState(0)
 
   const getStartTime = useCallback(async () => {
-    // const startTime = await getPoolStartTime(farm.contract)
-    // work-around
-    const startTime = 1598516811
+    const startTime = await getPoolStartTime(farm.contract)
     setStartTime(startTime)
-  }, [setStartTime])
+  }, [farm.contract])
 
   const renderer = (countdownProps: CountdownRenderProps) => {
-    const { hours, minutes, seconds } = countdownProps
+    const { days, hours, minutes, seconds } = countdownProps
     const paddedSeconds = seconds < 10 ? `0${seconds}` : seconds
     const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes
     const paddedHours = hours < 10 ? `0${hours}` : hours
+    const paddedDays = hours < 10 ? `0${days}` : days
     return (
-      <span style={{ width: '100%' }}>{paddedHours}:{paddedMinutes}:{paddedSeconds}</span>
+    <span style={{ width: '100%' }}>{paddedDays}:{paddedHours}:{paddedMinutes}:{paddedSeconds}</span>
     )
   }
 

@@ -10,7 +10,16 @@ import Context from './context'
 import { Farm } from './types'
 
 const NAME_FOR_POOL: { [key: string]: string } = {
+  // new pools
   yffi_grap_univ_pool: 'Oh. YFFI',
+  grap_yfii_bal_pool: 'YFII is friend.',
+  eth_grap_univ_pool: 'We all love ETH.',
+  dogefi_grap_univ_pool: 'DOGEFI is lovely.',
+
+  // price uniswap
+  ycrvUNIV_pool: 'Eternal Lands',
+
+  // old
   eth_pool: 'Weth Homestead',
   yam_pool: 'YAM',
   crv_pool: 'Curvy Fields',
@@ -21,11 +30,17 @@ const NAME_FOR_POOL: { [key: string]: string } = {
   lend_pool: 'Aave Agriculture',
   snx_pool: 'Spartan Grounds',
   mkr_pool: 'Maker Range',
-  ycrvUNIV_pool: 'Eternal Lands',
 }
 
 const ICON_FOR_POOL: { [key: string]: string } = {
+
+  grap_yfii_bal_pool: '✨',
   yffi_grap_univ_pool: '🔥',
+  eth_grap_univ_pool: '😍',
+  dogefi_grap_univ_pool: '🐶',
+
+  ycrvUNIV_pool: '🌈',
+
   yfi_pool: '🐋',
   yfii_pool: '🦈',
   yam_pool: '🍠',
@@ -36,10 +51,9 @@ const ICON_FOR_POOL: { [key: string]: string } = {
   lend_pool: '🏕️',
   snx_pool: '⚔️',
   mkr_pool: '🐮',
-  ycrvUNIV_pool: '🌈'
 }
 
-const isAdvPool: [string] = ['yffi_grap_univ_pool']
+const isAdvPool: string[] = ['yffi_grap_univ_pool','grap_yfii_bal_pool','eth_grap_univ_pool', 'dogefi_grap_univ_pool']
 
 const Farms: React.FC = ({ children }) => {
 

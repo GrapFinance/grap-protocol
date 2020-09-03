@@ -32,6 +32,9 @@ import IncJson from '../clean_build/contracts/GRAPIncentivizer.json';
 
 // advanced pool
 import YFFIPoolJson from '../clean_build/contracts/GRAPYFFIUNIVPool.json';
+import YFIIBALPoolJson from '../clean_build/contracts/GRAPYFIIBALANCERPool.json';
+import ETHUNIVPoolJson from '../clean_build/contracts/GRAPETHUNIVPool.json'
+import DOGEFIUNIVPoolJson from '../clean_build/contracts/GRAPDOGEFIUNIVPool.json'
 
 export class Contracts {
   constructor(
@@ -53,6 +56,9 @@ export class Contracts {
 
     // advanced pool
     this.yffi_grap_univ_pool = new this.web3.eth.Contract(YFFIPoolJson.abi);
+    this.grap_yfii_bal_pool = new this.web3.eth.Contract(YFIIBALPoolJson.abi);
+    this.eth_grap_univ_pool = new this.web3.eth.Contract(ETHUNIVPoolJson.abi);
+    this.dogefi_grap_univ_pool = new this.web3.eth.Contract(DOGEFIUNIVPoolJson.abi);
 
     this.eth_pool = new this.web3.eth.Contract(WETHPoolJson.abi);
     // this.weth_pool = this.eth_pool;
@@ -87,6 +93,9 @@ export class Contracts {
     this.uni_lp = this.ycrvUNIV;
 
     this.yffi_grap_univ = new this.web3.eth.Contract(ERC20Json.abi);
+    this.grap_yfii_bal = new this.web3.eth.Contract(ERC20Json.abi);
+    this.eth_grap_univ = new this.web3.eth.Contract(ERC20Json.abi);
+    this.dogefi_grap_univ = new this.web3.eth.Contract(ERC20Json.abi);
 
     this.rebaser = new this.web3.eth.Contract(GRAPRebaserJson.abi);
     this.reserves = new this.web3.eth.Contract(GRAPReservesJson.abi);
@@ -110,6 +119,10 @@ export class Contracts {
     const contracts = [
       // advanced pool
       { contract: this.yffi_grap_univ_pool, json: YFFIPoolJson },
+      { contract: this.grap_yfii_bal_pool, json: YFIIBALPoolJson },
+      { contract: this.eth_grap_univ_pool, json: ETHUNIVPoolJson },
+      { contract: this.dogefi_grap_univ_pool, json: DOGEFIUNIVPoolJson },
+
       // basic
       { contract: this.grap, json: GRAPJson },
       { contract: this.rebaser, json: GRAPRebaserJson },
@@ -149,13 +162,23 @@ export class Contracts {
     this.ycrv.options.address = addressMap["YCRV"];
     this.yffi.options.address = addressMap["YFFI"];
     this.ycrvUNIV.options.address = addressMap["YCRVUNIV"];
-    this.yffi_grap_univ.options.address = addressMap["YFFIUNIV"];
     this.uni_fact.options.address = addressMap["uniswapFactoryV2"];
     this.uni_router.options.address = addressMap["UNIRouter"];
+
+    // new pool
+    this.yffi_grap_univ.options.address = addressMap["YFFIUNIV"];
+    this.grap_yfii_bal.options.address = addressMap["YFIIBAL"];
+    this.eth_grap_univ.options.address = addressMap["ETHUNIV"];
+    this.dogefi_grap_univ.options.address = addressMap["DOGEFIUNIV"];
+
 
     this.pools = [
       // advanced pool
       {"tokenAddr": this.yffi_grap_univ.options.address, "poolAddr": this.yffi_grap_univ_pool.options.address},
+      {"tokenAddr": this.grap_yfii_bal.options.address, "poolAddr": this.grap_yfii_bal_pool.options.address},
+      {"tokenAddr": this.eth_grap_univ.options.address, "poolAddr": this.eth_grap_univ_pool.options.address},
+      {"tokenAddr": this.dogefi_grap_univ.options.address, "poolAddr": this.dogefi_grap_univ_pool.options.address},
+
       // basic
       {"tokenAddr": this.yam.options.address, "poolAddr": this.yam_pool.options.address},
       {"tokenAddr": this.weth.options.address, "poolAddr": this.eth_pool.options.address},

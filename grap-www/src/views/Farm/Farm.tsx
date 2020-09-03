@@ -5,8 +5,6 @@ import { useParams } from 'react-router-dom'
 import { useWallet } from 'use-wallet'
 import { provider } from 'web3-core'
 
-import Countdown, { CountdownRenderProps} from 'react-countdown'
-
 
 import Button from '../../components/Button'
 import PageHeader from '../../components/PageHeader'
@@ -39,6 +37,9 @@ const Farm: React.FC = () => {
   const tokenList: {[index: string]: string} = {
     'uni_lp': '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8',
     'yffi_grap_univ': '0xCee1d3c3A02267e37E6B373060F79d5d7b9e1669',
+    'grap_yfii_bal': '0x09b8de949282c7f73355b8285f131c447694f95d',
+    'eth_grap_univ': 'ETH',
+    'dogefi_grap_univ': '0x9B9087756eCa997C5D595C840263001c9a26646D',
   }
 
   useEffect(() => {
@@ -61,16 +62,6 @@ const Farm: React.FC = () => {
     return earnToken.toUpperCase()
   }, [earnToken])
 
-  const countdownBlock = () => {
-    const date = Date.parse('Sun Aug 23 2020 00:20:00 GMT+0800')
-    if (Date.now() >= date) return "";
-    return (
-      <CountdownView>
-        <Countdown date={date} />
-      </CountdownView>
-    )
-  }
-
   const Notify = (token: string)=> {
     if (Object.keys(tokenList).includes(token)) return ""
     return (
@@ -83,13 +74,24 @@ const Farm: React.FC = () => {
 
   const lpPoolTips = (token: string)=> {
     if (!Object.keys(tokenList).includes(token)) return ""
-    return (
-      <NotifyView>
-        <p>
-          If you want Add liquidity to Uniswap, please use this <a href={`https://app.uniswap.org/#/add/0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB/${tokenList[token]}`}>Uniswap link</a>.
-        </p>
-      </NotifyView>
-    )
+    else if(token.indexOf('univ') !== -1){
+      return (
+        <NotifyView>
+          <p>
+            If you want Add liquidity to Uniswap, please use this <a href={`https://app.uniswap.org/#/add/0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB/${tokenList[token]}`}>Uniswap link</a>.
+          </p>
+        </NotifyView>
+      )
+    }
+    else if(token.indexOf('bal') !== -1){
+      return (
+        <NotifyView>
+          <p>
+            If you want Add liquidity to Balancer, please use this <a href={`https://pools.balancer.exchange/#/pool/${tokenList[token]}`}>Balancer pool link</a>.
+          </p>
+        </NotifyView>
+      )
+    }
   }
 
 
