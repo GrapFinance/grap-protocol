@@ -53,7 +53,7 @@ const ICON_FOR_POOL: { [key: string]: string } = {
   mkr_pool: '🐮',
 }
 
-const isAdvPool: string[] = ['yffi_grap_univ_pool','grap_yfii_bal_pool','eth_grap_univ_pool', 'dogefi_grap_univ_pool']
+const isActivatePool: string[] = ['ycrvUNIV_pool','grap_yfii_bal_pool','eth_grap_univ_pool', 'dogefi_grap_univ_pool']
 
 const Farms: React.FC = ({ children }) => {
 
@@ -91,13 +91,14 @@ const Farms: React.FC = ({ children }) => {
             earnTokenAddress: grapAddress,
             icon: ICON_FOR_POOL[poolKey],
             id: tokenKey,
-            isAdv: isAdvPool.includes(poolKey)
+            isActivate: isActivatePool.includes(poolKey)
           })
         } catch (e) {
           console.log(e)
         }
       }
     }
+    farmsArr.sort((a,b)=> a.isActivate ? -1 : 1)
     setFarms(farmsArr)
   }, [grap, setFarms])
 

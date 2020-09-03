@@ -262,6 +262,10 @@ export const getProposalStatus = async (grap, id) => {
   return proposalStatus
 }
 
+export const getTotalVotes = async (grap) => {
+  return grap.toBigN(await grap.contracts.grap.methods.initSupply().call()).div(10**6)
+}
+
 export const getQuorumVotes = async (grap) => {
   return new BigNumber(await grap.contracts.gov.methods.quorumVotes().call()).div(10**6)
 }

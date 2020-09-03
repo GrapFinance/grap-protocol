@@ -16,19 +16,18 @@ import useGrap from '../../hooks/useGrap'
 
 import { getDisplayBalance } from '../../utils/formatBalance'
 
-import { getProposal, getQuorumVotes, getProposalStatus, castVote } from '../../grapUtils'
+import { getProposal, getTotalVotes, getQuorumVotes, getProposalStatus, castVote } from '../../grapUtils'
 
 import { Proposal, ProposalStatus } from '../../contexts/Proposals'
 
 import {PROPOSALSTATUSCODE} from '../../grap/lib/constants'
 
 
-const METER_TOTAL = 80000
 
 const ProposalPage: React.FC = () => {
   const { proposalId } = useParams()
   const [proposal, setProposal] =  useState<Proposal>({} as Proposal)
-  const [{forVotes, againstVotes, quorumVotes, totalVotes}, setVotes] = useState({forVotes:0, againstVotes:0, totalVotes:0, quorumVotes:0})
+  const [{totalGrapVotes, forVotes, againstVotes, quorumVotes, totalVotes}, setVotes] = useState({totalGrapVotes:0, forVotes:0, againstVotes:0, totalVotes:0, quorumVotes:0})
   const { account } = useWallet()
   const grap = useGrap()
 
@@ -48,10 +47,12 @@ const ProposalPage: React.FC = () => {
 
   const fetchVotes = useCallback(async () => {
     const proposalStatus:ProposalStatus = await getProposalStatus(grap, proposalId)
+    const totalGrapVote = await getTotalVotes(grap)
     const forVotes = new BigNumber(proposalStatus.forVotes).div(10**6)
     const againstVotes = new BigNumber(proposalStatus.againstVotes).div(10**6)
     const quorumCount = await getQuorumVotes(grap)
     setVotes({
+      totalGrapVotes: Number(getDisplayBalance(totalGrapVote)),
       forVotes: Number(getDisplayBalance(forVotes)),
       againstVotes: Number(getDisplayBalance(againstVotes)),
       totalVotes: Number(getDisplayBalance(forVotes.plus(againstVotes))),
@@ -75,7 +76,7 @@ const ProposalPage: React.FC = () => {
         <StyledTitle>Total votes: {new BigNumber(totalVotes).toFixed(2)}</StyledTitle>
         <Spacer />
         <StyledCheckpoints>
-          <StyledCheckpoint left={4000 / METER_TOTAL * 100}>
+          <StyledCheckpoint left={quorumVotes / totalGrapVotes}>
             <StyledCheckpointText left={-28}>
               <div>Quorum Votes</div>
               <div>{ String(quorumVotes) }</div>
@@ -83,7 +84,7 @@ const ProposalPage: React.FC = () => {
           </StyledCheckpoint>
         </StyledCheckpoints>
         <StyledMeter>
-          <StyledMeterInner width={Math.max(1000, totalVotes) / METER_TOTAL * 100} />
+          <StyledMeterInner width={Math.max(1000, totalVotes) / totalGrapVotes} />
         </StyledMeter>
         <Spacer />
         <StyledDetails>

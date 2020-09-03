@@ -15,7 +15,7 @@ import { Farm } from '../../../contexts/Farms'
 import { getPoolStartTime } from '../../../grapUtils'
 
 const FarmCards: React.FC = () => {
-  const [farms] = useFarms(false)
+  const [farms] = useFarms()
 
   const rows = farms.reduce<Farm[][]>((farmRows, farm) => {
     const newFarmRows = [...farmRows]
@@ -60,17 +60,18 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
   }, [farm, setStartTime])
 
   const renderer = (countdownProps: CountdownRenderProps) => {
-    const { hours, minutes, seconds } = countdownProps
+    const { days, hours, minutes, seconds } = countdownProps
     const paddedSeconds = seconds < 10 ? `0${seconds}` : seconds
     const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes
     const paddedHours = hours < 10 ? `0${hours}` : hours
+    const paddedDays = hours < 10 ? `0${days}` : days
     return (
-      <span style={{ width: '100%' }}>{paddedHours}:{paddedMinutes}:{paddedSeconds}</span>
+    <span style={{ width: '100%' }}>{paddedDays}:{paddedHours}:{paddedMinutes}:{paddedSeconds}</span>
     )
   }
 
   useEffect(() => {
-    if (farm && farm.id === 'uni_lp') {
+    if (farm) {
       getStartTime()
     }
   }, [farm, getStartTime])
@@ -88,8 +89,19 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
             <CardIcon>{farm.icon}</CardIcon>
             <StyledTitle>{farm.name}</StyledTitle>
             <StyledDetails>
-              <StyledDetail>Deposit {farm.depositToken.toUpperCase()}</StyledDetail>
-              <StyledDetail>Earn {farm.earnToken.toUpperCase()}</StyledDetail>
+              {!farm.isActivate 
+                ? 
+                  <div>
+                    <StyledDetail>END</StyledDetail>
+                    <StyledDetail>Withdrawal</StyledDetail>
+                  </div>
+                : 
+                  <div>
+                    <StyledDetail>Deposit {farm.depositToken.toUpperCase()}</StyledDetail>
+                    <StyledDetail>Earn {farm.earnToken.toUpperCase()}</StyledDetail>
+                  </div>
+              }
+
             </StyledDetails>
             <Button
               disabled={!poolActive}
@@ -126,6 +138,7 @@ const StyledCardAccent = styled.div`
   top: -2px; right: -2px; bottom: -2px; left: -2px;
   z-index: -1;
 `
+
 
 const StyledCards = styled.div`
   width: 900px;

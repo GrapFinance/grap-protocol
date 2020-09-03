@@ -27,11 +27,11 @@ let tokenList: {[index: string]: {[index: string]: string}} = {
     token_name: 'ycrv',
     uni_token_name: 'ycrvUNIV'
   },
-  'yffi_grap_univ': {
-    uni_token_addr:'0x79A3919d86e90Eb101C5fBbcaDB06B546667B323',
-    token_name: 'yffi',
-    uni_token_name: 'yffi_grap_univ'
-  },
+  // 'yffi_grap_univ': {
+  //   uni_token_addr:'0x79A3919d86e90Eb101C5fBbcaDB06B546667B323',
+  //   token_name: 'yffi',
+  //   uni_token_name: 'yffi_grap_univ'
+  // },
 }
 
 const FarmCards: React.FC = () => {
