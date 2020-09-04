@@ -27,11 +27,11 @@ let tokenList: {[index: string]: {[index: string]: string}} = {
     token_name: 'ycrv',
     uni_token_name: 'ycrvUNIV'
   },
-  // 'yffi_grap_univ': {
-  //   uni_token_addr:'0x79A3919d86e90Eb101C5fBbcaDB06B546667B323',
-  //   token_name: 'yffi',
-  //   uni_token_name: 'yffi_grap_univ'
-  // },
+  'grap_yfii_bal': {
+    bal_token_addr:'0x09B8De949282C7F73355b8285f131C447694f95D',
+    token_name: 'yfii',
+    bal_token_name: 'grap_yfii_bal'
+  },
 }
 
 const FarmCards: React.FC = () => {
@@ -74,7 +74,6 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm }) => {
 
   const getData = useCallback(async () => {
     const price = (await lookUpPrices(["grap-finance"]))['grap-finance'].usd;
-    console.log(price)
     const selfAddress = grap.web3.currentProvider.selectedAddress;
     const token = farm.depositToken;
     let ah:any = {'weth': 'eth_pool', 'uni_lp': 'ycrvUNIV_pool', 'yffi_grap_univ': 'yffi_grap_univ_pool'};
@@ -83,7 +82,6 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm }) => {
     const Token = grap.contracts[token];
     const GRAP_TOKEN = grap.contracts.grap;
     const rewardTokenTicker = "GRAP"
-    const stakingTokenTicker = token
     const grapScale = await GRAP_TOKEN.methods.grapsScalingFactor().call() / 1e18;
     const rewardPoolAddr = STAKING_POOL._address
     const amount = await STAKING_POOL.methods.balanceOf(selfAddress).call() / 1e18;
@@ -96,32 +94,38 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm }) => {
     const rewardPerToken = weekly_reward / totalStakedAmount;
 
     let hash: any = {
-      yffi_grap_univ: ["yffi-finance"],
-      yfi: ["yearn-finance"],
-      yfii: ["yfii-finance"],
-      crv: ["curve-dao-token"],
-      weth: ["ethereum"],
-      link: ["chainlink"],
-      mkr: ["maker"],
-      comp: ["compound-governance-token"],
-      snx: ["havven"],
-      lend: ["ethlend"],
+      grap_yfii_bal: ["yfii-finance"],
       uni_lp: ["curve-fi-ydai-yusdc-yusdt-ytusd"],
     }
+    let stakingTokenTicker = token
+    let targetTokenPrice = 0;
     let stakingTokenPrice = 1;
     if (Object.keys(hash).includes(token))  {
       let d = await lookUpPrices(hash[token]);
       let data:any = Object.values(d[0] || d)[0];
       data = data.usd || data;
-      stakingTokenPrice = parseFloat(data.toString());
+      targetTokenPrice = parseFloat(data.toString());
       // if(token == 'yfi') debugger;
       if(Object.keys(tokenList).includes(token)){
-        const UNI_TOKEN_ADDR = tokenList[token].uni_token_addr;
-        const totalyCRVInUniswapPair = await grap.contracts[tokenList[token].token_name].methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
-        const totalGRAPInUniswapPair = await GRAP_TOKEN.methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
-        let yCRVPrice = stakingTokenPrice;
-        const totalSupplyOfStakingToken = await grap.contracts[tokenList[token].uni_token_name].methods.totalSupply().call() / 1e18;
-        stakingTokenPrice = (yCRVPrice * totalyCRVInUniswapPair + price * totalGRAPInUniswapPair) / totalSupplyOfStakingToken;
+        if(token.indexOf('uni') !== -1){
+          const UNI_TOKEN_ADDR = tokenList[token].uni_token_addr;
+          stakingTokenTicker = tokenList[token].token_name;
+          const totalyTokenInBalancerPair = await grap.contracts[tokenList[token].token_name].methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
+          const totalGRAPInUniswapPair = await GRAP_TOKEN.methods.balanceOf(UNI_TOKEN_ADDR).call() / 1e18;
+          const totalSupplyOfStakingToken = await grap.contracts[tokenList[token].uni_token_name].methods.totalSupply().call() / 1e18;
+          stakingTokenPrice = (stakingTokenPrice * totalyTokenInBalancerPair + price * totalGRAPInUniswapPair) / totalSupplyOfStakingToken;
+        } else if (token.indexOf('bal') !== -1){
+          const BAL_TOKEN_ADDR = tokenList[token].bal_token_addr;
+          stakingTokenTicker = tokenList[token].token_name;
+          const totalyTokenInBalancerPair = await grap.contracts[tokenList[token].token_name].methods.balanceOf(BAL_TOKEN_ADDR).call() / 1e18;
+          const totalGRAPInBalancerPair = await GRAP_TOKEN.methods.balanceOf(BAL_TOKEN_ADDR).call() / 1e18;
+          const totalSupplyOfStakingToken = await grap.contracts[tokenList[token].bal_token_name].methods.totalSupply().call() / 1e18;
+
+          const TokenPerBPT = totalyTokenInBalancerPair / totalSupplyOfStakingToken;
+          const GRAPPerBPT = totalGRAPInBalancerPair / totalSupplyOfStakingToken;
+
+          stakingTokenPrice = (targetTokenPrice * TokenPerBPT + price * GRAPPerBPT);
+        }
       }
     }
     let weeklyEstimate = rewardPerToken * amount;
@@ -130,6 +134,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm }) => {
 
     setData({
       token,
+      targetTokenPrice,
       weekly_reward,
       amount,
       totalSupply,
@@ -153,20 +158,21 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm }) => {
 
   const DataDetail = (data: any) => {
 
-    const {totalSupply, totalStakedAmount, weekly_reward, amount, earned, weeklyEstimate, rewardTokenTicker, stakingTokenTicker, stakingTokenPrice, price, weeklyROI} = data
+    const {token, targetTokenPrice, totalSupply, totalStakedAmount, weekly_reward, amount, earned, weeklyEstimate, rewardTokenTicker, stakingTokenTicker, stakingTokenPrice, price, weeklyROI} = data
     // debugger
     return (
       <div>
         <StyledPre>
         ========== PRICES ==========<br/>
-    1 {rewardTokenTicker}   = {price}$<br/>
-    1 {stakingTokenTicker}   = {stakingTokenPrice}$<br/>
+    1 {rewardTokenTicker}    = {price}$<br/>
+    1 {stakingTokenTicker}    = {targetTokenPrice}$<br/>
+    1 {token}    = {stakingTokenPrice}$<br/>
     <br/>
     ========== STAKING =========<br/>
-    There are total   : {totalSupply} {stakingTokenTicker}.<br/>
-    There are total   : {totalStakedAmount} {stakingTokenTicker} staked in {rewardTokenTicker}'s {stakingTokenTicker} staking pool.<br/>
+    There are total   : {totalSupply} {token}.<br/>
+    There are total   : {totalStakedAmount} {token} staked in {rewardTokenTicker}'s {token} staking pool.<br/>
                       = <span className='total'>{toDollar(totalStakedAmount * stakingTokenPrice)}</span><br/>
-    You are staking   : {amount} {stakingTokenTicker} ({toFixed(amount * 100 / totalStakedAmount, 3)}% of the pool)<br/>
+    You are staking   : {amount} {token} ({toFixed(amount * 100 / totalStakedAmount, 3)}% of the pool)<br/>
                       = {toDollar(amount * stakingTokenPrice)}<br/>
                       <br/>
     ======== {rewardTokenTicker} REWARDS ========<br/>
