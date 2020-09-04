@@ -33,7 +33,9 @@ const FarmCards: React.FC = () => {
         <StyledRow key={i}>
           {farmRow.map((farm, j) => (
             <React.Fragment key={j}>
-              <FarmCard farm={farm} />
+              <div style={farm.isActivate ? {} : {opacity:0.5}}>
+                <FarmCard farm={farm}/>
+              </div>
               {(j === 0 || j === 1) && <StyledSpacer />}
             </React.Fragment>
           ))}

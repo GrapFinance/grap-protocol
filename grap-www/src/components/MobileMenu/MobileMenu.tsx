@@ -57,7 +57,7 @@ const StyledMobileMenu = styled.div`
   justify-content: center;
   position: absolute;
   top: 0; left: 100%; bottom: 0;
-  width: calc(100% - 48px);
+  width: 50%;
 `
 
 const StyledLink = styled(NavLink)`
