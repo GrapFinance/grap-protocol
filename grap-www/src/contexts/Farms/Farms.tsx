@@ -9,6 +9,8 @@ import { getPoolContracts } from '../../grapUtils'
 import Context from './context'
 import { Farm } from './types'
 
+import dogefi from '../../assets/img/dogefi.png'
+
 const NAME_FOR_POOL: { [key: string]: string } = {
   // new pools
   yffi_grap_univ_pool: 'Oh. YFFI',
@@ -32,12 +34,12 @@ const NAME_FOR_POOL: { [key: string]: string } = {
   mkr_pool: 'Maker Range',
 }
 
-const ICON_FOR_POOL: { [key: string]: string } = {
+const ICON_FOR_POOL: { [key: string]: React.ReactNode } = {
 
   grap_yfii_bal_pool: '✨',
   yffi_grap_univ_pool: '🔥',
   eth_grap_univ_pool: '😍',
-  dogefi_grap_univ_pool: '🐶',
+  dogefi_grap_univ_pool: <img src={dogefi} height="96" />,
 
   ycrvUNIV_pool: '🌈',
 
