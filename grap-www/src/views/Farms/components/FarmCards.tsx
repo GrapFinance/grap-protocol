@@ -57,9 +57,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
   const [startTime, setStartTime] = useState(0)
 
   const getStartTime = useCallback(async () => {
-    const startTime = await getPoolStartTime(farm.contract)
+    // const startTime = await getPoolStartTime(farm.contract)
+    const startTime = 1599609600;
     setStartTime(startTime)
-  }, [farm, setStartTime])
+  }, [setStartTime])
 
   const renderer = (countdownProps: CountdownRenderProps) => {
     const { days, hours, minutes, seconds } = countdownProps
