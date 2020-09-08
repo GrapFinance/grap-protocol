@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/17.gif";
 export default {
+  id: 17,
   name: "Noisy boat 1907",
   points: 50,
   external_url: "https://grap.finance/#/wines/17",
@@ -13,11 +14,11 @@ export default {
     },
     {
       trait_type: "Artist",
-      value: "Jill",
+      value: "Reva",
     },
     {
       trait_type: "Artist ETH Address",
-      value: "0x38a28592192572c67f7F4eB9925f6356b30CEF7b",
+      value: "0xAbc9B3AF7ba302c60049Dc826fb2532b37504196",
     },
     {
       display_type: "date",

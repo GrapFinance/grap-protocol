@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/16.png";
 export default {
+  id: 16,
   name: "Rose Winery 1929",
   points: 50,
   external_url: "https://grap.finance/#/wines/16",

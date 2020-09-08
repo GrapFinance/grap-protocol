@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/29.png";
 export default {
+  id: 29,
   name: "Long Winter, 1966",
   points: 25,
   external_url: "https://grap.finance/#/wines/29",
