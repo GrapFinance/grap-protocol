@@ -1,10 +1,10 @@
 import wine from "../assets/wines/36.png";
 export default {
-  name: "",
+  name: "Anteater, 1977",
   points: 25,
   external_url: "https://grap.finance/#/wines/36",
   image: wine,
-  description: "",
+  description: "A genuine anteater.",
   attributes: [
     {
       trait_type: "Rarity",

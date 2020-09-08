@@ -1,10 +1,10 @@
 import wine from "../assets/wines/34.png";
 export default {
-  name: "",
+  name: "The Wheel of Fortune, 2010",
   points: 25,
   external_url: "https://grap.finance/#/wines/34",
   image: wine,
-  description: "",
+  description: "The wheel of fortune is spinning, don't leave at this time.",
   attributes: [
     {
       trait_type: "Rarity",

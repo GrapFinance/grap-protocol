@@ -1,10 +1,11 @@
 import wine from "../assets/wines/45.png";
 export default {
-  name: "",
+  name: "The Hermit, 2009",
   points: 25,
   external_url: "https://grap.finance/#/wines/45",
   image: wine,
-  description: "",
+  description:
+    "He has chosen this path of self-discovery and, as a result, has reached a heightened state of awareness",
   attributes: [
     {
       trait_type: "Rarity",

@@ -1,10 +1,10 @@
 import wine from "../assets/wines/49.png";
 export default {
-  name: "",
+  name: "il vino di Pisa, 1944",
   points: 25,
   external_url: "https://grap.finance/#/wines/49",
   image: wine,
-  description: "",
+  description: "Just like the Leaning Tower of Pisa, but it is drinkable.",
   attributes: [
     {
       trait_type: "Rarity",

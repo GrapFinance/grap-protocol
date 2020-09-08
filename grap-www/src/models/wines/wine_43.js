@@ -1,10 +1,11 @@
 import wine from "../assets/wines/43.png";
 export default {
-  name: "",
+  name: "The Hierophant, 2005",
   points: 25,
   external_url: "https://grap.finance/#/wines/43",
   image: wine,
-  description: "",
+  description:
+    "He wears a triple crown, and the keys to Heaven are at his feet",
   attributes: [
     {
       trait_type: "Rarity",

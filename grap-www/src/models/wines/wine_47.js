@@ -1,10 +1,10 @@
 import wine from "../assets/wines/47.png";
 export default {
-  name: "",
+  name: "Money Grow On Trees, 2014",
   points: 25,
   external_url: "https://grap.finance/#/wines/47",
   image: wine,
-  description: "",
+  description: "Yes, money does grow on trees.",
   attributes: [
     {
       trait_type: "Rarity",

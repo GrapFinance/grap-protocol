@@ -4,7 +4,7 @@ export default {
   points: 50,
   external_url: "https://grap.finance/#/wines/21",
   image: wine,
-  description: "",
+  description: "This Gray Old Ink i used for years.",
   attributes: [
     {
       trait_type: "Rarity",

@@ -1,10 +1,11 @@
 import wine from "../assets/wines/42.png";
 export default {
-  name: "",
+  name: "The High Priestess, 2002",
   points: 25,
   external_url: "https://grap.finance/#/wines/42",
   image: wine,
-  description: "",
+  description:
+    "Pay attention to your dreams and the signs and symbols the universe is sending you when this Major Arcana trump card appears in your tarot reading.",
   attributes: [
     {
       trait_type: "Rarity",

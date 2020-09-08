@@ -1,10 +1,11 @@
 import wine from "../assets/wines/31.png";
 export default {
-  name: "",
+  name: "Blood Castle 2018",
   points: 25,
   external_url: "https://grap.finance/#/wines/31",
   image: wine,
-  description: "",
+  description:
+    "Please do not enter the blood castle without wearing an invisible cloak.",
   attributes: [
     {
       trait_type: "Rarity",

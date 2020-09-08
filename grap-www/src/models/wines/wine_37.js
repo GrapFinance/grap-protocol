@@ -1,10 +1,11 @@
 import wine from "../assets/wines/37.png";
 export default {
-  name: "",
+  name: "Colorful Iceberg, 1979",
   points: 25,
   external_url: "https://grap.finance/#/wines/37",
   image: wine,
-  description: "",
+  description:
+    "Please pay attention to the colorful iceberg when sailing, and don't hit it.",
   attributes: [
     {
       trait_type: "Rarity",

@@ -1,14 +1,14 @@
 import wine from "../assets/wines/50.png";
 export default {
-  name: "",
+  name: "Vineyard Love, 2006",
   points: 25,
   external_url: "https://grap.finance/#/wines/50",
   image: wine,
-  description: "",
+  description: "Fall in love in the vineyard.",
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",

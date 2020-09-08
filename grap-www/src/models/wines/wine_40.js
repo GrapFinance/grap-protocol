@@ -1,10 +1,11 @@
 import wine from "../assets/wines/40.png";
 export default {
-  name: "",
+  name: "The Emperor, 2004",
   points: 25,
   external_url: "https://grap.finance/#/wines/40",
   image: wine,
-  description: "",
+  description:
+    "You are on top of things and everything in under your control. It is your hard work, discipline and self control that have bought you this far",
   attributes: [
     {
       trait_type: "Rarity",

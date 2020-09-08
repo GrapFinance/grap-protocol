@@ -1,10 +1,11 @@
 import wine from "../assets/wines/44.png";
 export default {
-  name: "",
+  name: "The Strength, 2008",
   points: 25,
   external_url: "https://grap.finance/#/wines/44",
   image: wine,
-  description: "",
+  description:
+    "Your resilience will greatly aid you, and your fearlessness means that you should have no issues speaking your mind.",
   attributes: [
     {
       trait_type: "Rarity",

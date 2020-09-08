@@ -1,10 +1,10 @@
 import wine from "../assets/wines/48.png";
 export default {
-  name: "",
+  name: "White Space, 1926",
   points: 25,
   external_url: "https://grap.finance/#/wines/48",
   image: wine,
-  description: "",
+  description: "   (         )   ",
   attributes: [
     {
       trait_type: "Rarity",

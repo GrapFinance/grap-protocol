@@ -1,10 +1,10 @@
 import wine from "../assets/wines/30.png";
 export default {
-  name: "",
+  name: "Shine Key 2002",
   points: 25,
   external_url: "https://grap.finance/#/wines/30",
   image: wine,
-  description: "",
+  description: "Shining so bright like the star that you are.",
   attributes: [
     {
       trait_type: "Rarity",

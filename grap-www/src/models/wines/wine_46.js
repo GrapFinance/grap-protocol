@@ -1,10 +1,11 @@
 import wine from "../assets/wines/46.png";
 export default {
-  name: "",
+  name: "The Justice, 2011",
   points: 25,
   external_url: "https://grap.finance/#/wines/46",
   image: wine,
-  description: "",
+  description:
+    "If you have been wronged, this card's appearance may bring you relief. On the other hand, if your actions caused pain to others, this card serves as a warning.",
   attributes: [
     {
       trait_type: "Rarity",

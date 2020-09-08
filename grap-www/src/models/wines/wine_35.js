@@ -1,10 +1,11 @@
 import wine from "../assets/wines/35.png";
 export default {
-  name: "",
+  name: "Thousand Gold Rain 2009",
   points: 25,
   external_url: "https://grap.finance/#/wines/35",
   image: wine,
-  description: "",
+  description:
+    "Three thousand golden rain fell from the sky, take it away if you have the gut.",
   attributes: [
     {
       trait_type: "Rarity",
