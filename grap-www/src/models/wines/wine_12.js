@@ -1,14 +1,14 @@
-import wine from "../assets/wines/12.png";
+import wine from "../../assets/wines/12.png";
 export default {
-  name: "",
+  name: "Gree Hat, farewell Stag Whisky, 2016",
   points: 50,
   external_url: "https://grap.finance/#/wines/12",
   image: wine,
-  description: "",
+  description: "Sound like a whisky, but i'm a wine.",
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
@@ -25,7 +25,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "128",
     },
   ],
 };

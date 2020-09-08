@@ -1,4 +1,4 @@
-import wine from "../assets/wines/45.png";
+import wine from "../../assets/wines/45.png";
 export default {
   name: "The Hermit, 2009",
   points: 25,
@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",

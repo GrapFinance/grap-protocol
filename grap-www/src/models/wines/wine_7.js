@@ -1,5 +1,6 @@
-import wine from "../assets/wines/7.png";
+import wine from "../../assets/wines/7.png";
 export default {
+  id: "7",
   name: "Twin Palms Vineyard 2014",
   points: 50,
   external_url: "https://grap.finance/#/wines/7",
@@ -8,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
@@ -25,7 +26,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "128",
     },
   ],
 };

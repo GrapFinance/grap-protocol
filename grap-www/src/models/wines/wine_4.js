@@ -1,7 +1,8 @@
-import wine from "../assets/wines/4.png";
+import wine from "../../assets/wines/4.png";
 export default {
+  id: "4",
   name: "Joker 2009",
-  points: 100,
+  points: 200,
   external_url: "https://grap.finance/#/wines/4",
   image: wine,
   description:
@@ -9,15 +10,15 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Epic",
+      value: "Legendary",
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "Ying",
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0xab4dE2B8E8EDb09bA33b4A10E84863115ef12f6A",
     },
     {
       display_type: "date",

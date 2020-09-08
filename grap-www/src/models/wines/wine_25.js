@@ -1,4 +1,4 @@
-import wine from "../assets/wines/25.png";
+import wine from "../../assets/wines/25.png";
 export default {
   name: "To Da Moon 2020",
   points: 50,
@@ -8,15 +8,15 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Epic",
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "Che",
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0x17301dbE98bEf7001D68d4E8823347eFAe377543",
     },
     {
       display_type: "date",
@@ -25,7 +25,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "128",
     },
   ],
 };

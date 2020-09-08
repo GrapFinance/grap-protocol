@@ -1,4 +1,4 @@
-import wine from "../assets/wines/16.png";
+import wine from "../../assets/wines/16.png";
 export default {
   name: "Rose Winery 1929",
   points: 60,
@@ -9,11 +9,11 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "Jill",
     },
     {
       trait_type: "Artist ETH Address",
@@ -26,7 +26,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "128",
     },
   ],
 };

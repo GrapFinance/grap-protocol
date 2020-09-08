@@ -1,4 +1,4 @@
-import wine from "../assets/wines/14.png";
+import wine from "../../assets/wines/14.png";
 export default {
   name: "Monsieur Hulot 2016",
   points: 50,
@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
@@ -27,7 +27,7 @@ export default {
     {
       trait_type: "Max Supply",
 
-      value: "64",
+      value: "128",
     },
   ],
 };

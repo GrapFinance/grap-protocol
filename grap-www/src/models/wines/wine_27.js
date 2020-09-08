@@ -1,22 +1,22 @@
-import wine from "../assets/wines/27.png";
+import wine from "../../assets/wines/27.png";
 export default {
   name: "Missing Opportunity, 1999",
-  points: 50,
+  points: 25,
   external_url: "https://grap.finance/#/wines/27",
   image: wine,
   description: "Don't keep going up! I haven't bought it yet!",
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "chachawai",
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0xb5DD3A3d56d7e2717df550998EE3d221AB22A462",
     },
     {
       display_type: "date",
@@ -25,7 +25,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "256",
     },
   ],
 };

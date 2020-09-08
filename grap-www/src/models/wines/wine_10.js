@@ -1,4 +1,4 @@
-import wine from "../assets/wines/10.png";
+import wine from "../../assets/wines/10.png";
 export default {
   name: "Brick carrier, The Poor 2016",
   points: 50,
@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
@@ -26,7 +26,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "128",
     },
   ],
 };

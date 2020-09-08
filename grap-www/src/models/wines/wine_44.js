@@ -1,4 +1,4 @@
-import wine from "../assets/wines/44.png";
+import wine from "../../assets/wines/44.png";
 export default {
   name: "The Strength, 2008",
   points: 25,
@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",

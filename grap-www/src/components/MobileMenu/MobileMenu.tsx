@@ -1,43 +1,80 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import React from "react";
+import styled, {keyframes} from "styled-components";
 
-import { NavLink } from 'react-router-dom'
+import {NavLink} from "react-router-dom";
 
 interface MobileMenuProps {
-  onDismiss: () => void,
-  visible?: boolean
+  onDismiss: () => void;
+  visible?: boolean;
 }
 
-const MobileMenu: React.FC<MobileMenuProps> = ({ onDismiss, visible }) => {
+const MobileMenu: React.FC<MobileMenuProps> = ({onDismiss, visible}) => {
   if (visible) {
     return (
       <StyledMobileMenuWrapper>
         <StyledBackdrop onClick={onDismiss} />
         <StyledMobileMenu>
-          <StyledLink exact activeClassName="active" to="/" onClick={onDismiss}>Home</StyledLink>
-          <StyledLink exact activeClassName="active" to="/farms" onClick={onDismiss}>Farms</StyledLink>
-          <StyledLink exact activeClassName="active" to="/vote" onClick={onDismiss}>Vote</StyledLink>
-          <StyledLink exact activeClassName="active" to="/stats" onClick={onDismiss}>Stats</StyledLink>
+          <StyledLink exact activeClassName="active" to="/" onClick={onDismiss}>
+            Home
+          </StyledLink>
+          <StyledLink
+            exact
+            activeClassName="active"
+            to="/farms"
+            onClick={onDismiss}
+          >
+            Farms
+          </StyledLink>
+          <StyledLink
+            exact
+            activeClassName="active"
+            to="/wines"
+            onClick={onDismiss}
+          >
+            Wines
+          </StyledLink>
+          <StyledLink
+            exact
+            activeClassName="active"
+            to="/vote"
+            onClick={onDismiss}
+          >
+            Vote
+          </StyledLink>
+          <StyledLink
+            exact
+            activeClassName="active"
+            to="/stats"
+            onClick={onDismiss}
+          >
+            Stats
+          </StyledLink>
         </StyledMobileMenu>
       </StyledMobileMenuWrapper>
-    )
+    );
   }
-  return null
-}
+  return null;
+};
 
 const StyledBackdrop = styled.div`
-  background-color: ${props => props.theme.color.grey[600]}aa;
+  background-color: ${(props) => props.theme.color.grey[600]}aa;
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-`
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;
 
 const StyledMobileMenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 1000;
-`
+`;
 
 const slideIn = keyframes`
   0% {
@@ -46,35 +83,38 @@ const slideIn = keyframes`
   100% {
     transform: translateX(-100%);
   }
-`
+`;
 
 const StyledMobileMenu = styled.div`
   animation: ${slideIn} 0.3s forwards ease-out;
-  background-color: ${props => props.theme.color.grey[200]};
+  background-color: ${(props) => props.theme.color.grey[200]};
   display: flex;
   flex: 1;
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  top: 0; left: 100%; bottom: 0;
+  top: 0;
+  left: 100%;
+  bottom: 0;
   width: 50%;
-`
+`;
 
 const StyledLink = styled(NavLink)`
   box-sizing: border-box;
-  color: ${props => props.theme.color.grey[400]};
+  color: ${(props) => props.theme.color.grey[400]};
   font-size: 24px;
   font-weight: 700;
-  padding: ${props => props.theme.spacing[3]}px ${props => props.theme.spacing[4]}px;
+  padding: ${(props) => props.theme.spacing[3]}px
+    ${(props) => props.theme.spacing[4]}px;
   text-align: center;
   text-decoration: none;
   width: 100%;
   &:hover {
-    color: ${props => props.theme.color.grey[500]};
+    color: ${(props) => props.theme.color.grey[500]};
   }
   &.active {
-    color: ${props => props.theme.color.primary.main};
+    color: ${(props) => props.theme.color.primary.main};
   }
-`
+`;
 
-export default MobileMenu
+export default MobileMenu;

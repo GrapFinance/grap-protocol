@@ -1,4 +1,4 @@
-import wine from "../assets/wines/31.png";
+import wine from "../../assets/wines/31.png";
 export default {
   name: "Blood Castle 2018",
   points: 25,
@@ -9,11 +9,11 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "Jill",
     },
     {
       trait_type: "Artist ETH Address",

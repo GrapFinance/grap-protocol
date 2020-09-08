@@ -1,7 +1,8 @@
-import wine from "../assets/wines/6.png";
+import wine from "../../assets/wines/6.png";
 export default {
+  id: "6",
   name: "Cosmos 2015",
-  points: 100,
+  points: 200,
   external_url: "https://grap.finance/#/wines/6",
   image: wine,
   description: "Real travel is when you can’t look back.",
@@ -12,11 +13,11 @@ export default {
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "Che",
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0xc594a40FCc5BAa771Ee1F006889Feb608D9b2d1f",
     },
     {
       display_type: "date",

@@ -1,4 +1,4 @@
-import wine from "../assets/wines/38.png";
+import wine from "../../assets/wines/38.png";
 export default {
   name: "No Time to Die, 1994",
   points: 25,
@@ -8,15 +8,15 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "chachawai",
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0xb5DD3A3d56d7e2717df550998EE3d221AB22A462",
     },
     {
       display_type: "date",
@@ -25,7 +25,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "128",
+      value: "256",
     },
   ],
 };

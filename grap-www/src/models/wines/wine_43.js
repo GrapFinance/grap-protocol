@@ -1,15 +1,14 @@
-import wine from "../assets/wines/43.png";
+import wine from "../../assets/wines/43.png";
 export default {
-  name: "The Hierophant, 2005",
+  name: "YFII, 2020",
   points: 25,
   external_url: "https://grap.finance/#/wines/43",
   image: wine,
-  description:
-    "He wears a triple crown, and the keys to Heaven are at his feet",
+  description: "A new cryptocurrency miracle.",
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",

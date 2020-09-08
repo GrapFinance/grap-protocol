@@ -1,4 +1,4 @@
-import wine from "../assets/wines/37.png";
+import wine from "../../assets/wines/37.png";
 export default {
   name: "Colorful Iceberg, 1979",
   points: 25,
@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",

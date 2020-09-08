@@ -1,4 +1,4 @@
-import wine from "../assets/wines/29.png";
+import wine from "../../assets/wines/29.png";
 export default {
   name: "Long Winter, 1966",
   points: 25,
@@ -8,11 +8,11 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "Jill",
     },
     {
       trait_type: "Artist ETH Address",

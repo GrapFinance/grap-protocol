@@ -1,14 +1,14 @@
-import wine from "../assets/wines/28.png";
+import wine from "../../assets/wines/28.png";
 export default {
   name: "Short Spring, 2000",
-  points: 50,
+  points: 25,
   external_url: "https://grap.finance/#/wines/28",
   image: wine,
   description: "That year was a good year for the Short, but not this year",
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
@@ -25,7 +25,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "128",
     },
   ],
 };

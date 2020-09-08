@@ -1,7 +1,7 @@
-import { black, green, grey, red, white } from './colors'
+import {black, green, grey, red, white} from "./colors";
 
 const theme = {
-  borderRadius: 12,
+  borderRadius: 0,
   breakpoints: {
     mobile: 400,
   },
@@ -20,7 +20,7 @@ const theme = {
     white,
     ongoing: green[500],
     successful: green[500],
-    fail: red[500]
+    fail: red[500],
   },
   siteWidth: 1200,
   spacing: {
@@ -32,7 +32,7 @@ const theme = {
     6: 48,
     7: 64,
   },
-  topBarSize: 72
-}
+  topBarSize: 72,
+};
 
-export default theme
+export default theme;

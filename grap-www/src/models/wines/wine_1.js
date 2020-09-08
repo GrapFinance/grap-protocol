@@ -1,6 +1,7 @@
-import wine from "../assets/wines/1.png";
+import wine from "../../assets/wines/1.gif";
 
 export default {
+  id: "1",
   name: "Lafitte, 1982",
   points: 3000,
   external_url: "https://grap.finance/#/wines/1",
@@ -9,7 +10,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Golden Legendary",
     },
     {
       trait_type: "Artist",
@@ -17,7 +18,7 @@ export default {
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0x17301dbE98bEf7001D68d4E8823347eFAe377543",
     },
     {
       display_type: "date",
@@ -26,7 +27,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "1",
+      value: "12",
     },
   ],
 };

@@ -1,4 +1,4 @@
-import wine from "../assets/wines/17.png";
+import wine from "../../assets/wines/17.gif";
 export default {
   name: "Noisy boat 1907",
   points: 50,
@@ -9,11 +9,11 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "Jill",
     },
     {
       trait_type: "Artist ETH Address",
@@ -26,7 +26,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "128",
     },
   ],
 };

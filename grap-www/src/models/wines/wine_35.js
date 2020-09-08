@@ -1,4 +1,4 @@
-import wine from "../assets/wines/35.png";
+import wine from "../../assets/wines/35.png";
 export default {
   name: "Thousand Gold Rain 2009",
   points: 25,
@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",

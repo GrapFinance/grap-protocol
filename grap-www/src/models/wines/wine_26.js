@@ -1,4 +1,4 @@
-import wine from "../assets/wines/26.png";
+import wine from "../../assets/wines/26.png";
 export default {
   name: "Remains of the Day 1993",
   points: 50,
@@ -8,11 +8,11 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "Jill",
     },
     {
       trait_type: "Artist ETH Address",
@@ -25,7 +25,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "128",
     },
   ],
 };

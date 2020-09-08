@@ -1,4 +1,4 @@
-import wine from "../assets/wines/42.png";
+import wine from "../../assets/wines/42.png";
 export default {
   name: "The High Priestess, 2002",
   points: 25,
@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",

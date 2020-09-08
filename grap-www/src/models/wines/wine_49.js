@@ -1,4 +1,4 @@
-import wine from "../assets/wines/49.png";
+import wine from "../../assets/wines/49.png";
 export default {
   name: "il vino di Pisa, 1944",
   points: 25,
@@ -8,7 +8,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",

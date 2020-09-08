@@ -1,4 +1,4 @@
-import wine from "../assets/wines/47.png";
+import wine from "../../assets/wines/47.png";
 export default {
   name: "Money Grow On Trees, 2014",
   points: 25,
@@ -8,7 +8,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",

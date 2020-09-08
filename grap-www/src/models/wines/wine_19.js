@@ -1,4 +1,4 @@
-import wine from "../assets/wines/19.png";
+import wine from "../../assets/wines/19.png";
 export default {
   name: "Ethereum Vineyard 2015",
   points: 50,
@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
@@ -26,7 +26,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "128",
     },
   ],
 };

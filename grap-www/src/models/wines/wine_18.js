@@ -1,4 +1,4 @@
-import wine from "../assets/wines/18.png";
+import wine from "../../assets/wines/18.png";
 export default {
   name: "To Da Moon 2017",
   points: 50,
@@ -8,7 +8,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Legendary",
+      value: "Common",
     },
     {
       trait_type: "Artist",
@@ -25,7 +25,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "64",
+      value: "128",
     },
   ],
 };
