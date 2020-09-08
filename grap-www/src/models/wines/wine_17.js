@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Common",
+      value: "Epic",
     },
     {
       trait_type: "Artist",
@@ -17,7 +17,7 @@ export default {
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0x38a28592192572c67f7F4eB9925f6356b30CEF7b",
     },
     {
       display_type: "date",

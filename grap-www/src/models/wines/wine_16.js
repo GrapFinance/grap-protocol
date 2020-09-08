@@ -1,7 +1,7 @@
 import wine from "../../assets/wines/16.png";
 export default {
   name: "Rose Winery 1929",
-  points: 60,
+  points: 50,
   external_url: "https://grap.finance/#/wines/16",
   image: wine,
   description:
@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Common",
+      value: "Epic",
     },
     {
       trait_type: "Artist",
@@ -17,7 +17,7 @@ export default {
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0x38a28592192572c67f7F4eB9925f6356b30CEF7b",
     },
     {
       display_type: "date",

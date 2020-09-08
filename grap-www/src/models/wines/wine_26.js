@@ -1,7 +1,7 @@
 import wine from "../../assets/wines/26.png";
 export default {
   name: "Remains of the Day 1993",
-  points: 50,
+  points: 25,
   external_url: "https://grap.finance/#/wines/26",
   image: wine,
   description: "Remains of the Day, I just want to lay down and breathe.",
@@ -16,7 +16,7 @@ export default {
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0x38a28592192572c67f7F4eB9925f6356b30CEF7b",
     },
     {
       display_type: "date",
@@ -25,7 +25,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "128",
+      value: "256",
     },
   ],
 };
