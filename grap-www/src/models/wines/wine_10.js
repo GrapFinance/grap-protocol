@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/10.png";
 export default {
+  id: 10,
   name: "Brick carrier, The Poor 2016",
   points: 50,
   external_url: "https://grap.finance/#/wines/10",

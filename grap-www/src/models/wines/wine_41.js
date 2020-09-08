@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/41.png";
 export default {
+  id: 41,
   name: "The Hanged Man, 2012",
   points: 25,
   external_url: "https://grap.finance/#/wines/41",

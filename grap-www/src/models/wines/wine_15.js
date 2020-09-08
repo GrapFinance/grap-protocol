@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/15.png";
 export default {
+  id: 15,
   name: "Bit Vintners 2014",
   points: 50,
   external_url: "https://grap.finance/#/wines/15",

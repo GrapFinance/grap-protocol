@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/21.png";
 export default {
+  id: 21,
   name: "Gray Old Ink 2010",
   points: 50,
   external_url: "https://grap.finance/#/wines/21",

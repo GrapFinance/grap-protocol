@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/14.png";
 export default {
+  id: 14,
   name: "Monsieur Hulot 2016",
   points: 50,
   external_url: "https://grap.finance/#/wines/14",

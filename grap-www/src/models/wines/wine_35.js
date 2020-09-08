@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/35.png";
 export default {
+  id: 35,
   name: "Thousand Gold Rain 2009",
   points: 25,
   external_url: "https://grap.finance/#/wines/35",

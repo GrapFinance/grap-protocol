@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/18.png";
 export default {
+  id: 18,
   name: "To Da Moon 2017",
   points: 50,
   external_url: "https://grap.finance/#/wines/18",

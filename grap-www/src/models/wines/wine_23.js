@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/23.png";
 export default {
+  id: 23,
   name: "Le hérisson，2009",
   points: 50,
   external_url: "https://grap.finance/#/wines/23",

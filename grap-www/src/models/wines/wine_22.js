@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/22.png";
 export default {
+  id: 22,
   name: "Miracle Sound 2020",
   points: 50,
   external_url: "https://grap.finance/#/wines/22",

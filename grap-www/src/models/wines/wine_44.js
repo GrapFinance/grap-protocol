@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/44.png";
 export default {
+  id: 44,
   name: "The Strength, 2008",
   points: 25,
   external_url: "https://grap.finance/#/wines/44",

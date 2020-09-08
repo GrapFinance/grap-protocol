@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/42.png";
 export default {
+  id: 42,
   name: "The High Priestess, 2002",
   points: 25,
   external_url: "https://grap.finance/#/wines/42",

@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/12.png";
 export default {
+  id: 12,
   name: "Gree Hat, farewell Stag Whisky, 2016",
   points: 50,
   external_url: "https://grap.finance/#/wines/12",

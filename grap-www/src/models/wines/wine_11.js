@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/11.png";
 export default {
+  id: 11,
   name: "soula Le danny,oC 2013",
   points: 50,
   external_url: "https://grap.finance/#/wines/11",

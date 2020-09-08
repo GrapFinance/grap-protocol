@@ -1,6 +1,6 @@
 import wine from "../../assets/wines/2.png";
 export default {
-  id: "2",
+  id: 2,
   name: "Romantic Cony 1984",
   points: 200,
   external_url: "https://grap.finance/#/wines/2",

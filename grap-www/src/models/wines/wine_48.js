@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/48.png";
 export default {
+  id: 48,
   name: "White Space, 1926",
   points: 25,
   external_url: "https://grap.finance/#/wines/48",

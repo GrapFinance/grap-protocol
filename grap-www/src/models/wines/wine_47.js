@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/47.png";
 export default {
+  id: 47,
   name: "Money Grow On Trees, 2014",
   points: 25,
   external_url: "https://grap.finance/#/wines/47",

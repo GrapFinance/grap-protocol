@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/32.png";
 export default {
+  id: 32,
   name: "Dog Curse 2019",
   points: 25,
   external_url: "https://grap.finance/#/wines/32",

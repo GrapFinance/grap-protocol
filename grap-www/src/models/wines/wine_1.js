@@ -1,7 +1,7 @@
 import wine from "../../assets/wines/1.gif";
 
 export default {
-  id: "1",
+  id: 1,
   name: "Lafitte, 1982",
   points: 3000,
   external_url: "https://grap.finance/#/wines/1",

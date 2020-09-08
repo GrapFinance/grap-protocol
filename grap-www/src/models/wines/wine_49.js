@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/49.png";
 export default {
+  id: 49,
   name: "il vino di Pisa, 1944",
   points: 25,
   external_url: "https://grap.finance/#/wines/49",

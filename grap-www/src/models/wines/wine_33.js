@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/33.png";
 export default {
+  id: 33,
   name: "Ｍountain Top Wind, 2018",
   points: 25,
   external_url: "https://grap.finance/#/wines/33",

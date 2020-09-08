@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/30.png";
 export default {
+  id: 30,
   name: "Shine Key 2002",
   points: 25,
   external_url: "https://grap.finance/#/wines/30",

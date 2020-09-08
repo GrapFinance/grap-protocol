@@ -1,6 +1,6 @@
 import wine from "../../assets/wines/5.png";
 export default {
-  id: "5",
+  id: 5,
   name: "Côte d'Azur 2014",
   points: 200,
   external_url: "https://grap.finance/#/wines/5",

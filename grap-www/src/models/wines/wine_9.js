@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/9.png";
 export default {
+  id: 9,
   name: "Deep Diver 1985",
   points: 50,
   external_url: "https://grap.finance/#/wines/9",

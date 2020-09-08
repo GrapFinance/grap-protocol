@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/38.png";
 export default {
+  id: 38,
   name: "No Time to Die, 1994",
   points: 25,
   external_url: "https://grap.finance/#/wines/38",

@@ -1,6 +1,6 @@
 import wine from "../../assets/wines/6.png";
 export default {
-  id: "6",
+  id: 6,
   name: "Cosmos 2015",
   points: 200,
   external_url: "https://grap.finance/#/wines/6",

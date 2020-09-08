@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/37.png";
 export default {
+  id: 37,
   name: "Colorful Iceberg, 1979",
   points: 25,
   external_url: "https://grap.finance/#/wines/37",

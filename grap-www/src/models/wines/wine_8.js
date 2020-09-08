@@ -1,6 +1,6 @@
 import wine from "../../assets/wines/8.png";
 export default {
-  id: "8",
+  id: 8,
   name: "il Vino dei Poeti' Prosecco 2014",
   points: 50,
   external_url: "https://grap.finance/#/wines/8",

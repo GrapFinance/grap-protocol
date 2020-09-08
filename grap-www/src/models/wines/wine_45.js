@@ -1,5 +1,6 @@
 import wine from "../../assets/wines/45.png";
 export default {
+  id: 45,
   name: "The Hermit, 2009",
   points: 25,
   external_url: "https://grap.finance/#/wines/45",
