@@ -12,11 +12,11 @@ export default {
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "Hobbit",
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0x689397eA42C5d7Ac96a2706De5CBa6A067f476bA",
     },
     {
       display_type: "date",
@@ -25,7 +25,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "128",
+      value: "256",
     },
   ],
 };
