@@ -2,7 +2,7 @@ import wine from "../../assets/wines/25.png";
 export default {
   id: 25,
   name: "To Da Moon 2020",
-  points: 50,
+  points: 25,
   external_url: "https://grap.finance/#/wines/25",
   image: wine,
   description: "Houston, we have reached the moon.",
@@ -26,7 +26,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "128",
+      value: "256",
     },
   ],
 };

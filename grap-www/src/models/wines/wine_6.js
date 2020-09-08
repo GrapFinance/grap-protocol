@@ -17,7 +17,7 @@ export default {
     },
     {
       trait_type: "Artist ETH Address",
-      value: "0xc594a40FCc5BAa771Ee1F006889Feb608D9b2d1f",
+      value: "0x17301dbE98bEf7001D68d4E8823347eFAe377543",
     },
     {
       display_type: "date",

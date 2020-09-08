@@ -2,7 +2,7 @@ import wine from "../../assets/wines/38.png";
 export default {
   id: 38,
   name: "No Time to Die, 1994",
-  points: 25,
+  points: 10,
   external_url: "https://grap.finance/#/wines/38",
   image: wine,
   description: "It is No Time to Die, You can only choose to be a survivor.",
@@ -26,7 +26,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "256",
+      value: "500",
     },
   ],
 };

@@ -13,11 +13,11 @@ export default {
     },
     {
       trait_type: "Artist",
-      value: "",
+      value: "Ruby",
     },
     {
       trait_type: "Artist ETH Address",
-      value: "",
+      value: "0xc594a40FCc5BAa771Ee1F006889Feb608D9b2d1f",
     },
     {
       display_type: "date",
@@ -26,7 +26,7 @@ export default {
     },
     {
       trait_type: "Max Supply",
-      value: "128",
+      value: "508",
     },
   ],
 };

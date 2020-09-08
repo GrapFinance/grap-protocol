@@ -26,14 +26,8 @@ const Farms: React.FC = () => {
               <Card>
                 <WineImage src={wine.image} />
                 <WineDesc>
-                  No.{i + 1}&nbsp;&nbsp;
+                  No.{wine.id}&nbsp;&nbsp;
                   {wine.name}
-                  -<br />
-                  {wine.attributes[0].value}
-                  -<br />
-                  {wine.points}
-                  -<br />
-                  {wine.attributes[1].value}:{wine.attributes[2].value.length}
                 </WineDesc>
               </Card>
             </React.Fragment>
