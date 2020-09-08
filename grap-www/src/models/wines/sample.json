@@ -1,0 +1,30 @@
+{
+  "name": "",
+  "points": 10,
+  "external_url": "",
+  "image": "",
+  "description": "",
+  "attributes": [
+    {
+      "trait_type": "Rarity",
+      "value": "Common" // Common 3, Rare 10, Epic 50, Legendary 200
+    },
+    {
+      "trait_type": "Artist",
+      "value": ""
+    },
+    {
+      "trait_type": "Artist ETH Address",
+      "value": ""
+    },
+    {
+      "display_type": "date",
+      "trait_type": "birthday",
+      "value": 1599609600
+    },
+    {
+      "trait_type": "Max Supply",
+      "value": "1000"
+    }
+  ]
+}

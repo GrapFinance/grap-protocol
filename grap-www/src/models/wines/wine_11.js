@@ -1,0 +1,31 @@
+import wine from "../assets/wines/11.png";
+export default {
+  name: "soula Le danny,oC 2013",
+  points: 50,
+  external_url: "https://grap.finance/#/wines/11",
+  image: wine,
+  description: "Danny’s soul lives here.",
+  attributes: [
+    {
+      trait_type: "Rarity",
+      value: "Legendary",
+    },
+    {
+      trait_type: "Artist",
+      value: "",
+    },
+    {
+      trait_type: "Artist ETH Address",
+      value: "",
+    },
+    {
+      display_type: "date",
+      trait_type: "birthday",
+      value: 1599609600,
+    },
+    {
+      trait_type: "Max Supply",
+      value: "64",
+    },
+  ],
+};
