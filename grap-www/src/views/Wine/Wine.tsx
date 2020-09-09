@@ -32,7 +32,7 @@ const Wine: React.FC = () => {
     }
   };
   const countdownBlock = () => {
-    const date = Date.parse("2020-09-10T00:00:00+0000");
+    const date = Date.parse("2020-09-11T00:00:00+0000");
     if (Date.now() >= date) return "";
     return (
       <CountdownView>
@@ -58,8 +58,11 @@ const Wine: React.FC = () => {
               Probability percentage: {fetch(wine, "Max Supply") / 100}%
             </WineInfoItem>
             <WineDesc>{wine.description}</WineDesc>
-            <WineInfoItem>Starting time: {countdownBlock()}</WineInfoItem>
+            <WineInfoItem>
+              Buy and Sell will Release at: {countdownBlock()}
+            </WineInfoItem>
           </WineInfo>
+          <TranasctionsBlock></TranasctionsBlock>
         </Container>
       ) : (
         <h1 style={{textAlign: "center"}}>"404"</h1>
@@ -134,5 +137,7 @@ const CountdownView = styled.div`
   font-weight: bold;
   color: #fff;
 `;
+
+const TranasctionsBlock = styled.div``;
 
 export default Wine;

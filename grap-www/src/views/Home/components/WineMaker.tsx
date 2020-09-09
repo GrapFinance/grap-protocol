@@ -10,6 +10,7 @@ import BigNumber from "bignumber.js";
 import Button from "../../../components/Button";
 
 interface WineMakerProps {
+  ticketNumber?: number;
   wineNumber?: number;
   wineMakingScore?: number;
   unclaimedNumber?: number;
@@ -18,6 +19,7 @@ const WineMaker: React.FC<WineMakerProps> = ({
   wineMakingScore,
   wineNumber,
   unclaimedNumber,
+  ticketNumber,
 }) => {
   const claimedWine = () => {};
   const draw = () => {};
@@ -27,9 +29,9 @@ const WineMaker: React.FC<WineMakerProps> = ({
         <CardContent>
           <StyledStat>
             <StyledValue>
-              <CountUp end={wineMakingScore} />
+              {ticketNumber ? <CountUp end={ticketNumber} /> : "-"}
             </StyledValue>
-            <Label text="Your WineMaking Score" />
+            <Label text="Earned Tickets" />
           </StyledStat>
         </CardContent>
       </Card>

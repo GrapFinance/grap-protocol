@@ -25,21 +25,32 @@ import {getStats} from "./utils";
 
 import {Line} from "rc-progress";
 
+let once = false;
 const Home: React.FC = () => {
   const grap = useGrap();
   const {account, connect} = useWallet();
-  if (!account) {
+  if (!account && !once) {
+    once = true;
     setTimeout(() => {
       connect("injected");
     }, 500);
   }
   const [
-    {circSupply, curPrice, nextRebase, targetPrice, totalSupply},
+    {
+      circSupply,
+      curPrice,
+      nextRebase,
+      targetPrice,
+      totalSupply,
+      rewards,
+      tickets,
+    },
     setStats,
   ] = useState<OverviewData>({});
 
   const fetchStats = useCallback(async () => {
     const statsData = await getStats(grap);
+    debugger;
     setStats(statsData);
   }, [grap, setStats]);
 
@@ -64,7 +75,6 @@ const Home: React.FC = () => {
   const precent = (alreadyCliamed / wineTotalSupply) * 100;
   const wineMakingScore = 55;
   const unclaimedNumber = 1;
-  const ticketNumber = 55;
   const prizePoolNumber = 10;
   const wineNumber = 2;
   return (
@@ -86,9 +96,10 @@ const Home: React.FC = () => {
 
       <StyledPrizeBlock>
         <Container>
-          <WinePool ticketNumber={ticketNumber} />
+          <WinePool ticketNumber={tickets} />
           <StyledSpacer />
           <WineMaker
+            ticketNumber={tickets}
             wineNumber={wineNumber}
             wineMakingScore={wineMakingScore}
             unclaimedNumber={unclaimedNumber}
