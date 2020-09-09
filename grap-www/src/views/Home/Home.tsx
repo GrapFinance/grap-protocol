@@ -10,6 +10,8 @@ import useGrap from "../../hooks/useGrap";
 
 import Rebase from "./components/Rebase";
 import Stats from "./components/Stats";
+import WineMaker from "./components/WineMaker";
+import WinePool from "./components/WinePool";
 
 import logo from "../../assets/img/logo.png";
 import Wine from "../../assets/img/wine.svg";
@@ -57,9 +59,6 @@ const Home: React.FC = () => {
     );
   };
 
-  const claimedWine = () => {};
-  const draw = () => {};
-
   const wineTotalSupply = 10000;
   const alreadyCliamed = 150;
   const precent = (alreadyCliamed / wineTotalSupply) * 100;
@@ -67,13 +66,11 @@ const Home: React.FC = () => {
   const unclaimedNumber = 1;
   const ticketNumber = 55;
   const prizePoolNumber = 10;
+  const wineNumber = 2;
   return (
     <Page>
-      <PageHeader
-        icon={<img width="80" src={logo} />}
-        subtitle="The limited quantity of Crypto Wines still has a price tag, at least for now."
-        title="Welcome"
-      />
+      <PageHeader icon={<img width="80" src={logo} />} subtitle="" title="" />
+      {/* The limited quantity of Crypto Wines still has a price tag, at least for now. */}
       <PrizePool>
         Total Prize Pool<PrizePoolSmall>EST</PrizePoolSmall>
         <Price>
@@ -81,57 +78,25 @@ const Home: React.FC = () => {
           ETH
         </Price>
       </PrizePool>
+      {/* <h1>Crypto Wine Status</h1>
+      <div>
+        {`WineMaking Collection completion : ${precent}%`}
+        <Line percent={precent} strokeWidth={1} strokeColor="#ff2f40" />
+      </div> */}
 
       <StyledPrizeBlock>
         <Container>
-          <h1>Crypto Wine Status</h1>
-          <div>
-            {`WineMaking Collection completion : ${precent}%`}
-            <Line percent={precent} strokeWidth={1} strokeColor="#ff2f40" />
-          </div>
-          <StatsBlock>
-            {unclaimedNumber > 0 ? (
-              <Card>
-                <CardContent>
-                  <StyledStat>
-                    <Icon>🍷</Icon>
-                    <Button
-                      onClick={claimedWine}
-                      text={` ${unclaimedNumber} New Crypto Wines earned!`}
-                    />
-                  </StyledStat>
-                </CardContent>
-              </Card>
-            ) : (
-              ""
-            )}
-            <Card>
-              <CardContent>
-                <StyledStat>
-                  <Icon>🚀</Icon>
-                  <p>
-                    Your WineMaking Score:
-                    <CountUp end={wineMakingScore} />
-                  </p>
-                </StyledStat>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent>
-                <Icon>🎰</Icon>
-                <StyledStat>
-                  Tickets you have: <CountUp end={ticketNumber} />
-                </StyledStat>
-                <Button
-                  onClick={draw}
-                  text={`Draw(Cost 100)`}
-                  disabled={ticketNumber < 100}
-                />
-              </CardContent>
-            </Card>
-          </StatsBlock>
+          <WinePool ticketNumber={ticketNumber} />
+          <StyledSpacer />
+          <WineMaker
+            wineNumber={wineNumber}
+            wineMakingScore={wineMakingScore}
+            unclaimedNumber={unclaimedNumber}
+          ></WineMaker>
         </Container>
       </StyledPrizeBlock>
+
+      <h1 style={{textAlign: "center"}}>Grap Info</h1>
       <StyledOverview>
         <Rebase nextRebase={nextRebase} />
         <StyledSpacer />
@@ -153,13 +118,17 @@ const StyledPrizeBlock = styled.div`
   margin-bottom: 50px;
   box-sizing: border-box;
   background-color: ${(props) => props.theme.color.grey[200]};
+  align-items: center;
+  display: flex;
 `;
 
 const Container = styled.div`
+  align-items: center;
   margin: 0 auto;
-  width: 980px;
+  display: flex;
   @media (max-width: 768px) {
     width: 100%;
+    flex-flow: column nowrap;
   }
 `;
 

@@ -36,6 +36,8 @@ const StyledInputWrapper = styled.div`
   display: flex;
   height: 72px;
   padding: 0 ${(props) => props.theme.spacing[3]}px;
+  border: 1px solid #fafafa;
+  border-radius: 5px;
 `;
 
 const StyledInput = styled.input`
