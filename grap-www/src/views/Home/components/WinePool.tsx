@@ -54,7 +54,7 @@ const WinePool: React.FC<WinePoolProps> = ({ticketNumber, draw}) => {
             text={`Draw(Cost 100)`}
             disabled={ticketNumber < 100}
           />
-          <StyledLink to="/farms/:s">Earn Tickets</StyledLink>
+          <StyledLink to="/WinePool">Earn Tickets</StyledLink>
         </CardContent>
       </Card>
     </StyledWinePool>

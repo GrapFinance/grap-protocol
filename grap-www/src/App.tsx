@@ -21,6 +21,7 @@ import Wine from "./views/Wine";
 import Vote from "./views/Vote";
 import Home from "./views/Home";
 import Statics from "./views/Statics";
+import WinePool from "./views/WinePool";
 import theme from "./theme";
 
 const App: React.FC = () => {
@@ -57,6 +58,9 @@ const App: React.FC = () => {
           </Route>
           <Route path={`/wine/:wineId`}>
             <Wine />
+          </Route>
+          <Route path="/WinePool">
+            <WinePool />
           </Route>
         </Switch>
       </Router>

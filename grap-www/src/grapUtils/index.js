@@ -238,6 +238,7 @@ export const getProposals = async (grap) => {
     toBlock: "latest",
   };
   const events = await grap.contracts.gov.getPastEvents("allEvents", filter);
+  console.log(events);
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
     let index = 0;
@@ -331,6 +332,42 @@ export const castVote = async (grap, id, support, from) => {
 };
 
 // wine
+export const getWinePoolStaked = async (brewMaster, pid, account) => {
+  try {
+    const { amount } = await brewMaster.methods
+      .userInfo(pid, account)
+      .call()
+    return new BigNumber(amount)
+  } catch {
+    return new BigNumber(0)
+  }
+}
+
+export const winePoolStake = async (brewMaster, pid, amount, account) => {
+  return brewMaster.methods
+    .deposit(
+      pid,
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+    )
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      console.log(tx)
+      return tx.transactionHash
+    })
+}
+
+export const winePoolUnstake = async (brewMaster, pid, amount, account) => {
+  return brewMaster.methods
+    .withdraw(
+      pid,
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+    )
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      console.log(tx)
+      return tx.transactionHash
+    })
+}
 
 export const totalWineAmount = async (grap) => {
   return await grap.contracts.brewMaster.methods.totalWineAmount().call();
@@ -341,29 +378,23 @@ export const approveWinePool = async (grap, account) => {
     .send({from: account, gas: 80000});
 };
 
-export const depositWinePool = async (grap, amount, account) => {
-  // supply one pool now.
-  let pid = 0;
-  return grap.contracts.brewMaster.methods
-    .deposit(
-      pid,
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString()
-    )
-    .send({from: account})
-    .on("transactionHash", (tx) => {
-      console.log(tx);
-      return tx.transactionHash;
-    });
+export const harvestWinePool = async (brewMaster, pid, account) => {
+  return brewMaster.methods
+    .deposit(pid, '0')
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      console.log(tx)
+      return tx.transactionHash
+    })
+}
+
+export const getBrewMaster = (grap) => {
+  return grap && grap.contracts && grap.contracts.brewMaster;
 };
 
-export const getPendingTickets = async (grap, account) => {
-  // supply one pool now.
-  let pid = 0;
-  const pending = new BigNumber(
-    await grap.contracts.brewMaster.methods.pendingTicket(pid, account).call()
-  );
-  return pending.dividedBy(new BigNumber(10).pow(18));
-};
+export const getPendingTickets = async (brewMaster, pid, account) => {
+  return brewMaster.methods.pendingTicket(pid, account).call()
+}
 
 export const getTicketsEarned = async (grap, account) => {
   const earned = new BigNumber(
@@ -381,14 +412,6 @@ export const getBalance = async (grap) => {
   return parseFloat(num);
 };
 
-export const getWinePoolStaked = async (grap, account) => {
-  // supply one pool now.
-  let pid = 0;
-  return grap.toBigN(
-    await grap.contracts.brewMaster.methods.userLPInfo(pid, account).call()
-  );
-};
-
 export const drawWine = async (grap, account) => {
   return grap.contracts.brewMaster.methods
     .draw()
@@ -396,59 +419,7 @@ export const drawWine = async (grap, account) => {
 };
 
 export const getUnclaimedWines = async (grap, account) => {
-  return grap.contracts.brewMaster.methods.userWineInfo(account, [
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-  ]);
+  return await grap.contracts.brewMaster.methods.userUnclaimWine(account).call();
 };
 
 export const claimFee = async (grap, wid, amount) => {

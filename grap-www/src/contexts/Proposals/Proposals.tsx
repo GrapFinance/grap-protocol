@@ -12,13 +12,12 @@ const Proposals: React.FC = ({children}) => {
 
   const fetchProposals = useCallback(async () => {
     const propsArr: Proposal[] = await getProposals(grap);
-
     setProposals(propsArr);
   }, [grap, setProposals]);
 
   useEffect(() => {
     if (grap) {
-      // fetchProposals()
+      fetchProposals()
     }
   }, [grap, fetchProposals]);
 

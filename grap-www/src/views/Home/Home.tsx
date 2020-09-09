@@ -57,13 +57,13 @@ const Home: React.FC = () => {
   const fetchStats = useCallback(async () => {
     const statsData = await getStats(grap, account);
     setStats(statsData);
-  }, [grap, setStats]);
+  }, [account, grap]);
 
   useEffect(() => {
     if (grap) {
       fetchStats();
     }
-  }, [grap]);
+  }, [fetchStats, grap]);
 
   const countdownBlock = () => {
     const date = Date.parse("2020-08-20T00:00:00+0000");

@@ -1,47 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-
-import { Contract } from 'web3-eth-contract'
-
 import Button from '../../../components/Button'
 import Card from '../../../components/Card'
 import CardContent from '../../../components/CardContent'
 import CardIcon from '../../../components/CardIcon'
 import Label from '../../../components/Label'
 import Value from '../../../components/Value'
-
-import useEarnings from '../../../hooks/useEarnings'
-import useReward from '../../../hooks/useReward'
-
+import useWinePoolEarnings from '../../../hooks/useWinePoolEarnings'
+import useWinePoolReward from '../../../hooks/useWinePoolReward'
 import { getDisplayBalance } from '../../../utils/formatBalance'
 
 interface HarvestProps {
-  poolContract: Contract
+  pid: number
 }
 
-const Harvest: React.FC<HarvestProps> = ({ poolContract }) => {
-
-  const earnings = useEarnings(poolContract)
-  const { onReward } = useReward(poolContract)
+const Harvest: React.FC<HarvestProps> = ({ pid }) => {
+  const earnings = useWinePoolEarnings(0)
+  const [pendingTx, setPendingTx] = useState(false)
+  const { onReward } = useWinePoolReward(pid)
 
   return (
     <Card>
       <CardContent>
         <StyledCardContentInner>
           <StyledCardHeader>
-            <CardIcon>🍇</CardIcon>
+            <CardIcon>🎟️</CardIcon>
             <Value value={getDisplayBalance(earnings)} />
-            <Label text="GRAPs earned" />
+            <Label text="Tickets Earned" />
           </StyledCardHeader>
           <StyledCardActions>
-            <Button onClick={onReward} text="Harvest" disabled={!earnings.toNumber()} />
+            <Button
+              disabled={!earnings.toNumber() || pendingTx}
+              text={pendingTx ? 'Collecting Tickets' : 'Harvest'}
+              onClick={async () => {
+                setPendingTx(true)
+                await onReward()
+                setPendingTx(false)
+              }}
+            />
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>
     </Card>
   )
 }
-
 
 const StyledCardHeader = styled.div`
   align-items: center;
@@ -51,13 +53,13 @@ const StyledCardHeader = styled.div`
 const StyledCardActions = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: ${props => props.theme.spacing[6]}px;
+  margin-top: ${(props) => props.theme.spacing[6]}px;
   width: 100%;
 `
 
 const StyledSpacer = styled.div`
-  height: ${props => props.theme.spacing[4]}px;
-  width: ${props => props.theme.spacing[4]}px;
+  height: ${(props) => props.theme.spacing[4]}px;
+  width: ${(props) => props.theme.spacing[4]}px;
 `
 
 const StyledCardContentInner = styled.div`
