@@ -113,9 +113,9 @@ export class Contracts {
     this.weth = new this.web3.eth.Contract(WETHJson);
 
     // wine
-    this.brewMaster = new this.web3.eth.Contract(BrewMasterJson);
-    this.grapWine = new this.web3.eth.Contract(GRAPWineJson);
-    this.wineTrader = new this.web3.eth.Contract(WineTraderJson);
+    this.brewMaster = new this.web3.eth.Contract(BrewMasterJson.abi);
+    this.grapWine = new this.web3.eth.Contract(GRAPWineJson.abi);
+    this.wineTrader = new this.web3.eth.Contract(WineTraderJson.abi);
 
     this.setProvider(provider, networkId);
     this.setDefaultAccount(this.web3.eth.defaultAccount);
