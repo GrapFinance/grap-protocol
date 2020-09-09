@@ -8,6 +8,7 @@ import {
   getTotalSupply as gTS,
   getTicketsEarned as gTE,
   getWineRewards as gWR,
+  totalWineAmount as tWA,
 } from "../../grapUtils";
 
 const getCurrentPrice = async (grap: typeof Grap): Promise<number> => {
@@ -43,12 +44,19 @@ const getAllReward = async (grap: typeof Grap): Promise<Array<any>> => {
   return rewards;
 };
 
-const getTicketsEarned = async (grap: typeof Grap): Promise<number> => {
-  const tickets = (await gTE(grap)).toNumber() as number;
+const getTicketsEarned = async (
+  grap: typeof Grap,
+  account: string
+): Promise<number> => {
+  const tickets = (await gTE(grap, account)).toNumber() as number;
   return tickets;
 };
 
-export const getStats = async (grap: typeof Grap) => {
+const totalWineAmount = async (grap: typeof Grap): Promise<string> => {
+  return tWA(grap);
+};
+
+export const getStats = async (grap: typeof Grap, account: string) => {
   const curPrice = 0;
   // await getCurrentPrice(grap);
   const circSupply = "0";
@@ -60,10 +68,9 @@ export const getStats = async (grap: typeof Grap) => {
   const totalSupply = "10";
   // await getTotalSupply(grap);
   const rewards = await getAllReward(grap);
-  const tickets = await getTicketsEarned(grap);
-  console.log("============");
-  console.log(tickets);
-  debugger;
+  const myRewards = rewards.filter((r) => r.user == account);
+  const tickets = await getTicketsEarned(grap, account);
+  const remainWineAmount = await totalWineAmount(grap);
   return {
     circSupply,
     curPrice,
@@ -71,6 +78,8 @@ export const getStats = async (grap: typeof Grap) => {
     targetPrice,
     totalSupply,
     rewards,
+    myRewards,
     tickets,
+    remainWineAmount,
   };
 };

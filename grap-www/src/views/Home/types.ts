@@ -5,5 +5,7 @@ export interface OverviewData {
   targetPrice?: number;
   totalSupply?: string;
   rewards?: any[];
+  myRewards?: any[];
   tickets?: number;
+  remainWineAmount?: string;
 }

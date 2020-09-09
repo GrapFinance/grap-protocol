@@ -31,9 +31,11 @@ const Home: React.FC = () => {
   const {account, connect} = useWallet();
   if (!account && !once) {
     once = true;
+
     setTimeout(() => {
+      console.log("ONCE");
       connect("injected");
-    }, 500);
+    }, 2000);
   }
   const [
     {
@@ -43,14 +45,15 @@ const Home: React.FC = () => {
       targetPrice,
       totalSupply,
       rewards,
+      myRewards,
       tickets,
+      remainWineAmount,
     },
     setStats,
   ] = useState<OverviewData>({});
 
   const fetchStats = useCallback(async () => {
-    const statsData = await getStats(grap);
-    debugger;
+    const statsData = await getStats(grap, account);
     setStats(statsData);
   }, [grap, setStats]);
 
@@ -71,12 +74,13 @@ const Home: React.FC = () => {
   };
 
   const wineTotalSupply = 10000;
-  const alreadyCliamed = 150;
-  const precent = (alreadyCliamed / wineTotalSupply) * 100;
+  const alreadyCliamed = wineTotalSupply - parseInt(remainWineAmount, 10);
+  const cliamedPrecent = (alreadyCliamed / wineTotalSupply) * 100;
+
   const wineMakingScore = 55;
   const unclaimedNumber = 1;
   const prizePoolNumber = 10;
-  const wineNumber = 2;
+  const wineNumber = myRewards ? myRewards.length : 0;
   return (
     <Page>
       <PageHeader icon={<img width="80" src={logo} />} subtitle="" title="" />
@@ -91,7 +95,7 @@ const Home: React.FC = () => {
       {/* <h1>Crypto Wine Status</h1>
       <div>
         {`WineMaking Collection completion : ${precent}%`}
-        <Line percent={precent} strokeWidth={1} strokeColor="#ff2f40" />
+        <Line percent={cliamedPrecent} strokeWidth={1} strokeColor="#ff2f40" />
       </div> */}
 
       <StyledPrizeBlock>
