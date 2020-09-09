@@ -19,8 +19,6 @@ const StyledCardIcon = styled.div`
   display: flex;
   overflow: hidden;
   justify-content: center;
-  box-shadow: inset 4px 4px 8px ${(props) => props.theme.color.grey[300]},
-    inset -6px -6px 12px ${(props) => props.theme.color.grey[100]};
   margin: 0 auto ${(props) => props.theme.spacing[3]}px;
 `;
 

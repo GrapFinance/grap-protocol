@@ -10,6 +10,8 @@ import useGrap from "../../hooks/useGrap";
 import Rebase from "./components/Rebase";
 import Stats from "./components/Stats";
 
+import logo from "../../assets/img/logo.png";
+
 import {OverviewData} from "./types";
 import {getStats} from "./utils";
 
@@ -45,8 +47,8 @@ const Home: React.FC = () => {
     <Page>
       {countdownBlock()}
       <PageHeader
-        icon={document.body.offsetWidth <= 600 ? "🍇" : "🍇 & 🍶 & 🍷"}
-        subtitle="It's time to make some new friends!"
+        icon={<img width="80" src={logo} />}
+        subtitle="It's time to make some new friends! Drink some Sake today. https://sakeswap.finance/"
         title="Welcome"
       />
 

@@ -9,7 +9,7 @@ export default {
   attributes: [
     {
       trait_type: "Rarity",
-      value: "Common",
+      value: "Rare",
     },
     {
       trait_type: "Artist",

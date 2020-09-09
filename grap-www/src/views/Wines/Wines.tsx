@@ -16,20 +16,25 @@ const Farms: React.FC = () => {
   const {path} = useRouteMatch();
   const {account, connect} = useWallet();
   const wines = Object.values(WineData);
-
   return (
     <Switch>
       <Page>
         <Container>
           {wines.map((wine, i) => (
             <React.Fragment key={i}>
-              <Card>
-                <WineImage src={wine.image} />
-                <WineDesc>
-                  No.{wine.id}&nbsp;&nbsp;
-                  {wine.name}
-                </WineDesc>
-              </Card>
+              <StyledLink
+                exact
+                activeClassName="active"
+                to={`/wine/${wine.id}`}
+              >
+                <Card>
+                  <WineImage src={wine.image} />
+                  <WineDesc>
+                    No.{wine.id}&nbsp;&nbsp;
+                    {wine.name}
+                  </WineDesc>
+                </Card>
+              </StyledLink>
             </React.Fragment>
           ))}
         </Container>
@@ -53,7 +58,9 @@ const Container = styled.div`
 `;
 
 const WineImage = styled.img`
-  width: 100%;
+  width: 180px;
+  height: 180px;
+  background: #fff;
   border-radius: 3px;
   display: block;
   overflow: hidden;
@@ -66,9 +73,9 @@ const WineDesc = styled.div`
 `;
 
 const StyledCard = styled.div`
-  width: calc((900px - ${(props) => props.theme.spacing[4]}px * 2) / 4);
+  width: calc((980px - ${(props) => props.theme.spacing[4]}px * 2) / 4);
   position: relative;
-  padding: 15px;
+  padding: ${(props) => props.theme.spacing[4]}px;
   box-sizing: border-box;
   transition: all 0.5s ease-out 0s;
   border-radius: 3px;
