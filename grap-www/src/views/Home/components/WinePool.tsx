@@ -11,9 +11,10 @@ import useGrap from "../../../hooks/useGrap";
 
 interface WinePoolProps {
   ticketNumber: number;
+  draw: () => void;
 }
 
-const WinePool: React.FC<WinePoolProps> = ({ticketNumber}) => {
+const WinePool: React.FC<WinePoolProps> = ({ticketNumber, draw}) => {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -35,8 +36,6 @@ const WinePool: React.FC<WinePoolProps> = ({ticketNumber}) => {
     );
   };
 
-  const draw = () => {};
-
   return (
     <StyledWinePool>
       <Card>
@@ -55,7 +54,7 @@ const WinePool: React.FC<WinePoolProps> = ({ticketNumber}) => {
             text={`Draw(Cost 100)`}
             disabled={ticketNumber < 100}
           />
-          <StyledLink to="/wines/:s">Earn Tickets</StyledLink>
+          <StyledLink to="/farms/:s">Earn Tickets</StyledLink>
         </CardContent>
       </Card>
     </StyledWinePool>

@@ -6,6 +6,8 @@ export interface OverviewData {
   totalSupply?: string;
   rewards?: any[];
   myRewards?: any[];
+  unclaimedWines?: any[];
   tickets?: number;
   remainWineAmount?: string;
+  balance?: number;
 }

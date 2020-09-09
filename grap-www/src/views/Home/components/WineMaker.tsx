@@ -8,21 +8,26 @@ import CardContent from "../../../components/CardContent";
 import {getDisplayBalance} from "../../../utils/formatBalance";
 import BigNumber from "bignumber.js";
 import Button from "../../../components/Button";
-
+import {claimWine, claimFee} from "../../../grapUtils";
 interface WineMakerProps {
   ticketNumber?: number;
   wineNumber?: number;
   wineMakingScore?: number;
   unclaimedNumber?: number;
+  unclaimedWines?: any[];
+  grap?: any;
+  account?: string;
 }
 const WineMaker: React.FC<WineMakerProps> = ({
   wineMakingScore,
   wineNumber,
   unclaimedNumber,
+  unclaimedWines,
   ticketNumber,
+  grap,
+  account,
 }) => {
-  const claimedWine = () => {};
-  const draw = () => {};
+  const wines = unclaimedWines || [];
   return (
     <StyledStats>
       <Card>
@@ -51,22 +56,41 @@ const WineMaker: React.FC<WineMakerProps> = ({
 
       <StyledSpacer />
 
-      <Card>
-        <CardContent>
-          <StyledStat>
-            <StyledValue>
-              {unclaimedNumber > 0 ? (
-                <Button
-                  onClick={claimedWine}
-                  text={` ${unclaimedNumber} New Crypto Wines earned!`}
-                />
-              ) : (
-                ""
-              )}
-            </StyledValue>
-          </StyledStat>
-        </CardContent>
-      </Card>
+      {wines.length ? (
+        <Card>
+          <CardContent>
+            <StyledStat>
+              <StyledValue>
+                {unclaimedNumber > 0
+                  ? wines.map((wine) => {
+                      return (
+                        <Button
+                          onClick={async () => {
+                            const cliaim = await claimFee(
+                              grap,
+                              wine.wid,
+                              wine.amount
+                            );
+                            claimWine(
+                              grap,
+                              wine.wid,
+                              wine.amount,
+                              account,
+                              cliaim
+                            );
+                          }}
+                          text={`No.${wine.wid} Crypto Wines earned!`}
+                        />
+                      );
+                    })
+                  : ""}
+              </StyledValue>
+            </StyledStat>
+          </CardContent>
+        </Card>
+      ) : (
+        ""
+      )}
     </StyledStats>
   );
 };

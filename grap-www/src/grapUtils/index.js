@@ -372,6 +372,15 @@ export const getTicketsEarned = async (grap, account) => {
   return earned.dividedBy(new BigNumber(10).pow(18));
 };
 
+export const getBalance = async (grap) => {
+  const num = new BigNumber(
+    await grap.web3.eth.getBalance(grap.contracts.brewMaster._address)
+  )
+    .dividedBy(new BigNumber(10).pow(18))
+    .toFixed(2);
+  return parseFloat(num);
+};
+
 export const getWinePoolStaked = async (grap, account) => {
   // supply one pool now.
   let pid = 0;
@@ -386,14 +395,78 @@ export const drawWine = async (grap, account) => {
     .send({from: account, gas: 800000});
 };
 
-export const claimWine = async (grap, wid, amount, account) => {
+export const getUnclaimedWines = async (grap, account) => {
+  return grap.contracts.brewMaster.methods.userWineInfo(account, [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+  ]);
+};
+
+export const claimFee = async (grap, wid, amount) => {
+  const fee = new BigNumber(
+    await grap.contracts.brewMaster.methods.claimFee(wid, amount).call()
+  );
+  return fee.toString();
+};
+
+export const claimWine = async (grap, wid, amount, account, cliaim) => {
+  debugger;
   return grap.contracts.brewMaster.methods
     .claim(wid, amount)
-    .send({from: account});
+    .send({from: account, value: cliaim});
 };
 
 export const getUserWineAmount = async (grap, wid, account) => {
-  return await grap.contracts.grapWine.balanceOf(account, wid).call();
+  return await grap.contracts.brewMaster.balanceOf(account, wid).call();
 };
 
 export const getWinePoolAmount = async (grap, wid) => {

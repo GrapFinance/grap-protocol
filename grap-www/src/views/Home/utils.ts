@@ -9,6 +9,8 @@ import {
   getTicketsEarned as gTE,
   getWineRewards as gWR,
   totalWineAmount as tWA,
+  getBalance as gB,
+  getUnclaimedWines as gUW,
 } from "../../grapUtils";
 
 const getCurrentPrice = async (grap: typeof Grap): Promise<number> => {
@@ -55,6 +57,16 @@ const getTicketsEarned = async (
 const totalWineAmount = async (grap: typeof Grap): Promise<string> => {
   return tWA(grap);
 };
+const getBalance = async (grap: typeof Grap): Promise<number> => {
+  return gB(grap);
+};
+const getUnclaimedWines = async (
+  grap: typeof Grap,
+  account: string
+): Promise<any[]> => {
+  const wines = await gUW(grap, account);
+  return wines;
+};
 
 export const getStats = async (grap: typeof Grap, account: string) => {
   const curPrice = 0;
@@ -71,6 +83,8 @@ export const getStats = async (grap: typeof Grap, account: string) => {
   const myRewards = rewards.filter((r) => r.user == account);
   const tickets = await getTicketsEarned(grap, account);
   const remainWineAmount = await totalWineAmount(grap);
+  const balance = await getBalance(grap);
+  const unclaimedWines = await getUnclaimedWines(grap, account);
   return {
     circSupply,
     curPrice,
@@ -81,5 +95,7 @@ export const getStats = async (grap: typeof Grap, account: string) => {
     myRewards,
     tickets,
     remainWineAmount,
+    balance,
+    unclaimedWines,
   };
 };

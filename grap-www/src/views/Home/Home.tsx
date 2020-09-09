@@ -20,8 +20,8 @@ import {useWallet} from "use-wallet";
 
 import {OverviewData} from "./types";
 import CountUp from "react-countup";
-
 import {getStats} from "./utils";
+import {drawWine} from "../../grapUtils";
 
 import {Line} from "rc-progress";
 
@@ -45,9 +45,11 @@ const Home: React.FC = () => {
       targetPrice,
       totalSupply,
       rewards,
+      unclaimedWines,
       myRewards,
       tickets,
       remainWineAmount,
+      balance,
     },
     setStats,
   ] = useState<OverviewData>({});
@@ -79,19 +81,24 @@ const Home: React.FC = () => {
 
   const wineMakingScore = 55;
   const unclaimedNumber = 1;
-  const prizePoolNumber = 10;
+  const prizePoolNumber = (balance * 2) / 3;
   const wineNumber = myRewards ? myRewards.length : 0;
+
   return (
     <Page>
       <PageHeader icon={<img width="80" src={logo} />} subtitle="" title="" />
       {/* The limited quantity of Crypto Wines still has a price tag, at least for now. */}
-      <PrizePool>
-        Total Prize Pool<PrizePoolSmall>EST</PrizePoolSmall>
-        <Price>
-          <CountUp end={prizePoolNumber} />
-          ETH
-        </Price>
-      </PrizePool>
+      {prizePoolNumber ? (
+        <PrizePool>
+          Total Prize Pool<PrizePoolSmall>EST</PrizePoolSmall>
+          <Price>
+            <CountUp decimals={2} end={prizePoolNumber} start={0} />
+            ETH
+          </Price>
+        </PrizePool>
+      ) : (
+        ""
+      )}
       {/* <h1>Crypto Wine Status</h1>
       <div>
         {`WineMaking Collection completion : ${precent}%`}
@@ -100,13 +107,21 @@ const Home: React.FC = () => {
 
       <StyledPrizeBlock>
         <Container>
-          <WinePool ticketNumber={tickets} />
+          <WinePool
+            ticketNumber={tickets}
+            draw={() => {
+              drawWine(grap, account);
+            }}
+          />
           <StyledSpacer />
           <WineMaker
             ticketNumber={tickets}
             wineNumber={wineNumber}
             wineMakingScore={wineMakingScore}
+            unclaimedWines={unclaimedWines}
             unclaimedNumber={unclaimedNumber}
+            grap={grap}
+            account={account}
           ></WineMaker>
         </Container>
       </StyledPrizeBlock>
