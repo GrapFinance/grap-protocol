@@ -33,8 +33,9 @@ import IncJson from '../clean_build/contracts/GRAPIncentivizer.json';
 // advanced pool
 import YFFIPoolJson from '../clean_build/contracts/GRAPYFFIUNIVPool.json';
 import YFIIBALPoolJson from '../clean_build/contracts/GRAPYFIIBALANCERPool.json';
-import ETHUNIVPoolJson from '../clean_build/contracts/GRAPETHUNIVPool.json'
-import DOGEFIUNIVPoolJson from '../clean_build/contracts/GRAPDOGEFIUNIVPool.json'
+import ETHUNIVPoolJson from '../clean_build/contracts/GRAPETHUNIVPool.json';
+import DOGEFIUNIVPoolJson from '../clean_build/contracts/GRAPDOGEFIUNIVPool.json';
+import ETHUNIVERRORPoolJson from '../clean_build/contracts/GRAPETHUNIVERRORPool.json'
 
 export class Contracts {
   constructor(
@@ -58,6 +59,7 @@ export class Contracts {
     this.yffi_grap_univ_pool = new this.web3.eth.Contract(YFFIPoolJson.abi);
     this.grap_yfii_bal_pool = new this.web3.eth.Contract(YFIIBALPoolJson.abi);
     this.eth_grap_univ_pool = new this.web3.eth.Contract(ETHUNIVPoolJson.abi);
+    this.etherror_grap_univ_pool = new this.web3.eth.Contract(ETHUNIVERRORPoolJson.abi);
     this.dogefi_grap_univ_pool = new this.web3.eth.Contract(DOGEFIUNIVPoolJson.abi);
 
     this.eth_pool = new this.web3.eth.Contract(WETHPoolJson.abi);
@@ -96,6 +98,7 @@ export class Contracts {
     this.yffi_grap_univ = new this.web3.eth.Contract(ERC20Json.abi);
     this.grap_yfii_bal = new this.web3.eth.Contract(ERC20Json.abi);
     this.eth_grap_univ = new this.web3.eth.Contract(ERC20Json.abi);
+    this.etherror_grap_univ = new this.web3.eth.Contract(ERC20Json.abi);
     this.dogefi_grap_univ = new this.web3.eth.Contract(ERC20Json.abi);
 
     this.rebaser = new this.web3.eth.Contract(GRAPRebaserJson.abi);
@@ -123,6 +126,7 @@ export class Contracts {
       { contract: this.grap_yfii_bal_pool, json: YFIIBALPoolJson },
       { contract: this.eth_grap_univ_pool, json: ETHUNIVPoolJson },
       { contract: this.dogefi_grap_univ_pool, json: DOGEFIUNIVPoolJson },
+      { contract: this.etherror_grap_univ_pool, json: ETHUNIVERRORPoolJson },
 
       // basic
       { contract: this.grap, json: GRAPJson },
@@ -171,6 +175,7 @@ export class Contracts {
     this.yffi_grap_univ.options.address = addressMap["YFFIUNIV"];
     this.grap_yfii_bal.options.address = addressMap["YFIIBAL"];
     this.eth_grap_univ.options.address = addressMap["ETHUNIV"];
+    this.etherror_grap_univ.options.address = addressMap["ETHUNIV"];
     this.dogefi_grap_univ.options.address = addressMap["DOGEFIUNIV"];
 
 
@@ -179,6 +184,8 @@ export class Contracts {
       {"tokenAddr": this.yffi_grap_univ.options.address, "poolAddr": this.yffi_grap_univ_pool.options.address},
       {"tokenAddr": this.grap_yfii_bal.options.address, "poolAddr": this.grap_yfii_bal_pool.options.address},
       {"tokenAddr": this.eth_grap_univ.options.address, "poolAddr": this.eth_grap_univ_pool.options.address},
+
+      {"tokenAddr": this.etherror_grap_univ.options.address, "poolAddr": this.etherror_grap_univ_pool.options.address},
       {"tokenAddr": this.dogefi_grap_univ.options.address, "poolAddr": this.dogefi_grap_univ_pool.options.address},
 
       // basic

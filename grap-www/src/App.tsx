@@ -41,7 +41,7 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/" exact>
             <Home />
-            <Disclaimer />
+            {/* <Disclaimer /> */}
           </Route>
           <Route path="/farms">
             <Farms />
@@ -82,23 +82,23 @@ const Providers: React.FC = ({children}) => {
   );
 };
 
-const Disclaimer: React.FC = () => {
-  const markSeen = useCallback(() => {
-    localStorage.setItem("disclaimer", "seen");
-  }, []);
+// const Disclaimer: React.FC = () => {
+//   const markSeen = useCallback(() => {
+//     localStorage.setItem("disclaimer", "seen");
+//   }, []);
 
-  const [onPresentDisclaimerModal] = useModal(
-    <DisclaimerModal onConfirm={markSeen} />
-  );
+//   const [onPresentDisclaimerModal] = useModal(
+//     <DisclaimerModal onConfirm={markSeen} />
+//   );
 
-  useEffect(() => {
-    const seenDisclaimer = localStorage.getItem("disclaimer");
-    // if (!seenDisclaimer) {
-    onPresentDisclaimerModal();
-    // }
-  }, []);
+//   useEffect(() => {
+//     const seenDisclaimer = localStorage.getItem("disclaimer");
+//     // if (!seenDisclaimer) {
+//     onPresentDisclaimerModal();
+//     // }
+//   }, []);
 
-  return <div />;
-};
+//   return <div />;
+// };
 
 export default App;

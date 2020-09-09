@@ -16,6 +16,7 @@ const NAME_FOR_POOL: { [key: string]: string } = {
   yffi_grap_univ_pool: 'Oh. YFFI',
   grap_yfii_bal_pool: 'YFII is friend.',
   eth_grap_univ_pool: 'We all love ETH.',
+  etherror_grap_univ_pool: 'Error ETH POOL.',
   dogefi_grap_univ_pool: 'DOGEFI is lovely.',
 
   // price uniswap
@@ -39,6 +40,7 @@ const ICON_FOR_POOL: { [key: string]: React.ReactNode } = {
   grap_yfii_bal_pool: '✨',
   yffi_grap_univ_pool: '🔥',
   eth_grap_univ_pool: '😍',
+  etherror_grap_univ_pool: '🚫',
   dogefi_grap_univ_pool: <img src={dogefi} height="96" />,
 
   ycrvUNIV_pool: '🌈',
@@ -55,7 +57,7 @@ const ICON_FOR_POOL: { [key: string]: React.ReactNode } = {
   mkr_pool: '🐮',
 }
 
-const isActivatePool: string[] = ['ycrvUNIV_pool','grap_yfii_bal_pool','eth_grap_univ_pool', 'dogefi_grap_univ_pool']
+const isActivatePool: string[] = ['ycrvUNIV_pool','grap_yfii_bal_pool', 'eth_grap_univ_pool', 'etherror_grap_univ_pool', 'dogefi_grap_univ_pool']
 
 const Farms: React.FC = ({ children }) => {
 
@@ -76,9 +78,9 @@ const Farms: React.FC = ({ children }) => {
         tokenKey = 'weth'
       } else if (tokenKey === 'ycrvUNIV') {
         tokenKey = 'uni_lp'
-      }
+      } 
 
-      const method = pool.methods[tokenKey]
+      const method = tokenKey === 'etherror_grap_univ' ? pool.methods["eth_grap_univ"] : pool.methods[tokenKey] ;
 
       if (method) {
         try {
