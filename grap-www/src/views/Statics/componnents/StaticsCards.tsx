@@ -32,6 +32,16 @@ let tokenList: {[index: string]: {[index: string]: string}} = {
     token_name: 'yfii',
     bal_token_name: 'grap_yfii_bal'
   },
+  'eth_grap_univ': {
+    uni_token_addr:'0xC09fb8E468274a683A7570D0b795f8244FBEFf9C',
+    token_name: 'weth',
+    uni_token_name: 'eth_grap_univ'
+  },
+  'dogefi_grap_univ': {
+    uni_token_addr:'0xb623385c0dD0DB66572aCfD2A7D2DCC6eB0E12B0',
+    token_name: 'dogefi',
+    uni_token_name: 'dogefi_grap_univ'
+  },
 }
 
 const FarmCards: React.FC = () => {
@@ -96,6 +106,8 @@ const StaticsCard: React.FC<StaticsCardProps> = ({ farm }) => {
     let hash: any = {
       grap_yfii_bal: ["yfii-finance"],
       uni_lp: ["curve-fi-ydai-yusdc-yusdt-ytusd"],
+      eth_grap_univ: ["ethereum"],
+      dogefi_grap_univ: ["dogefi"],
     }
     let stakingTokenTicker = token
     let targetTokenPrice = 0;

@@ -87,6 +87,7 @@ export class Contracts {
     this.snx = new this.web3.eth.Contract(ERC20Json.abi);
     this.ycrv = new this.web3.eth.Contract(ERC20Json.abi);
     this.yffi = new this.web3.eth.Contract(ERC20Json.abi);
+    this.dogefi = new this.web3.eth.Contract(ERC20Json.abi);
     this.erc20 = new this.web3.eth.Contract(ERC20Json.abi);
 
     this.ycrvUNIV = new this.web3.eth.Contract(ERC20Json.abi);
@@ -161,6 +162,7 @@ export class Contracts {
     this.snx.options.address = addressMap["SNX"];
     this.ycrv.options.address = addressMap["YCRV"];
     this.yffi.options.address = addressMap["YFFI"];
+    this.dogefi.options.address = addressMap["DOGEFI"];
     this.ycrvUNIV.options.address = addressMap["YCRVUNIV"];
     this.uni_fact.options.address = addressMap["uniswapFactoryV2"];
     this.uni_router.options.address = addressMap["UNIRouter"];
