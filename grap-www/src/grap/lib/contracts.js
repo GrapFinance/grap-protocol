@@ -37,6 +37,11 @@ import ETHUNIVPoolJson from '../clean_build/contracts/GRAPETHUNIVPool.json';
 import DOGEFIUNIVPoolJson from '../clean_build/contracts/GRAPDOGEFIUNIVPool.json';
 import ETHUNIVERRORPoolJson from '../clean_build/contracts/GRAPETHUNIVERRORPool.json'
 
+// wine
+import BrewMasterJson from '../clean_build/contracts/BrewMaster.json';
+import GRAPWineJson from '../clean_build/contracts/GRAPWine.json';
+import WineTraderJson from '../clean_build/contracts/WineTrader.json';
+
 export class Contracts {
   constructor(
     provider,
@@ -106,6 +111,12 @@ export class Contracts {
     this.gov = new this.web3.eth.Contract(GRAPGovJson.abi);
     this.timelock = new this.web3.eth.Contract(GRAPTimelockJson.abi);
     this.weth = new this.web3.eth.Contract(WETHJson);
+
+    // wine
+    this.brewMaster = new this.web3.eth.Contract(BrewMasterJson);
+    this.grapWine = new this.web3.eth.Contract(GRAPWineJson);
+    this.wineTrader = new this.web3.eth.Contract(WineTraderJson);
+
     this.setProvider(provider, networkId);
     this.setDefaultAccount(this.web3.eth.defaultAccount);
   }
@@ -120,6 +131,11 @@ export class Contracts {
     this.reserves.setProvider(provider);
     this.gov.setProvider(provider);
     this.timelock.setProvider(provider);
+
+    // wine
+    this.brewMaster.setProvider(provider);
+    this.grapWine.setProvider(provider);
+    this.wineTrader.setProvider(provider);
     const contracts = [
       // advanced pool
       { contract: this.yffi_grap_univ_pool, json: YFFIPoolJson },
@@ -145,6 +161,11 @@ export class Contracts {
       { contract: this.link_pool, json: LINKPoolJson },
       { contract: this.comp_pool, json: COMPPoolJson },
       { contract: this.ycrvUNIV_pool, json: IncJson },
+
+      // wine
+      { contract: this.brewMaster, json: BrewMasterJson },
+      { contract: this.grapWine, json: GRAPWineJson },
+      { contract: this.wineTrader, json: WineTraderJson },
     ]
 
     contracts.forEach(contract => this.setContractProvider(

@@ -1,0 +1,1 @@
+{"abi": [{"stateMutability": "view", "inputs": [{"type": "address", "name": "", "internalType": "address"}], "type": "function", "name": "proxies", "outputs": [{"type": "address", "name": "", "internalType": "contract OwnableDelegateProxy"}]}], "networks": {}}

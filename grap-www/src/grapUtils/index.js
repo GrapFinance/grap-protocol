@@ -285,3 +285,137 @@ export const delegate = async (grap, account, from) => {
 export const castVote = async (grap, id, support, from) => {
   return grap.contracts.gov.methods.castVote(id, support).send({from: from, gas: 320000 })
 }
+
+// wine
+
+export const approveWinePool = async (grap, account) => {
+  return grap.contracts.eth_grap_univ.methods
+    .approve(grap.contracts.brewMaster.address, ethers.constants.MaxUint256)
+    .send({ from: account, gas: 80000 })
+}
+
+export const depositWinePool = async (grap, amount, account) => {
+  // supply one pool now.
+  let pid = 0;
+  return grap.contracts.brewMaster
+    .deposit(pid, (new BigNumber(amount).times(new BigNumber(10).pow(18))).toString())
+    .send({ from: account })
+    .on('transactionHash', tx => {
+      console.log(tx)
+      return tx.transactionHash
+    })
+}
+
+export const getPendingTickets = async (grap, account) => {
+  // supply one pool now.
+  let pid = 0;
+  const pending = new BigNumber(await grap.contracts.brewMaster.pendingTicket(pid, account).call())
+  return pending.dividedBy(new BigNumber(10).pow(18))
+}
+
+export const getTicketsEarned = async (grap, account) => {
+  const earned = new BigNumber(await grap.contracts.brewMaster.ticketBalanceOf(account).call())
+  return earned.dividedBy(new BigNumber(10).pow(18))
+}
+
+export const getWinePoolStaked = async (grap, account) => {
+  // supply one pool now.
+  let pid = 0;
+  return grap.toBigN(await grap.contracts.brewMaster.methods.userLPInfo(pid, account).call())
+}
+
+export const drawWine = async (grap, account) => {
+  return grap.contracts.brewMaster.methods
+    .draw().send({ from: account, gas: 800000 });
+}
+
+export const claimWine = async (grap, wid, amount, account) => {
+  return grap.contracts.brewMaster.methods
+    .claim(wid, amount).send({ from: account });
+}
+
+export const getUserWineAmount = async (grap, wid, account) => {
+  return await grap.contracts.grapWine.balanceOf(account, wid).call();
+}
+
+export const getWinePoolAmount = async (grap, wid) => {
+  return await grap.contracts.brewMaster.wineBalanceOf(wid).call();
+}
+
+export const getWineClaimFee = async (grap, wid, amount) => {
+  return await grap.contracts.brewMaster.claimFee(wid, amount).call();
+}
+
+export const getUserClaimWineAmount = async (grap, wid, address) => {
+  return await grap.contracts.brewMaster.userWineBalanceOf(address, wid).call();
+}
+
+export const getWineRewards = async (grap, type) => {
+  let rewards = []
+  const filter = {
+    fromBlock: 0,
+    toBlock: 'latest',
+  }
+  const events = await grap.contracts.gov.getPastEvents("Reward", filter)
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i]
+    if (event.removed === false) {
+        if(event.event === type){
+          rewards.push(
+            {
+              user: event.returnValues.user,
+              wineID: event.returnValues.wineID,
+              transactionHash: event.transactionHash,
+              blockNumber: event.blockNumber
+            }
+          )
+        }
+    }
+  }
+  rewards.sort((a,b) => Number(a.blockNumber) - Number(b.blockNumber))
+  return rewards
+}
+
+// trader
+export const getOrderList = async (grap, type) => {
+  let rewards = []
+  const filter = {
+    fromBlock: 0,
+    toBlock: 'latest',
+  }
+  const events = await grap.contracts.gov.getPastEvents("Reward", filter)
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i]
+    if (event.removed === false) {
+        if(event.event === type){
+          rewards.push(
+            {
+              orderID: event.returnValues.orderID,
+              user: event.returnValues.user,
+              wid: event.returnValues.wid,
+              price: event.returnValues.price,
+              transactionHash: event.transactionHash,
+              blockNumber: event.blockNumber
+            }
+          )
+        }
+    }
+  }
+  rewards.sort((a,b) => Number(a.blockNumber) - Number(b.blockNumber))
+  return rewards
+}
+
+export const orderWine = async (grap, wid, _price, account) => {
+  return grap.contracts.wineTrader.methods
+    .orderWine(wid, _price).send({ from: account });
+}
+
+export const cancel = async (grap, orderID, account) => {
+  return grap.contracts.wineTrader.methods
+    .cancel(orderID).send({ from: account });
+}
+
+export const buyWine = async (grap, orderID, account) => {
+  return grap.contracts.wineTrader.methods
+    .buyWine(orderID).send({ from: account });
+}
