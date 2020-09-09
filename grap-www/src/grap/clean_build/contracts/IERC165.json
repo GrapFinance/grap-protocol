@@ -1,0 +1,1 @@
+{"abi": [{"stateMutability": "view", "inputs": [{"type": "bytes4", "name": "_interfaceId", "internalType": "bytes4"}], "type": "function", "name": "supportsInterface", "outputs": [{"type": "bool", "name": "", "internalType": "bool"}]}], "networks": {}}
