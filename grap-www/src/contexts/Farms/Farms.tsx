@@ -109,9 +109,7 @@ const Farms: React.FC = ({children}) => {
         }
       }
     }
-    console.log(farmsArr);
     const highPriority = ["etherror_grap_univ"];
-    debugger;
     farmsArr.sort(
       (a, b) =>
         (a.isActivate ? -1 : 1) +
