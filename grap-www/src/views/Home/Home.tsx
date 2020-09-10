@@ -124,7 +124,12 @@ const Home: React.FC = () => {
           ></WineMaker>
         </Container>
       </StyledPrizeBlock>
-
+      <StyledInfo>
+        ⭐️ Whenever you get a new bottle of wine, you can see it in
+        <a href="https://opensea.io/assets/crypto-wine" target="_blank">
+          OpeanSea
+        </a>
+      </StyledInfo>
       <h1 style={{textAlign: "center"}}>Grap Info</h1>
       <StyledOverview>
         <Rebase nextRebase={nextRebase} />
@@ -224,6 +229,14 @@ const StatsBlock = styled.div``;
 const StyledSpacer = styled.div`
   height: ${(props) => props.theme.spacing[4]}px;
   width: ${(props) => props.theme.spacing[4]}px;
+`;
+const StyledInfo = styled.h3`
+  color: ${(props) => props.theme.color.grey[400]};
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  text-align: center;
 `;
 
 export default Home;
