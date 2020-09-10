@@ -24,6 +24,7 @@ import {getStats} from "./utils";
 import {drawWine} from "../../grapUtils";
 
 import {Line} from "rc-progress";
+import {stat} from "fs";
 
 let once = false;
 const Home: React.FC = () => {
@@ -53,7 +54,6 @@ const Home: React.FC = () => {
     },
     setStats,
   ] = useState<OverviewData>({});
-
   const fetchStats = useCallback(async () => {
     const statsData = await getStats(grap, account);
     setStats(statsData);
@@ -103,7 +103,6 @@ const Home: React.FC = () => {
         {`WineMaking Collection completion : ${precent}%`}
         <Line percent={cliamedPrecent} strokeWidth={1} strokeColor="#ff2f40" />
       </div> */}
-
       <StyledPrizeBlock>
         <Container>
           <WinePool
@@ -206,6 +205,10 @@ const PrizePool = styled.div`
   font-size: 50px;
   font-weight: bold;
   margin-bottom: 20px;
+  text-align: center;
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
 `;
 const PrizePoolSmall = styled.small`
   color: #dedede;
@@ -217,6 +220,9 @@ const Price = styled.p`
   font-size: 100px;
   text-align: center;
   margin: 0;
+  @media (max-width: 768px) {
+    font-size: 50px;
+  }
 `;
 
 const Icon = styled.div`

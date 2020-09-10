@@ -74,12 +74,13 @@ export const getStats = async (grap: typeof Grap, account: string) => {
   const nextRebase = await getNextRebaseTimestamp(grap);
   const targetPrice = await getTargetPrice(grap);
   const totalSupply = await getTotalSupply(grap);
-  const rewards = await getAllReward(grap);
-  const myRewards = rewards.filter((r) => r.user == account);
   const tickets = await getTicketsEarned(grap, account);
   const remainWineAmount = await totalWineAmount(grap);
   const balance = await getBalance(grap);
   const unclaimedWines = await getUnclaimedWines(grap, account);
+  const rewards = await getAllReward(grap);
+  const myRewards = rewards.filter((r) => r.user === account);
+
   return {
     circSupply,
     curPrice,

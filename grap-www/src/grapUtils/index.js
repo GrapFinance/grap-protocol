@@ -462,9 +462,9 @@ export const getUserClaimWineAmount = async (grap, wid, address) => {
 export const getWineRewards = async (grap, type) => {
   let rewards = [];
   const filter = {
-    fromBlock: 0,
     toBlock: "latest",
   };
+  // alert(grap.contracts.brewMaster.getPastEvents);
   const events = await grap.contracts.brewMaster.getPastEvents(
     "allEvents",
     filter

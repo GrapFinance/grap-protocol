@@ -29,7 +29,6 @@ const WineMaker: React.FC<WineMakerProps> = ({
   account,
 }) => {
   const wines = unclaimedWines || [];
-  debugger;
   return (
     <StyledStats>
       <Card>
@@ -67,9 +66,9 @@ const WineMaker: React.FC<WineMakerProps> = ({
                   ? wines.map((amount, index) => {
                       return amount > 0 ? (
                         <Button
+                          key={index}
                           onClick={async () => {
                             const cliaim = await claimFee(grap, index, amount);
-                            debugger;
                             claimWine(grap, index, amount, account, cliaim);
                           }}
                           text={`No.${index} Crypto Wines earned!`}

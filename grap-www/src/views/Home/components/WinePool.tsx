@@ -17,13 +17,16 @@ interface WinePoolProps {
 const WinePool: React.FC<WinePoolProps> = ({ticketNumber, draw}) => {
   const date = new Date();
   const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  let dateNumber = Date.parse(`${year}-${month}-${day} 00:00 GMT+0000`);
+  let month: any = date.getMonth() + 1;
+  let day: any = date.getDate();
+  month = month < 10 ? `0` + month : month;
+  day = day < 10 ? `0` + day : day;
+  let dateNumber = Number(
+    new Date(`${year}-${month}-${day}T00:00:00.000+00:00`)
+  );
   if (Date.now() > dateNumber) {
     dateNumber += 24 * 60 * 60 * 1000;
   }
-  console.log(new Date(dateNumber));
   const dialValue = ((dateNumber - Date.now()) / (1000 * 60 * 60 * 24)) * 100;
   const renderer = (countdownProps: CountdownRenderProps) => {
     const {hours, minutes, seconds} = countdownProps;
