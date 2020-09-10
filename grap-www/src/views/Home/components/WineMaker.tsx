@@ -35,7 +35,11 @@ const WineMaker: React.FC<WineMakerProps> = ({
         <CardContent>
           <StyledStat>
             <StyledValue>
-              {ticketNumber ? <CountUp end={ticketNumber} /> : "-"}
+              {ticketNumber || ticketNumber == 0 ? (
+                <CountUp end={ticketNumber} />
+              ) : (
+                "-"
+              )}
             </StyledValue>
             <Label text="Earned Tickets" />
           </StyledStat>
