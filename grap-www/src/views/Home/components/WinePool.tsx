@@ -52,8 +52,8 @@ const WinePool: React.FC<WinePoolProps> = ({ticketNumber, draw}) => {
           <StyledSpacer />
           <Button
             onClick={draw}
-            text={`Draw(Cost 100 Tickets)`}
-            disabled={ticketNumber < 100}
+            text={`Draw(Cost 1000 Tickets)`}
+            disabled={ticketNumber < 1000}
           />
           <StyledLink to="/WinePool">Earn Tickets</StyledLink>
         </CardContent>

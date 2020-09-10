@@ -86,7 +86,10 @@ export const redeem = async (poolContract, account) => {
 
 export const approve = async (tokenContract, poolContract, account) => {
   return tokenContract.methods
-    .approve(poolContract.options.address, (ethers.constants.MaxUint256).toString())
+    .approve(
+      poolContract.options.address,
+      ethers.constants.MaxUint256.toString()
+    )
     .send({from: account, gas: 80000});
 };
 
@@ -334,7 +337,7 @@ export const castVote = async (grap, id, support, from) => {
 // wine
 export const getWinePoolStaked = async (brewMaster, pid, account) => {
   try {
-    const {amount} = await brewMaster.methods.userInfo(pid, account).call();
+    const {amount} = await brewMaster.methods.userLPInfo(pid, account).call();
     return new BigNumber(amount);
   } catch {
     return new BigNumber(0);
@@ -372,7 +375,10 @@ export const totalWineAmount = async (grap) => {
 };
 export const approveWinePool = async (grap, account) => {
   return grap.contracts.eth_grap_univ.methods
-    .approve(grap.contracts.brewMaster.address, (ethers.constants.MaxUint256).toString())
+    .approve(
+      grap.contracts.brewMaster.address,
+      ethers.constants.MaxUint256.toString()
+    )
     .send({from: account, gas: 80000});
 };
 

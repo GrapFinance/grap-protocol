@@ -82,8 +82,7 @@ const Home: React.FC = () => {
   const prizePoolNumber = (balance * 2) / 3;
   const wineNumber = myRewards ? myRewards.length : 0;
   const wines = unclaimedWines || [];
-  console.log(unclaimedWines);
-  const unclaimedNumber = wines.filter((e) => e.amount > 0).length;
+  const unclaimedNumber = wines.filter((e) => e > 0).length;
   return (
     <Page>
       <PageHeader icon={<img width="80" src={logo} />} subtitle="" title="" />
