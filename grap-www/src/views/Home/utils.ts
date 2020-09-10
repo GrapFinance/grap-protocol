@@ -80,7 +80,6 @@ export const getStats = async (grap: typeof Grap, account: string) => {
   const unclaimedWines = await getUnclaimedWines(grap, account);
   const rewards = await getAllReward(grap);
   const myRewards = rewards.filter((r) => r.user === account);
-
   return {
     circSupply,
     curPrice,

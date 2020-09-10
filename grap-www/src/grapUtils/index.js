@@ -59,7 +59,7 @@ export const harvest = async (poolContract, account) => {
   if (now >= 1597172400) {
     return poolContract.methods
       .getReward()
-      .send({from: account, gas: 400000})
+      .send({from: account, gas: 200000})
       .on("transactionHash", (tx) => {
         console.log(tx);
         return tx.transactionHash;
@@ -240,8 +240,7 @@ export const getProposals = async (grap) => {
     fromBlock: 0,
     toBlock: "latest",
   };
-  const events = await grap.contracts.gov.getPastEvents("allEvents", filter);
-  console.log(events);
+  const events = await grap.contracts.gov.getPastEvents("allEvents", {filter});
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
     let index = 0;
@@ -419,7 +418,7 @@ export const getBalance = async (grap) => {
 export const drawWine = async (grap, account) => {
   return grap.contracts.brewMaster.methods
     .draw()
-    .send({from: account, gas: 800000});
+    .send({from: account, gas: 400000});
 };
 
 export const getUnclaimedWines = async (grap, account) => {
@@ -462,9 +461,9 @@ export const getUserClaimWineAmount = async (grap, wid, address) => {
 export const getWineRewards = async (grap, type) => {
   let rewards = [];
   const filter = {
+    fromBlock: 0,
     toBlock: "latest",
   };
-  // alert(grap.contracts.brewMaster.getPastEvents);
   const events = await grap.contracts.brewMaster.getPastEvents(
     "allEvents",
     filter

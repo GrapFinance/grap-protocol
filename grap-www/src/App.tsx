@@ -56,6 +56,9 @@ const App: React.FC = () => {
           <Route path="/stats">
             <Statics />
           </Route>
+          <Route path={`/wines/:wineId`}>
+            <Wine />
+          </Route>
           <Route path={`/wine/:wineId`}>
             <Wine />
           </Route>

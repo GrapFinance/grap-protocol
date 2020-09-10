@@ -126,7 +126,7 @@ const Home: React.FC = () => {
       <StyledInfo>
         ⭐️ Whenever you get a new bottle of wine, you can see it in
         <a href="https://opensea.io/assets/crypto-wine" target="_blank">
-          OpeanSea
+          OpenSea
         </a>
       </StyledInfo>
       <h1 style={{textAlign: "center"}}>Grap Info</h1>
