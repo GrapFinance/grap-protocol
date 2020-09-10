@@ -19,6 +19,7 @@ import Farms from "./views/Farms";
 import Wines from "./views/Wines";
 import Wine from "./views/Wine";
 import Vote from "./views/Vote";
+import Mine from "./views/Mine";
 import Home from "./views/Home";
 import Statics from "./views/Statics";
 import WinePool from "./views/WinePool";
@@ -61,6 +62,9 @@ const App: React.FC = () => {
           </Route>
           <Route path={`/wine/:wineId`}>
             <Wine />
+          </Route>
+          <Route path={`/mine`}>
+            <Mine />
           </Route>
           <Route path="/WinePool">
             <WinePool />
