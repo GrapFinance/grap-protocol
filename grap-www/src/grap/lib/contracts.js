@@ -47,9 +47,11 @@ export class Contracts {
     provider,
     networkId,
     web3,
+    infura,
     options
   ) {
     this.web3 = web3;
+    this.infura = infura;
     this.defaultConfirmations = options.defaultConfirmations;
     this.autoGasMultiplier = options.autoGasMultiplier || 1.5;
     this.confirmationType = options.confirmationType || Types.ConfirmationType.Confirmed;
@@ -117,13 +119,22 @@ export class Contracts {
     this.grapWine = new this.web3.eth.Contract(GRAPWineJson.abi);
     this.wineTrader = new this.web3.eth.Contract(WineTraderJson.abi);
 
-    this.setProvider(provider, networkId);
+    // need events
+    this.rebaser_event = new this.web3.eth.Contract(GRAPRebaserJson.abi);
+    this.reserves_event = new this.web3.eth.Contract(GRAPReservesJson.abi);
+    this.gov_event = new this.web3.eth.Contract(GRAPGovJson.abi);
+    this.brewMaster_event = new this.web3.eth.Contract(BrewMasterJson.abi);
+    this.grapWine_event = new this.web3.eth.Contract(GRAPWineJson.abi);
+    this.wineTrader_event = new this.web3.eth.Contract(WineTraderJson.abi);
+
+    this.setProvider(provider, infura, networkId);
     this.setDefaultAccount(this.web3.eth.defaultAccount);
   }
 
 
   setProvider(
     provider,
+    infura,
     networkId
   ) {
     this.grap.setProvider(provider);
@@ -136,6 +147,7 @@ export class Contracts {
     this.brewMaster.setProvider(provider);
     this.grapWine.setProvider(provider);
     this.wineTrader.setProvider(provider);
+
     const contracts = [
       // advanced pool
       { contract: this.yffi_grap_univ_pool, json: YFFIPoolJson },
@@ -166,6 +178,14 @@ export class Contracts {
       { contract: this.brewMaster, json: BrewMasterJson },
       { contract: this.grapWine, json: GRAPWineJson },
       { contract: this.wineTrader, json: WineTraderJson },
+
+      // need evetns
+      { contract: this.rebaser_event, json: GRAPRebaserJson },
+      { contract: this.reserves_event, json: GRAPReservesJson },
+      { contract: this.gov_event, json: GRAPGovJson },
+      { contract: this.brewMaster_event, json: BrewMasterJson },
+      { contract: this.grapWine_event, json: GRAPWineJson },
+      { contract: this.wineTrader_event, json: WineTraderJson },
     ]
 
     contracts.forEach(contract => this.setContractProvider(
@@ -175,6 +195,15 @@ export class Contracts {
         networkId,
       ),
     );
+
+    // need events
+    this.rebaser_event.setProvider(infura);
+    this.reserves_event.setProvider(infura);
+    this.gov_event.setProvider(infura);
+    this.brewMaster_event.setProvider(infura);
+    this.grapWine_event.setProvider(infura);
+    this.wineTrader_event.setProvider(infura);
+
     this.yfi.options.address = addressMap["YFI"];
     this.yfii.options.address = addressMap["YFII"];
     this.crv.options.address = addressMap["CRV"];

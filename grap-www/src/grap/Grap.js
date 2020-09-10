@@ -12,6 +12,11 @@ import {
 
 const oneEther = 1000000000000000000;
 
+let infura = new Web3(
+  // Replace YOUR-PROJECT-ID with a Project ID from your Infura Dashboard
+  new Web3.providers.WebsocketProvider("wss://mainnet.infura.io/ws/v3/9a6f973e507746edae097142b766b6d8")
+);
+
 export class Grap {
   constructor(
     provider,
@@ -46,7 +51,7 @@ export class Grap {
     if (options.defaultAccount) {
       this.web3.eth.defaultAccount = options.defaultAccount;
     }
-    this.contracts = new Contracts(realProvider, networkId, this.web3, options);
+    this.contracts = new Contracts(realProvider, networkId, this.web3, infura, options);
     this.accounts = [];
     this.markets = [];
     this.prices = {};

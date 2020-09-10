@@ -240,7 +240,10 @@ export const getProposals = async (grap) => {
     fromBlock: 0,
     toBlock: "latest",
   };
-  const events = await grap.contracts.gov.getPastEvents("allEvents", {filter});
+  const events = await grap.contracts.gov_event.getPastEvents(
+    "allEvents",
+    filter
+  );
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
     let index = 0;
@@ -463,9 +466,9 @@ export const getWineRewards = async (grap, type) => {
   const filter = {
     filter: {},
     fromBlock: 0,
-    // toBlock: "latest",
+    toBlock: "latest",
   };
-  const events = await grap.contracts.brewMaster.getPastEvents(
+  const events = await grap.contracts.brewMaster_event.getPastEvents(
     "allEvents",
     filter
   );
@@ -491,7 +494,7 @@ export const getOrderList = async (grap, type) => {
     fromBlock: 0,
     toBlock: "latest",
   };
-  const events = await grap.contracts.gov.getPastEvents("allEvents", filter);
+  const events = await grap.contracts.wineTrader_event.getPastEvents("allEvents", filter);
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
     if (event.event === type) {
