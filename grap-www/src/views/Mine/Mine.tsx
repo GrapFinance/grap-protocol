@@ -33,7 +33,6 @@ const Mine: React.FC = () => {
     let rewards = await getWineRewards(grap, ["Reward", "Airdrop"]);
     setRewards(rewards);
     const MineWinesData = rewards.filter((d) => d.user == account);
-    console.log(MineWinesData);
     setMineWines(MineWinesData);
   }, [account, grap]);
 

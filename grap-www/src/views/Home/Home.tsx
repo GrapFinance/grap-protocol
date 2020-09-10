@@ -129,6 +129,24 @@ const Home: React.FC = () => {
           OpenSea
         </a>
       </StyledInfo>
+      <StyledInfo>
+        ❓ Need help about WineMaking?
+        <a
+          href="https://medium.com/@grap.finance/q-a-about-winemaking-bd9035c8ca0e"
+          target="_blank"
+          style={{margin: "0 10px", color: "#07c"}}
+        >
+          Help
+        </a>
+        <a
+          href="https://docs.qq.com/doc/DSWRaTkZvSVJJVEdM"
+          target="_blank"
+          style={{margin: "0 10px", color: "#07c"}}
+        >
+          帮助
+        </a>
+      </StyledInfo>
+
       <h1 style={{textAlign: "center"}}>Grap Info</h1>
       <StyledOverview>
         <Rebase nextRebase={nextRebase} />
