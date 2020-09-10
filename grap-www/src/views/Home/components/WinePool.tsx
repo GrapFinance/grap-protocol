@@ -21,8 +21,9 @@ const WinePool: React.FC<WinePoolProps> = ({ticketNumber, draw}) => {
   const day = date.getDate();
   let dateNumber = Date.parse(`${year}-${month}-${day} 00:00 GMT+0000`);
   if (Date.now() > dateNumber) {
-    dateNumber += 24 * 60 * 60;
+    dateNumber += 24 * 60 * 60 * 1000;
   }
+  console.log(new Date(dateNumber));
   const dialValue = ((dateNumber - Date.now()) / (1000 * 60 * 60 * 24)) * 100;
   const renderer = (countdownProps: CountdownRenderProps) => {
     const {hours, minutes, seconds} = countdownProps;

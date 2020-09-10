@@ -78,12 +78,12 @@ const Home: React.FC = () => {
   const wineTotalSupply = 10000;
   const alreadyCliamed = wineTotalSupply - parseInt(remainWineAmount, 10);
   const cliamedPrecent = (alreadyCliamed / wineTotalSupply) * 100;
-
   const wineMakingScore = 55;
-  const unclaimedNumber = 1;
   const prizePoolNumber = (balance * 2) / 3;
   const wineNumber = myRewards ? myRewards.length : 0;
-
+  const wines = unclaimedWines || [];
+  console.log(unclaimedWines);
+  const unclaimedNumber = wines.filter((e) => e.amount > 0).length;
   return (
     <Page>
       <PageHeader icon={<img width="80" src={logo} />} subtitle="" title="" />

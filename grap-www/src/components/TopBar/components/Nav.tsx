@@ -14,9 +14,9 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/wines">
         Wines
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/vote">
+      {/* <StyledLink exact activeClassName="active" to="/vote">
         Vote
-      </StyledLink>
+      </StyledLink> */}
       <StyledLink exact activeClassName="active" to="/stats">
         Stats
       </StyledLink>

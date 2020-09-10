@@ -70,19 +70,13 @@ const getUnclaimedWines = async (
 
 export const getStats = async (grap: typeof Grap, account: string) => {
   const curPrice = await getCurrentPrice(grap);
-  // await getCurrentPrice(grap);
   const circSupply = await getCirculatingSupply(grap);
-  // await getCirculatingSupply(grap);
   const nextRebase = await getNextRebaseTimestamp(grap);
-  // await getNextRebaseTimestamp(grap);
   const targetPrice = await getTargetPrice(grap);
-  // await getTargetPrice(grap);
   const totalSupply = await getTotalSupply(grap);
-  // await getTotalSupply(grap);
   const rewards = await getAllReward(grap);
   const myRewards = rewards.filter((r) => r.user == account);
   const tickets = await getTicketsEarned(grap, account);
-  console.log(tickets);
   const remainWineAmount = await totalWineAmount(grap);
   const balance = await getBalance(grap);
   const unclaimedWines = await getUnclaimedWines(grap, account);

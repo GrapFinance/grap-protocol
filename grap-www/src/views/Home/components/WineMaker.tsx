@@ -4,6 +4,7 @@ import CountUp from "react-countup";
 import numeral from "numeral";
 
 import CardContent from "../../../components/CardContent";
+import get from "../../../models/wines";
 
 import {getDisplayBalance} from "../../../utils/formatBalance";
 import BigNumber from "bignumber.js";
@@ -56,31 +57,27 @@ const WineMaker: React.FC<WineMakerProps> = ({
 
       <StyledSpacer />
 
-      {wines.length ? (
+      {wines.length && unclaimedNumber > 0 ? (
         <Card>
           <CardContent>
             <StyledStat>
               <StyledValue>
                 {unclaimedNumber > 0
-                  ? wines.map((wine) => {
-                      return (
+                  ? wines.map((amount, index) => {
+                      return amount > 0 ? (
                         <Button
                           onClick={async () => {
                             const cliaim = await claimFee(
                               grap,
-                              wine.wid,
-                              wine.amount
+                              index + 1,
+                              amount
                             );
-                            claimWine(
-                              grap,
-                              wine.wid,
-                              wine.amount,
-                              account,
-                              cliaim
-                            );
+                            claimWine(grap, index + 1, amount, account, cliaim);
                           }}
-                          text={`No.${wine.wid} Crypto Wines earned!`}
+                          text={`No.${index + 1} Crypto Wines earned!`}
                         />
+                      ) : (
+                        ""
                       );
                     })
                   : ""}
