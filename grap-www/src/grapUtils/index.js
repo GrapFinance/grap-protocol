@@ -461,8 +461,9 @@ export const getUserClaimWineAmount = async (grap, wid, address) => {
 export const getWineRewards = async (grap, type) => {
   let rewards = [];
   const filter = {
+    filter: {},
     fromBlock: 0,
-    toBlock: "latest",
+    // toBlock: "latest",
   };
   const events = await grap.contracts.brewMaster.getPastEvents(
     "allEvents",
@@ -470,15 +471,13 @@ export const getWineRewards = async (grap, type) => {
   );
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
-    if (event.removed === false) {
-      if (type.includes(event.event)) {
-        rewards.push({
-          user: event.returnValues.user,
-          wineID: event.returnValues.wineID,
-          transactionHash: event.transactionHash,
-          blockNumber: event.blockNumber,
-        });
-      }
+    if (type.includes(event.event)) {
+      rewards.push({
+        user: event.returnValues.user,
+        wineID: event.returnValues.wineID,
+        transactionHash: event.transactionHash,
+        blockNumber: event.blockNumber,
+      });
     }
   }
   rewards.sort((a, b) => Number(a.blockNumber) - Number(b.blockNumber));
@@ -492,20 +491,18 @@ export const getOrderList = async (grap, type) => {
     fromBlock: 0,
     toBlock: "latest",
   };
-  const events = await grap.contracts.gov.getPastEvents("Reward", filter);
+  const events = await grap.contracts.gov.getPastEvents("allEvents", filter);
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
-    if (event.removed === false) {
-      if (event.event === type) {
-        rewards.push({
-          orderID: event.returnValues.orderID,
-          user: event.returnValues.user,
-          wid: event.returnValues.wid,
-          price: event.returnValues.price,
-          transactionHash: event.transactionHash,
-          blockNumber: event.blockNumber,
-        });
-      }
+    if (event.event === type) {
+      rewards.push({
+        orderID: event.returnValues.orderID,
+        user: event.returnValues.user,
+        wid: event.returnValues.wid,
+        price: event.returnValues.price,
+        transactionHash: event.transactionHash,
+        blockNumber: event.blockNumber,
+      });
     }
   }
   rewards.sort((a, b) => Number(a.blockNumber) - Number(b.blockNumber));

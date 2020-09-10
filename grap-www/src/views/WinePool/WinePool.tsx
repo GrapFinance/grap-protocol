@@ -7,6 +7,7 @@ import Spacer from "../../components/Spacer";
 import {getContract} from "../../utils/erc20";
 import Harvest from "./components/Harvest";
 import Stake from "./components/Stake";
+
 let once = false;
 const Farm: React.FC = () => {
   const {pid, lpTokenAddress, name, icon} = {

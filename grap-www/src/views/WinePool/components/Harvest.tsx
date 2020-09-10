@@ -9,13 +9,14 @@ import Value from '../../../components/Value'
 import useWinePoolEarnings from '../../../hooks/useWinePoolEarnings'
 import useWinePoolReward from '../../../hooks/useWinePoolReward'
 import { getDisplayBalance } from '../../../utils/formatBalance'
+import CountUp from "react-countup";
 
 interface HarvestProps {
   pid: number
 }
 
 const Harvest: React.FC<HarvestProps> = ({ pid }) => {
-  const earnings = useWinePoolEarnings(0)
+  const earnings = useWinePoolEarnings(pid)
   const [pendingTx, setPendingTx] = useState(false)
   const { onReward } = useWinePoolReward(pid)
 
