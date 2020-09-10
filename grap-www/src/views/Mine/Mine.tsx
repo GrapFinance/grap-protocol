@@ -134,8 +134,8 @@ const WineImage = styled.img`
 
 const WineInfo = styled.div`
   float: left;
-  margin-bottom: 15px;
-  margin-right: 30px;
+  margin-bottom: 45px;
+  margin-right: 45px;
   border-radius: 3px;
   overflow: hidden;
 `;
