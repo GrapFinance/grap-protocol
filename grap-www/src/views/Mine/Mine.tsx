@@ -137,6 +137,12 @@ const WineInfo = styled.div`
   margin-right: 45px;
   border-radius: 3px;
   overflow: hidden;
+  @media (max-width: 768px) {
+    float: none;
+    inline-size: min-content;
+    justify-content: center;
+    margin: 20px auto;
+  }
 `;
 const WinePill = styled.div`
   border-radius: 5px;
@@ -147,6 +153,11 @@ const WinePill = styled.div`
   display: inline-block;
   font-weight: bold;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
 `;
 
 const WineInfoItem = styled.div`
