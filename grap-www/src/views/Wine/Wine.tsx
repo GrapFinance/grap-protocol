@@ -104,7 +104,7 @@ const Wine: React.FC = () => {
                 (!!account && grap && wineAomunt > 0
                     ? 
                       <div>
-                        You have {claimAmoumt} wines.
+                        You have {wineAomunt} wines.
                         <Button
                         onClick={async () => {
                           var price = prompt("Please enter price.(ETH)", "1");
