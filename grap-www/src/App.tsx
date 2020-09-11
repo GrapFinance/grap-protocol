@@ -23,6 +23,7 @@ import Mine from "./views/Mine";
 import Home from "./views/Home";
 import Statics from "./views/Statics";
 import WinePool from "./views/WinePool";
+import Trade from "./views/Trade";
 import theme from "./theme";
 
 const App: React.FC = () => {
@@ -68,6 +69,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/WinePool">
             <WinePool />
+          </Route>
+          <Route path={`/trade`}>
+            <Trade />
           </Route>
         </Switch>
       </Router>

@@ -1,21 +1,30 @@
-import React, {useMemo, useEffect} from "react";
+import React, {useEffect, useCallback, useState} from "react";
 import styled from "styled-components";
 
 import {useParams} from "react-router-dom";
 import {useWallet} from "use-wallet";
-import {provider} from "web3-core";
 
 import Button from "../../components/Button";
-import PageHeader from "../../components/PageHeader";
-import Spacer from "../../components/Spacer";
+
+import useModal from '../../hooks/useModal'
 
 import WineData from "../../models/wines";
-import Countdown from "react-countdown";
+
+import useApprovedForAll from '../../hooks/useApprovedForAll'
+
+import useGrap from "../../hooks/useGrap";
+import {getWinesBalance, claimWine, claimFee, orderWine, getUnclaimedWines, setApproveAll} from "../../grapUtils";
 
 const Wine: React.FC = () => {
+  const grap = useGrap();
+  const {account} = useWallet();
+  const isApproveAll = useApprovedForAll()
+  const [claimAmoumt, setClaimAmoumt] = useState(0);
+  const [wineAomunt, setWineAomunt] = useState(0);
+  const [requestedApproval, setRequestedApproval] = useState(false)
+
   const {wineId} = useParams();
   const wines = Object.values(WineData);
-  console.log(wines);
   const wine = wines.filter((w) => w.id == wineId)[0];
   const _color = (type: string) => {
     switch (type) {
@@ -31,15 +40,19 @@ const Wine: React.FC = () => {
         return "linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3)";
     }
   };
-  const countdownBlock = () => {
-    const date = Date.parse("2020-09-11T00:00:00+0000");
-    if (Date.now() >= date) return "";
-    return (
-      <CountdownView>
-        <Countdown date={date} />
-      </CountdownView>
-    );
-  };
+  const fetchAmount = useCallback(async () => {
+    let unclaimedWines = await getUnclaimedWines(grap, account);
+    setClaimAmoumt(unclaimedWines[wineId]);
+    let wineAmount = await getWinesBalance(grap, wineId, account);
+    setWineAomunt(wineAmount);
+  }, [account, grap]);
+
+  useEffect(() => {
+    if (grap) {
+      fetchAmount();
+    }
+  }, [fetchAmount, grap]);
+
   return (
     <>
       {wine ? (
@@ -58,9 +71,51 @@ const Wine: React.FC = () => {
               Probability percentage: {fetch(wine, "Max Supply") / 100}%
             </WineInfoItem>
             <WineDesc>{wine.description}</WineDesc>
-            <WineInfoItem>
-              Buy and Sell will Release at: {countdownBlock()}
-            </WineInfoItem>
+            <ClaimWine>
+              {!!account && claimAmoumt >= 0
+                  ? 
+                    <div>
+                      You have {claimAmoumt} unclaim wines.
+                      <Button
+                      onClick={async () => {
+                        const cliaim = await claimFee(grap, wineId, claimAmoumt);
+                        claimWine(grap, wineId, claimAmoumt, account, cliaim);
+                      }}
+                      text={`Claim The Wines!`}
+                    />
+                    </div>
+                  : ""
+              }
+            {!!account && grap && !isApproveAll && wineAomunt >= 0
+              ?
+                  <Button
+                  disabled={requestedApproval}
+                  onClick={async () => {
+                    setRequestedApproval(true)
+                    const txHash = await setApproveAll(grap, account);
+                    // user rejected tx or didn't go thru
+                    if (!txHash) {
+                      setRequestedApproval(false)
+                    }
+                  }}
+                  text={`Approve to sell`}
+                />
+              :
+                (!!account && grap && wineAomunt >= 0
+                    ? 
+                      <div>
+                        You have {claimAmoumt} wines.
+                        <Button
+                        onClick={async () => {
+                          var price = prompt("Please enter price.(ETH)", "1");
+                          orderWine(grap, wineId, price, account);
+                        }}
+                        text={`Sell Wines!`}
+                      />
+                      </div>
+                    : "")
+            }
+            </ClaimWine>
           </WineInfo>
           <TranasctionsBlock></TranasctionsBlock>
         </Container>
@@ -109,6 +164,13 @@ const WinePill = styled.div`
 const WineInfoItem = styled.div`
   margin: 15px 0;
 `;
+
+const ClaimWine = styled.div`
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+`
 
 // const Button = styled.button``;
 

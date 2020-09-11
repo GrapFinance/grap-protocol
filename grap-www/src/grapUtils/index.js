@@ -430,6 +430,12 @@ export const getUnclaimedWines = async (grap, account) => {
     .call();
 };
 
+export const getWinesBalance = async (grap, wid, account) => {
+  return await grap.contracts.grapWine.methods
+    .balanceOf(account, wid)
+    .call();
+};
+
 export const claimFee = async (grap, wid, amount) => {
   const fee = new BigNumber(
     await grap.contracts.brewMaster.methods.claimFee(wid, amount).call()
@@ -488,8 +494,24 @@ export const getWineRewards = async (grap, type) => {
 };
 
 // trader
+export const getApproveAll = async (grap, account) => {
+  if(grap && grap.contracts.grapWine){
+    return grap.contracts.grapWine.methods
+    .isApprovedForAll(account, grap.contracts.wineTrader._address)
+    .call();
+  } else {
+    return false;
+  }
+};
+
+export const setApproveAll = async (grap, account) => {
+  return grap.contracts.grapWine.methods
+    .setApprovalForAll(grap.contracts.wineTrader._address, true)
+    .send({from: account});
+};
+
 export const getOrderList = async (grap, type) => {
-  let rewards = [];
+  let orderMap = new Map();
   const filter = {
     fromBlock: 0,
     toBlock: "latest",
@@ -497,24 +519,26 @@ export const getOrderList = async (grap, type) => {
   const events = await grap.contracts.wineTrader_event.getPastEvents("allEvents", filter);
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
-    if (event.event === type) {
-      rewards.push({
+    if (type.includes(event.event)) {
+      orderMap.set(event.returnValues.orderID, {
         orderID: event.returnValues.orderID,
         user: event.returnValues.user,
         wid: event.returnValues.wid,
-        price: event.returnValues.price,
+        price: new BigNumber(event.returnValues.price),
         transactionHash: event.transactionHash,
         blockNumber: event.blockNumber,
-      });
+      })
     }
   }
-  rewards.sort((a, b) => Number(a.blockNumber) - Number(b.blockNumber));
-  return rewards;
+  let orderlist = Array.from(orderMap.values());
+  orderlist.sort((a, b) => Number(a.blockNumber) - Number(b.blockNumber));
+  return orderlist;
 };
+
 
 export const orderWine = async (grap, wid, _price, account) => {
   return grap.contracts.wineTrader.methods
-    .orderWine(wid, _price)
+    .orderWine(wid, (new BigNumber(_price).times(new BigNumber(10).pow(18)).toString()))
     .send({from: account});
 };
 
@@ -524,8 +548,8 @@ export const cancel = async (grap, orderID, account) => {
     .send({from: account});
 };
 
-export const buyWine = async (grap, orderID, account) => {
+export const buyWine = async (grap, orderID, price, account) => {
   return grap.contracts.wineTrader.methods
     .buyWine(orderID)
-    .send({from: account});
+    .send({from: account, value: price});
 };
