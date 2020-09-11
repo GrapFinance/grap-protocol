@@ -72,7 +72,7 @@ const Wine: React.FC = () => {
             </WineInfoItem>
             <WineDesc>{wine.description}</WineDesc>
             <ClaimWine>
-              {!!account && claimAmoumt >= 0
+              {!!account && claimAmoumt > 0
                   ? 
                     <div>
                       You have {claimAmoumt} unclaim wines.
@@ -86,7 +86,7 @@ const Wine: React.FC = () => {
                     </div>
                   : ""
               }
-            {!!account && grap && !isApproveAll && wineAomunt >= 0
+            {!!account && grap && !isApproveAll && wineAomunt > 0
               ?
                   <Button
                   disabled={requestedApproval}
@@ -101,7 +101,7 @@ const Wine: React.FC = () => {
                   text={`Approve to sell`}
                 />
               :
-                (!!account && grap && wineAomunt >= 0
+                (!!account && grap && wineAomunt > 0
                     ? 
                       <div>
                         You have {claimAmoumt} wines.

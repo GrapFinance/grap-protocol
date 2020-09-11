@@ -521,6 +521,7 @@ export const getOrderList = async (grap, type) => {
     const event = events[i];
     if (type.includes(event.event)) {
       orderMap.set(event.returnValues.orderID, {
+        type: event.event,
         orderID: event.returnValues.orderID,
         user: event.returnValues.user,
         wid: event.returnValues.wid,
