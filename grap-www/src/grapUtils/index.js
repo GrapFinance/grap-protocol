@@ -520,6 +520,9 @@ export const getOrderList = async (grap, type) => {
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
     if (type.includes(event.event)) {
+      if(event.event === "Buy"){
+        event.returnValues.price = (orderMap.get(event.returnValues.orderID)).price;
+      }
       orderMap.set(event.returnValues.orderID, {
         type: event.event,
         orderID: event.returnValues.orderID,
