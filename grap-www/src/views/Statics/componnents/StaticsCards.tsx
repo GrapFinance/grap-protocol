@@ -146,7 +146,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({farm}) => {
               .totalSupply()
               .call()) / 1e18;
           stakingTokenPrice =
-            (stakingTokenPrice * totalyTokenInBalancerPair +
+            (targetTokenPrice * totalyTokenInBalancerPair +
               price * totalGRAPInUniswapPair) /
             totalSupplyOfStakingToken;
         } else if (token.indexOf("bal") !== -1) {
