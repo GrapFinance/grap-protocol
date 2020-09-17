@@ -36,12 +36,7 @@ let tokenList: {[index: string]: {[index: string]: string}} = {
     uni_token_addr: "0xC09fb8E468274a683A7570D0b795f8244FBEFf9C",
     token_name: "weth",
     uni_token_name: "eth_grap_univ",
-  },
-  dogefi_grap_univ: {
-    uni_token_addr: "0xb623385c0dD0DB66572aCfD2A7D2DCC6eB0E12B0",
-    token_name: "dogefi",
-    uni_token_name: "dogefi_grap_univ",
-  },
+  }
 };
 
 const FarmCards: React.FC = () => {

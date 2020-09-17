@@ -61,7 +61,7 @@ const isActivatePool: string[] = [
   "grap_yfii_bal_pool",
   "eth_grap_univ_pool",
   "etherror_grap_univ_pool",
-  "dogefi_grap_univ_pool",
+  // "dogefi_grap_univ_pool",
 ];
 
 const Farms: React.FC = ({children}) => {
