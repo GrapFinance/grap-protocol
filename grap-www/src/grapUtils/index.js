@@ -279,13 +279,17 @@ export const getProposals = async (grap) => {
         case "VoteCast":
           break;
         case "ProposalExecuted":
+          index = proposals.findIndex(
+            (proposal) => proposal.id === event.returnValues.id
+          );
+          proposals[index].status = PROPOSALSTATUSCODE.EXECUTED;
           break;
         default:
           break;
       }
     }
   }
-  proposals.sort((a, b) => Number(b.endBlock) - Number(b.endBlock));
+  proposals.sort((a, b) => Number(b.endBlock) - Number(a.endBlock));
   return proposals;
 };
 

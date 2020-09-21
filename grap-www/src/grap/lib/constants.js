@@ -30,6 +30,9 @@ export const PROPOSALSTATUSCODE = {
   EXECUTED: 4,
 };
 
+export const PROPOSALSTATUSTEXT = Object.keys(PROPOSALSTATUSCODE);
+
+
 export const addressMap = {
   uniswapFactory : "0xc0a47dFe034B400B47bDaD5FecDa2621de6c4d95",
   uniswapFactoryV2: "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",

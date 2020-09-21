@@ -7,7 +7,7 @@ import Card from '../../../components/Card'
 import CardContent from '../../../components/CardContent'
 import Loader from '../../../components/Loader'
 
-import {PROPOSALSTATUSCODE} from '../../../grap/lib/constants'
+import {PROPOSALSTATUSCODE, PROPOSALSTATUSTEXT} from '../../../grap/lib/constants'
 import useProposals from '../../../hooks/useProposals'
 
 import { Proposal } from '../../../contexts/Proposals'
@@ -79,7 +79,7 @@ const ProposalCard: React.FC<ProposalCards> = ({ proposal }) => {
                 </StyledCreated>
               ) : (
                 <StyledEnd>
-                  End
+                  { PROPOSALSTATUSTEXT[proposal.status] }
                 </StyledEnd>
               )}
             <Button
