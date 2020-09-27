@@ -40,6 +40,7 @@ const Farm: React.FC = () => {
     eth_grap_univ: "ETH",
     etherror_grap_univ: "ETH",
     dogefi_grap_univ: "0x9B9087756eCa997C5D595C840263001c9a26646D",
+    sake_grap_univ: "0x67222b7e2f48a8c23e84b19a2d8f7b8162ab86c5",
   };
 
   useEffect(() => {

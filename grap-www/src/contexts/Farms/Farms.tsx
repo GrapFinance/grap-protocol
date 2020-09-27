@@ -18,6 +18,7 @@ const NAME_FOR_POOL: {[key: string]: string} = {
   eth_grap_univ_pool: "We all love ETH.",
   etherror_grap_univ_pool: "Error ETH POOL.",
   dogefi_grap_univ_pool: "DOGEFI is lovely.",
+  sake_grap_univ_pool: "Sake and Wine.",
 
   // price uniswap
   ycrvUNIV_pool: "Eternal Lands",
@@ -41,6 +42,7 @@ const ICON_FOR_POOL: {[key: string]: React.ReactNode} = {
   eth_grap_univ_pool: "😍",
   etherror_grap_univ_pool: "🚫",
   dogefi_grap_univ_pool: <img src={dogefi} height="96" />,
+  sake_grap_univ_pool: "🍶",
 
   ycrvUNIV_pool: "🌈",
 
@@ -61,7 +63,7 @@ const isActivatePool: string[] = [
   "grap_yfii_bal_pool",
   "eth_grap_univ_pool",
   "etherror_grap_univ_pool",
-  // "dogefi_grap_univ_pool",
+  "sake_grap_univ_pool",
 ];
 
 const Farms: React.FC = ({children}) => {

@@ -36,6 +36,11 @@ let tokenList: {[index: string]: {[index: string]: string}} = {
     uni_token_addr: "0xC09fb8E468274a683A7570D0b795f8244FBEFf9C",
     token_name: "weth",
     uni_token_name: "eth_grap_univ",
+  },
+  sake_grap_univ: {
+    uni_token_addr: "0x67222b7e2f48a8C23E84B19a2d8F7b8162aB86c5",
+    token_name: "sake",
+    uni_token_name: "sake_grap_univ",
   }
 };
 
@@ -117,6 +122,7 @@ const StaticsCard: React.FC<StaticsCardProps> = ({farm}) => {
       uni_lp: ["curve-fi-ydai-yusdc-yusdt-ytusd"],
       eth_grap_univ: ["ethereum"],
       dogefi_grap_univ: ["dogefi"],
+      sake_grap_univ: ["sake-token"],
     };
     let stakingTokenTicker = token;
     let targetTokenPrice = 0;
