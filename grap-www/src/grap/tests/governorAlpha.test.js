@@ -13,11 +13,11 @@ import {
 const ethUtil = require('ethereumjs-util');
 
 async function enfranchise(actor, amount, user) {
-  await grap.contracts.grap.methods.transfer(actor, amount.toString()).send({from: user});
-  await grap.contracts.grap.methods.delegate(actor).send({from: actor});
+  await oliv.contracts.oliv.methods.transfer(actor, amount.toString()).send({from: user});
+  await oliv.contracts.oliv.methods.delegate(actor).send({from: actor});
 }
 
-export const grap = new Yam(
+export const oliv = new Yam(
   "http://localhost:8545/",
   // "http://127.0.0.1:9545/",
   "1001",
@@ -37,7 +37,7 @@ const oneEther = 10 ** 18;
 const EIP712 = require('./EIP712');
 
 describe("governorAlpha#castVote/2", () => {
-  let name = "GRAP";
+  let name = "OLIV";
   let chainId = 1001;
   let snapshotId;
   let user;
@@ -57,48 +57,48 @@ describe("governorAlpha#castVote/2", () => {
   const pvk_a3 = "0x752dd9cf65e68cfaba7d60225cbdbc1f4729dd5e5507def72815ed0d8abc6249";
   const pvk_a4 = "0xefb595a0178eb79a8df953f87c5148402a224cdf725e88c0146727c6aceadccd";
   beforeAll(async () => {
-    await grap.testing.resetEVM("0x2");
-    accounts = await grap.web3.eth.getAccounts();
-    grap.addAccount(accounts[0]);
+    await oliv.testing.resetEVM("0x2");
+    accounts = await oliv.web3.eth.getAccounts();
+    oliv.addAccount(accounts[0]);
     user = accounts[0];
     a1 = accounts[1];
     a2 = accounts[2];
     guy = accounts[3];
     a3 = accounts[4];
     a4 = accounts[5];
-    let one_hundred = grap.toBigN(100).times(grap.toBigN(10**18));
-    // await grap.contracts.grap.methods.transfer(guy, one_hundred.toString()).send({from: user});
+    let one_hundred = oliv.toBigN(100).times(oliv.toBigN(10**18));
+    // await oliv.contracts.oliv.methods.transfer(guy, one_hundred.toString()).send({from: user});
 
-    snapshotId = await grap.testing.snapshot();
+    snapshotId = await oliv.testing.snapshot();
 
     targets = [a1];
     values = ["0"];
     signatures = ["getBalanceOf(address)"];
-    callDatas = [grap.web3.eth.abi.encodeParameters(['address'], [a1])];
+    callDatas = [oliv.web3.eth.abi.encodeParameters(['address'], [a1])];
   });
 
   beforeEach(async () => {
-    await grap.testing.resetEVM("0x2");
-    await grap.contracts.grap.methods.delegate(a1).send({from: user, gas: 400000});
-    await grap.contracts.gov.methods.propose(targets, values, signatures, callDatas, "do nothing").send({from: a1, gas: 400000});
-    proposalId = await grap.contracts.gov.methods.latestProposalIds(a1).call();
+    await oliv.testing.resetEVM("0x2");
+    await oliv.contracts.oliv.methods.delegate(a1).send({from: user, gas: 400000});
+    await oliv.contracts.gov.methods.propose(targets, values, signatures, callDatas, "do nothing").send({from: a1, gas: 400000});
+    proposalId = await oliv.contracts.gov.methods.latestProposalIds(a1).call();
   });
 
   describe("We must revert if:", () => {
     it("There does not exist a proposal with matching proposal id where the current block number is between the proposal's start block (exclusive) and end block (inclusive)", async () => {
-      await grap.testing.expectThrow(
-        grap.contracts.gov.methods.castVote(proposalId, true).call(),
+      await oliv.testing.expectThrow(
+        oliv.contracts.gov.methods.castVote(proposalId, true).call(),
         "GovernorAlpha::_castVote: voting is closed"
       );
     });
 
     test("Such proposal already has an entry in its voters set matching the sender", async () => {
-      await grap.testing.mineBlock();
-      await grap.testing.mineBlock();
+      await oliv.testing.mineBlock();
+      await oliv.testing.mineBlock();
 
-      await grap.contracts.gov.methods.castVote(proposalId, true).send({from: accounts[4]});
-      await grap.testing.expectThrow(
-        grap.contracts.gov.methods.castVote(proposalId, true).call({ from: accounts[4] }),
+      await oliv.contracts.gov.methods.castVote(proposalId, true).send({from: accounts[4]});
+      await oliv.testing.expectThrow(
+        oliv.contracts.gov.methods.castVote(proposalId, true).call({ from: accounts[4] }),
         "GovernorAlpha::_castVote: voter already voted"
       );
     });
@@ -106,13 +106,13 @@ describe("governorAlpha#castVote/2", () => {
 
   describe("Otherwise", () => {
     it("we add the sender to the proposal's voters set", async () => {
-      await grap.testing.mineBlock();
-      await grap.testing.mineBlock();
-      let r = await grap.contracts.gov.methods.getReceipt(proposalId, accounts[2]).call();
+      await oliv.testing.mineBlock();
+      await oliv.testing.mineBlock();
+      let r = await oliv.contracts.gov.methods.getReceipt(proposalId, accounts[2]).call();
       expect(r.hasVoted).toBe(false);
 
-      await grap.contracts.gov.methods.castVote(proposalId, true).send({from: accounts[2]});
-      r = await grap.contracts.gov.methods.getReceipt(proposalId, accounts[2]).call();
+      await oliv.contracts.gov.methods.castVote(proposalId, true).send({from: accounts[2]});
+      r = await oliv.contracts.gov.methods.getReceipt(proposalId, accounts[2]).call();
       expect(r.hasVoted).toBe(true);
     });
 
@@ -120,39 +120,39 @@ describe("governorAlpha#castVote/2", () => {
       let actor; // an account that will propose, receive tokens, delegate to self, and vote on own proposal
 
       test("and we add that ForVotes", async () => {
-        await grap.testing.mineBlock();
-        await grap.testing.mineBlock();
+        await oliv.testing.mineBlock();
+        await oliv.testing.mineBlock();
         actor = a2;
-        await enfranchise(actor, grap.toBigN(400001).times(10**18), user);
+        await enfranchise(actor, oliv.toBigN(400001).times(10**18), user);
 
-        await grap.contracts.gov.methods.propose(targets, values, signatures, callDatas, "do nothing").send({from: actor, gas: 400000});
+        await oliv.contracts.gov.methods.propose(targets, values, signatures, callDatas, "do nothing").send({from: actor, gas: 400000});
 
-        proposalId = await grap.contracts.gov.methods.latestProposalIds(actor).call();
+        proposalId = await oliv.contracts.gov.methods.latestProposalIds(actor).call();
 
-        let beforeFors = (await grap.contracts.gov.methods.proposals(proposalId).call()).forVotes;
-        await grap.testing.mineBlock();
-        await grap.contracts.gov.methods.castVote(proposalId, true).send({ from: actor });
+        let beforeFors = (await oliv.contracts.gov.methods.proposals(proposalId).call()).forVotes;
+        await oliv.testing.mineBlock();
+        await oliv.contracts.gov.methods.castVote(proposalId, true).send({ from: actor });
 
-        let afterFors = (await grap.contracts.gov.methods.proposals(proposalId).call()).forVotes;
-        expect(grap.toBigN(afterFors).toString()).toBe(grap.toBigN(beforeFors).plus(grap.toBigN(400001).times(10**24)).toString());
+        let afterFors = (await oliv.contracts.gov.methods.proposals(proposalId).call()).forVotes;
+        expect(oliv.toBigN(afterFors).toString()).toBe(oliv.toBigN(beforeFors).plus(oliv.toBigN(400001).times(10**24)).toString());
       })
 
       test("or AgainstVotes corresponding to the caller's support flag.", async () => {
-        await grap.testing.mineBlock();
-        await grap.testing.mineBlock();
+        await oliv.testing.mineBlock();
+        await oliv.testing.mineBlock();
         actor = accounts[4];
-        await enfranchise(actor, grap.toBigN(400001).times(10**18), user);
+        await enfranchise(actor, oliv.toBigN(400001).times(10**18), user);
 
-        await grap.contracts.gov.methods.propose(targets, values, signatures, callDatas, "do nothing").send({from: actor, gas: 400000});
+        await oliv.contracts.gov.methods.propose(targets, values, signatures, callDatas, "do nothing").send({from: actor, gas: 400000});
 
-        proposalId = await grap.contracts.gov.methods.latestProposalIds(actor).call();
+        proposalId = await oliv.contracts.gov.methods.latestProposalIds(actor).call();
 
-        let beforeFors = (await grap.contracts.gov.methods.proposals(proposalId).call()).againstVotes;
-        await grap.testing.mineBlock();
-        await grap.contracts.gov.methods.castVote(proposalId, false).send({ from: actor });
+        let beforeFors = (await oliv.contracts.gov.methods.proposals(proposalId).call()).againstVotes;
+        await oliv.testing.mineBlock();
+        await oliv.contracts.gov.methods.castVote(proposalId, false).send({ from: actor });
 
-        let afterFors = (await grap.contracts.gov.methods.proposals(proposalId).call()).againstVotes;
-        expect(grap.toBigN(afterFors).toString()).toBe(grap.toBigN(beforeFors).plus(grap.toBigN(400001).times(10**24)).toString());
+        let afterFors = (await oliv.contracts.gov.methods.proposals(proposalId).call()).againstVotes;
+        expect(oliv.toBigN(afterFors).toString()).toBe(oliv.toBigN(beforeFors).plus(oliv.toBigN(400001).times(10**24)).toString());
       });
     });
 
@@ -173,9 +173,9 @@ describe("governorAlpha#castVote/2", () => {
              },
              primaryType: 'Ballot',
              domain: {
-                 name: 'GRAP Governor Alpha',
+                 name: 'OLIV Governor Alpha',
                  chainId: 1,
-                 verifyingContract: grap.contracts.gov.options.address,
+                 verifyingContract: oliv.contracts.gov.options.address,
              },
              message: {
                  proposalId: proposalId,
@@ -186,8 +186,8 @@ describe("governorAlpha#castVote/2", () => {
         let sigHash = EIP712.encodeTypedData(typedData)
         const sig = ethUtil.ecsign(ethUtil.toBuffer(sigHash, 'hex'), ethUtil.toBuffer(pvk_a1, 'hex'));
 
-        await grap.testing.expectThrow(
-            grap.contracts.gov.methods.castVoteBySig(proposalId, false, 0, '0xbad', '0xbad').send({from: user}),
+        await oliv.testing.expectThrow(
+            oliv.contracts.gov.methods.castVoteBySig(proposalId, false, 0, '0xbad', '0xbad').send({from: user}),
             "GovernorAlpha::castVoteBySig: invalid signature"
         );
       });
@@ -195,9 +195,9 @@ describe("governorAlpha#castVote/2", () => {
       it('casts vote on behalf of the signatory', async () => {
 
 
-        await enfranchise(a4, grap.toBigN(400001).times(10**18), user);
-        await grap.contracts.gov.methods.propose(targets, values, signatures, callDatas, "do nothing").send({ from: a4, gas: 400000 });
-        proposalId = await grap.contracts.gov.methods.latestProposalIds(a4).call();
+        await enfranchise(a4, oliv.toBigN(400001).times(10**18), user);
+        await oliv.contracts.gov.methods.propose(targets, values, signatures, callDatas, "do nothing").send({ from: a4, gas: 400000 });
+        proposalId = await oliv.contracts.gov.methods.latestProposalIds(a4).call();
 
         const typedData = {
              types: {
@@ -213,7 +213,7 @@ describe("governorAlpha#castVote/2", () => {
              },
              primaryType: 'Ballot',
              domain: {
-                 name: 'GRAP Governor Alpha',
+                 name: 'OLIV Governor Alpha',
                  chainId: 1,
                  verifyingContract: "0x47Ff9D00cDAE31B4E09DEf8081bb3a1282e8061D",
              },
@@ -226,14 +226,14 @@ describe("governorAlpha#castVote/2", () => {
         let sigHash = EIP712.encodeTypedData(typedData)
         const sig = ethUtil.ecsign(ethUtil.toBuffer(sigHash, 'hex'), ethUtil.toBuffer(pvk_a4, 'hex'));
 
-        let beforeFors = (await grap.contracts.gov.methods.proposals(proposalId).call()).forVotes;
-        await grap.testing.mineBlock();
-        const tx = await grap.contracts.gov.methods.castVoteBySig(proposalId, true, sig.v, sig.r, sig.s).send({from: a4, gas: 100000});
+        let beforeFors = (await oliv.contracts.gov.methods.proposals(proposalId).call()).forVotes;
+        await oliv.testing.mineBlock();
+        const tx = await oliv.contracts.gov.methods.castVoteBySig(proposalId, true, sig.v, sig.r, sig.s).send({from: a4, gas: 100000});
         console.log(tx.events)
         expect(tx.gasUsed < 80000);
 
-        let afterFors = (await grap.contracts.gov.methods.proposals(proposalId).call()).forVotes;
-        expect(grap.toBigN(afterFors).toString()).toBe(grap.toBigN(beforeFors).plus(grap.toBigN(400001).times(10**24)).toString());
+        let afterFors = (await oliv.contracts.gov.methods.proposals(proposalId).call()).forVotes;
+        expect(oliv.toBigN(afterFors).toString()).toBe(oliv.toBigN(beforeFors).plus(oliv.toBigN(400001).times(10**24)).toString());
       });
     });
   });

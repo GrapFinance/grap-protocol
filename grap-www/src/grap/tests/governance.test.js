@@ -16,7 +16,7 @@ const ethUtil = require('ethereumjs-util');
 
 // const ethUtil = require('ethereumjs-util');
 
-export const grap = new Yam(
+export const oliv = new Yam(
   "http://localhost:8545/",
   // "http://127.0.0.1:9545/",
   "1001",
@@ -36,8 +36,8 @@ const oneEther = 10 ** 18;
 
 const EIP712 = require('./EIP712.js');
 
-describe('GRAP governance', () => {
-  let name = "GRAP";
+describe('OLIV governance', () => {
+  let name = "OLIV";
   let chainId = 1001;
   let snapshotId;
   let user;
@@ -48,17 +48,17 @@ describe('GRAP governance', () => {
 
 
   beforeAll(async () => {
-    const accounts = await grap.web3.eth.getAccounts();
-    grap.addAccount(accounts[0]);
+    const accounts = await oliv.web3.eth.getAccounts();
+    oliv.addAccount(accounts[0]);
     user = accounts[0];
     a1 = accounts[1];
     a2 = accounts[2];
     guy = accounts[3];
-    snapshotId = await grap.testing.snapshot();
+    snapshotId = await oliv.testing.snapshot();
   });
 
   beforeEach(async () => {
-    await grap.testing.resetEVM("0x2");
+    await oliv.testing.resetEVM("0x2");
   });
 
   describe('delegateBySig', () => {
@@ -69,7 +69,7 @@ describe('GRAP governance', () => {
     const pvk_a1 = "0x5d862464fe9303452126c8bc94274b8c5f9874cbd219789b3eb2128075a76f72";
     test('reverts if the signatory is invalid', async () => {
       const delegatee = user, nonce = 0, expiry = 0;
-      await grap.testing.expectThrow(grap.contracts.grap.methods.delegateBySig(delegatee, nonce, expiry, 0, '0xbad', '0xbad').send({from: a1}), "GRAP::delegateBySig: invalid signature");
+      await oliv.testing.expectThrow(oliv.contracts.oliv.methods.delegateBySig(delegatee, nonce, expiry, 0, '0xbad', '0xbad').send({from: a1}), "OLIV::delegateBySig: invalid signature");
     });
 
     test('reverts if the nonce is bad ', async () => {
@@ -91,7 +91,7 @@ describe('GRAP governance', () => {
            },
            primaryType: 'Delegation',
            domain: {
-               name: 'GRAP',
+               name: 'OLIV',
                chainId: 1, // since we are using --fork, it respects that chainID
                verifyingContract: '0x4BC6657283f8f24e27EAc1D21D1deE566C534A9A',
            },
@@ -108,7 +108,7 @@ describe('GRAP governance', () => {
 
       // const encoded = EIP712.signer.encodeMessageData(delegation.types, delegation.primaryType, delegation.message);
 
-      await grap.testing.expectThrow(grap.contracts.grap.methods.delegateBySig(user, 1, 0, sig.v, sig.r, sig.s).send({from: a1}), "GRAP::delegateBySig: invalid nonce");
+      await oliv.testing.expectThrow(oliv.contracts.oliv.methods.delegateBySig(user, 1, 0, sig.v, sig.r, sig.s).send({from: a1}), "OLIV::delegateBySig: invalid nonce");
     });
 
     test('reverts if the signature has expired', async () => {
@@ -130,7 +130,7 @@ describe('GRAP governance', () => {
            },
            primaryType: 'Delegation',
            domain: {
-               name: 'GRAP',
+               name: 'OLIV',
                chainId: 1,
                verifyingContract: '0x4BC6657283f8f24e27EAc1D21D1deE566C534A9A',
            },
@@ -145,7 +145,7 @@ describe('GRAP governance', () => {
       const sig = ethUtil.ecsign(ethUtil.toBuffer(sigHash, 'hex'), ethUtil.toBuffer(pvk_a1, 'hex'));
 
 
-      await grap.testing.expectThrow(grap.contracts.grap.methods.delegateBySig(user, 0, 0, sig.v, sig.r, sig.s).send({from: a1}), "GRAP::delegateBySig: signature expired");
+      await oliv.testing.expectThrow(oliv.contracts.oliv.methods.delegateBySig(user, 0, 0, sig.v, sig.r, sig.s).send({from: a1}), "OLIV::delegateBySig: signature expired");
     });
 
     test('delegates on behalf of the signatory', async () => {
@@ -165,7 +165,7 @@ describe('GRAP governance', () => {
            },
            primaryType: 'Delegation',
            domain: {
-               name: 'GRAP',
+               name: 'OLIV',
                chainId: 1,
                verifyingContract: '0x4BC6657283f8f24e27EAc1D21D1deE566C534A9A',
            },
@@ -179,19 +179,19 @@ describe('GRAP governance', () => {
       let sigHash = EIP712.encodeTypedData(typedData)
       const sig = ethUtil.ecsign(ethUtil.toBuffer(sigHash, 'hex'), ethUtil.toBuffer(pvk_a1, 'hex'));
 
-      let tx = await grap.contracts.grap.methods.delegateBySig(user, 0, 10e9, sig.v, sig.r, sig.s).send({from: a1, gas: 500000});
+      let tx = await oliv.contracts.oliv.methods.delegateBySig(user, 0, 10e9, sig.v, sig.r, sig.s).send({from: a1, gas: 500000});
       expect(tx.gasUsed < 80000);
-      let k = await grap.contracts.grap.methods.delegates(a1).call();
-      let j = await grap.contracts.grap.methods.delegates(user).call();
+      let k = await oliv.contracts.oliv.methods.delegates(a1).call();
+      let j = await oliv.contracts.oliv.methods.delegates(user).call();
       expect(k).toBe(user);
     });
 
     test('delegate', async () => {
-      let d = await grap.contracts.grap.methods.delegates(a1).call()
+      let d = await oliv.contracts.oliv.methods.delegates(a1).call()
       expect(d).toBe("0x0000000000000000000000000000000000000000");
-      let tx = await grap.contracts.grap.methods.delegate(user).send({from: a1});;
+      let tx = await oliv.contracts.oliv.methods.delegate(user).send({from: a1});;
       expect(tx.gasUsed < 80000);
-      let k = await grap.contracts.grap.methods.delegates(a1).call();
+      let k = await oliv.contracts.oliv.methods.delegates(a1).call();
       expect(k).toBe(user);
     });
   });
@@ -199,40 +199,40 @@ describe('GRAP governance', () => {
   describe('numCheckpoints', () => {
     it('returns the number of checkpoints for a delegate', async () => {
 
-      let one_hundred = grap.toBigN(100).times(grap.toBigN(10**18));
-      await grap.contracts.grap.methods.transfer(guy, one_hundred.toString()).send({from: user});
-      let nc = await grap.contracts.grap.methods.numCheckpoints(a1).call();
+      let one_hundred = oliv.toBigN(100).times(oliv.toBigN(10**18));
+      await oliv.contracts.oliv.methods.transfer(guy, one_hundred.toString()).send({from: user});
+      let nc = await oliv.contracts.oliv.methods.numCheckpoints(a1).call();
       expect(nc).toBe('0');
 
-      await grap.contracts.grap.methods.delegate(a1).send({from: guy});
-      nc = await grap.contracts.grap.methods.numCheckpoints(a1).call();
+      await oliv.contracts.oliv.methods.delegate(a1).send({from: guy});
+      nc = await oliv.contracts.oliv.methods.numCheckpoints(a1).call();
       expect(nc).toBe('1');
 
 
-      await grap.contracts.grap.methods.transfer(a2, one_hundred.minus(one_hundred.times(.9)).toString()).send({from: guy});
-      nc = await grap.contracts.grap.methods.numCheckpoints(a1).call();
+      await oliv.contracts.oliv.methods.transfer(a2, one_hundred.minus(one_hundred.times(.9)).toString()).send({from: guy});
+      nc = await oliv.contracts.oliv.methods.numCheckpoints(a1).call();
       expect(nc).toBe('2');
 
-      await grap.contracts.grap.methods.transfer(a2, one_hundred.minus(one_hundred.times(.9)).toString()).send({from: guy});
-      nc = await grap.contracts.grap.methods.numCheckpoints(a1).call();
+      await oliv.contracts.oliv.methods.transfer(a2, one_hundred.minus(one_hundred.times(.9)).toString()).send({from: guy});
+      nc = await oliv.contracts.oliv.methods.numCheckpoints(a1).call();
       expect(nc).toBe('3');
 
 
-      await grap.contracts.grap.methods.transfer(guy, one_hundred.minus(one_hundred.times(.8)).toString()).send({from: user});
-      nc = await grap.contracts.grap.methods.numCheckpoints(a1).call();
+      await oliv.contracts.oliv.methods.transfer(guy, one_hundred.minus(one_hundred.times(.8)).toString()).send({from: user});
+      nc = await oliv.contracts.oliv.methods.numCheckpoints(a1).call();
       expect(nc).toBe('4');
 
-      let cs = await grap.contracts.grap.methods.checkpoints(a1, 0).call();
+      let cs = await oliv.contracts.oliv.methods.checkpoints(a1, 0).call();
       expect(cs.votes).toBe("100000000000000000000000000"); // 100 * 1e24
 
-      cs = await grap.contracts.grap.methods.checkpoints(a1, 1).call();
+      cs = await oliv.contracts.oliv.methods.checkpoints(a1, 1).call();
       expect(cs.votes).toBe("90000000000000000000000000"); // 90 * 1e24
 
 
-      cs = await grap.contracts.grap.methods.checkpoints(a1, 2).call();
+      cs = await oliv.contracts.oliv.methods.checkpoints(a1, 2).call();
       expect(cs.votes).toBe("80000000000000000000000000"); // 90 * 1e24
 
-      cs = await grap.contracts.grap.methods.checkpoints(a1, 3).call();
+      cs = await oliv.contracts.oliv.methods.checkpoints(a1, 3).call();
       expect(cs.votes).toBe("100000000000000000000000000"); // 90 * 1e24
     });
 
@@ -240,18 +240,18 @@ describe('GRAP governance', () => {
       // For this test to pass, you must enable blocktimes. it will fail otherwise
 
 
-      let one_hundred = grap.toBigN(100).times(grap.toBigN(10**18));
-      await grap.contracts.grap.methods.transfer(guy, one_hundred.toString()).send({from: user});
-      let nc = await grap.contracts.grap.methods.numCheckpoints(a1).call();
+      let one_hundred = oliv.toBigN(100).times(oliv.toBigN(10**18));
+      await oliv.contracts.oliv.methods.transfer(guy, one_hundred.toString()).send({from: user});
+      let nc = await oliv.contracts.oliv.methods.numCheckpoints(a1).call();
       expect(nc).toBe('0');
 
-      await grap.testing.stopMining();
+      await oliv.testing.stopMining();
 
-      let t1 = grap.contracts.grap.methods.delegate(a1).send({from: guy});
-      let t2 = grap.contracts.grap.methods.transfer(a2, grap.toBigN(100).times(grap.toBigN(10**18)).times(.1).toString()).send({from: guy});
-      let t3 = grap.contracts.grap.methods.transfer(a2, grap.toBigN(100).times(grap.toBigN(10**18)).times(.1).toString()).send({from: guy});
+      let t1 = oliv.contracts.oliv.methods.delegate(a1).send({from: guy});
+      let t2 = oliv.contracts.oliv.methods.transfer(a2, oliv.toBigN(100).times(oliv.toBigN(10**18)).times(.1).toString()).send({from: guy});
+      let t3 = oliv.contracts.oliv.methods.transfer(a2, oliv.toBigN(100).times(oliv.toBigN(10**18)).times(.1).toString()).send({from: guy});
 
-      await grap.testing.startMining();
+      await oliv.testing.startMining();
       t1 = await t1;
       t2 = await t2;
       t3 = await t3;
@@ -261,25 +261,25 @@ describe('GRAP governance', () => {
         return;
       }
 
-      nc = await grap.contracts.grap.methods.numCheckpoints(a1).call();
+      nc = await oliv.contracts.oliv.methods.numCheckpoints(a1).call();
       expect(nc).toBe('1');
 
-      let cs = await grap.contracts.grap.methods.checkpoints(a1, 0).call();
+      let cs = await oliv.contracts.oliv.methods.checkpoints(a1, 0).call();
       expect(cs.votes).toBe("80000000000000000000000000"); // 80 * 1e24
 
-      cs = await grap.contracts.grap.methods.checkpoints(a1, 1).call();
+      cs = await oliv.contracts.oliv.methods.checkpoints(a1, 1).call();
       expect(cs.votes).toBe("0"); // 0
 
-      cs = await grap.contracts.grap.methods.checkpoints(a1, 2).call();
+      cs = await oliv.contracts.oliv.methods.checkpoints(a1, 2).call();
       expect(cs.votes).toBe("0"); // 0
 
-      let t4 = await grap.contracts.grap.methods.transfer(guy, grap.toBigN(100).times(grap.toBigN(10**18)).times(.2).toString()).send({from: user});
+      let t4 = await oliv.contracts.oliv.methods.transfer(guy, oliv.toBigN(100).times(oliv.toBigN(10**18)).times(.2).toString()).send({from: user});
 
-      nc = await grap.contracts.grap.methods.numCheckpoints(a1).call();
+      nc = await oliv.contracts.oliv.methods.numCheckpoints(a1).call();
       expect(nc).toBe('2');
 
 
-      cs = await grap.contracts.grap.methods.checkpoints(a1, 1).call();
+      cs = await oliv.contracts.oliv.methods.checkpoints(a1, 1).call();
       expect(cs.votes).toBe("100000000000000000000000000"); // 0
 
     });
@@ -287,85 +287,85 @@ describe('GRAP governance', () => {
 
   describe('getPriorVotes', () => {
     test('reverts if block number >= current block', async () => {
-      await grap.testing.expectThrow(
-        grap.contracts.grap.methods.getPriorVotes(a1, 5e10).call(),
-        "GRAP::getPriorVotes: not yet determined"
+      await oliv.testing.expectThrow(
+        oliv.contracts.oliv.methods.getPriorVotes(a1, 5e10).call(),
+        "OLIV::getPriorVotes: not yet determined"
       )
     });
 
     test('returns 0 if there are no checkpoints', async () => {
-      let pv = await grap.contracts.grap.methods.getPriorVotes(a1, 0).call();
+      let pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, 0).call();
       expect(pv).toBe('0');
     });
 
     test('returns the latest block if >= last checkpoint block', async () => {
-      let t1 = await grap.contracts.grap.methods.delegate(a1).send({from: user});
-      await grap.testing.mineBlock();
-      await grap.testing.mineBlock();
+      let t1 = await oliv.contracts.oliv.methods.delegate(a1).send({from: user});
+      await oliv.testing.mineBlock();
+      await oliv.testing.mineBlock();
 
-      let pv = await grap.contracts.grap.methods.getPriorVotes(a1, t1.blockNumber).call();
+      let pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t1.blockNumber).call();
       expect(pv).toBe('7000000000000000000000000000000');
 
-      pv = await grap.contracts.grap.methods.getPriorVotes(a1, t1.blockNumber + 1).call();
+      pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t1.blockNumber + 1).call();
       expect(pv).toBe('7000000000000000000000000000000');
     });
 
     test('returns zero if < first checkpoint block', async () => {
-      await grap.testing.mineBlock();
-      let t1 = await grap.contracts.grap.methods.delegate(a1).send({from: user});
-      await grap.testing.mineBlock();
-      await grap.testing.mineBlock();
+      await oliv.testing.mineBlock();
+      let t1 = await oliv.contracts.oliv.methods.delegate(a1).send({from: user});
+      await oliv.testing.mineBlock();
+      await oliv.testing.mineBlock();
 
-      let pv = await grap.contracts.grap.methods.getPriorVotes(a1, t1.blockNumber - 1).call();
+      let pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t1.blockNumber - 1).call();
       expect(pv).toBe('0');
 
-      pv = await grap.contracts.grap.methods.getPriorVotes(a1, t1.blockNumber + 1).call();
+      pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t1.blockNumber + 1).call();
       expect(pv).toBe('7000000000000000000000000000000');
     });
 
     it('generally returns the voting balance at the appropriate checkpoint', async () => {
-      let one_hundred = grap.toBigN(100).times(grap.toBigN(10**18));
-      await grap.contracts.grap.methods.transfer(guy, one_hundred.toString()).send({from: user});
+      let one_hundred = oliv.toBigN(100).times(oliv.toBigN(10**18));
+      await oliv.contracts.oliv.methods.transfer(guy, one_hundred.toString()).send({from: user});
 
-      let t1 = await grap.contracts.grap.methods.delegate(a1).send({from: guy});
-      await grap.testing.mineBlock();
-      await grap.testing.mineBlock();
-      let t2 = await grap.contracts.grap.methods.transfer(a2, grap.toBigN(100).times(grap.toBigN(10**18)).times(.1).toString()).send({from: guy});
-      await grap.testing.mineBlock();
-      await grap.testing.mineBlock();
-      let t3 = await grap.contracts.grap.methods.transfer(a2, grap.toBigN(100).times(grap.toBigN(10**18)).times(.1).toString()).send({from: guy});
-      await grap.testing.mineBlock();
-      await grap.testing.mineBlock();
-      let t4 = await grap.contracts.grap.methods.transfer(guy, grap.toBigN(100).times(grap.toBigN(10**18)).times(.2).toString()).send({from: a2});
-      await grap.testing.mineBlock();
-      await grap.testing.mineBlock();
+      let t1 = await oliv.contracts.oliv.methods.delegate(a1).send({from: guy});
+      await oliv.testing.mineBlock();
+      await oliv.testing.mineBlock();
+      let t2 = await oliv.contracts.oliv.methods.transfer(a2, oliv.toBigN(100).times(oliv.toBigN(10**18)).times(.1).toString()).send({from: guy});
+      await oliv.testing.mineBlock();
+      await oliv.testing.mineBlock();
+      let t3 = await oliv.contracts.oliv.methods.transfer(a2, oliv.toBigN(100).times(oliv.toBigN(10**18)).times(.1).toString()).send({from: guy});
+      await oliv.testing.mineBlock();
+      await oliv.testing.mineBlock();
+      let t4 = await oliv.contracts.oliv.methods.transfer(guy, oliv.toBigN(100).times(oliv.toBigN(10**18)).times(.2).toString()).send({from: a2});
+      await oliv.testing.mineBlock();
+      await oliv.testing.mineBlock();
 
 
-      let pv = await grap.contracts.grap.methods.getPriorVotes(a1, t1.blockNumber - 1).call();
+      let pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t1.blockNumber - 1).call();
       expect(pv).toBe('0');
 
-      pv = await grap.contracts.grap.methods.getPriorVotes(a1, t1.blockNumber).call();
+      pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t1.blockNumber).call();
       expect(pv).toBe('100000000000000000000000000');
 
-      pv = await grap.contracts.grap.methods.getPriorVotes(a1, t1.blockNumber + 1).call();
+      pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t1.blockNumber + 1).call();
       expect(pv).toBe('100000000000000000000000000');
 
-      pv = await grap.contracts.grap.methods.getPriorVotes(a1, t2.blockNumber).call();
+      pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t2.blockNumber).call();
       expect(pv).toBe('90000000000000000000000000');
 
-      pv = await grap.contracts.grap.methods.getPriorVotes(a1, t2.blockNumber + 1).call();
+      pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t2.blockNumber + 1).call();
       expect(pv).toBe('90000000000000000000000000');
 
-      pv = await grap.contracts.grap.methods.getPriorVotes(a1, t3.blockNumber).call();
+      pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t3.blockNumber).call();
       expect(pv).toBe('80000000000000000000000000');
 
-      pv = await grap.contracts.grap.methods.getPriorVotes(a1, t3.blockNumber + 1).call();
+      pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t3.blockNumber + 1).call();
       expect(pv).toBe('80000000000000000000000000');
 
-      pv = await grap.contracts.grap.methods.getPriorVotes(a1, t4.blockNumber).call();
+      pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t4.blockNumber).call();
       expect(pv).toBe('100000000000000000000000000');
 
-      pv = await grap.contracts.grap.methods.getPriorVotes(a1, t4.blockNumber + 1).call();
+      pv = await oliv.contracts.oliv.methods.getPriorVotes(a1, t4.blockNumber + 1).call();
       expect(pv).toBe('100000000000000000000000000');
     });
   });

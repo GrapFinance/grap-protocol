@@ -6,7 +6,7 @@ BigNumber.config({
   DECIMAL_PLACES: 80,
 });
 
-export { Grap } from './Grap.js';
+export { Oliv } from './Oliv.js';
 export {
   Web3,
   BigNumber,

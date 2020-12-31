@@ -11,7 +11,7 @@ import {
 } from "../lib/Helpers.js"
 
 
-export const grap = new Yam(
+export const oliv = new Yam(
   "http://localhost:8545/",
   // "http://127.0.0.1:9545/",
   "1001",
@@ -33,65 +33,65 @@ describe("token_tests", () => {
   let user;
   let new_user;
   beforeAll(async () => {
-    const accounts = await grap.web3.eth.getAccounts();
-    grap.addAccount(accounts[0]);
+    const accounts = await oliv.web3.eth.getAccounts();
+    oliv.addAccount(accounts[0]);
     user = accounts[0];
     new_user = accounts[1];
-    snapshotId = await grap.testing.snapshot();
+    snapshotId = await oliv.testing.snapshot();
   });
 
   beforeEach(async () => {
-    await grap.testing.resetEVM("0x2");
+    await oliv.testing.resetEVM("0x2");
   });
 
   describe("expected fail transfers", () => {
     test("cant transfer from a 0 balance", async () => {
-      await grap.testing.expectThrow(grap.contracts.grap.methods.transfer(user, "100").send({from: new_user}), "SafeMath: subtraction overflow");
+      await oliv.testing.expectThrow(oliv.contracts.oliv.methods.transfer(user, "100").send({from: new_user}), "SafeMath: subtraction overflow");
     });
     test("cant transferFrom without allowance", async () => {
-      await grap.testing.expectThrow(grap.contracts.grap.methods.transferFrom(user, new_user, "100").send({from: new_user}), "SafeMath: subtraction overflow");
+      await oliv.testing.expectThrow(oliv.contracts.oliv.methods.transferFrom(user, new_user, "100").send({from: new_user}), "SafeMath: subtraction overflow");
     });
 
   });
 
   describe("non-failing transfers", () => {
     test("transfer to self doesnt inflate", async () => {
-      let bal0 = await grap.contracts.grap.methods.balanceOf(user).call();
-      await grap.contracts.grap.methods.transfer(user, "100").send({from: user});
-      let bal1 = await grap.contracts.grap.methods.balanceOf(user).call();
+      let bal0 = await oliv.contracts.oliv.methods.balanceOf(user).call();
+      await oliv.contracts.oliv.methods.transfer(user, "100").send({from: user});
+      let bal1 = await oliv.contracts.oliv.methods.balanceOf(user).call();
       expect(bal0).toBe(bal1);
     });
     test("transferFrom works", async () => {
-      let bal00 = await grap.contracts.grap.methods.balanceOf(user).call();
-      let bal01 = await grap.contracts.grap.methods.balanceOf(new_user).call();
-      await grap.contracts.grap.methods.approve(new_user, "100").send({from: user});
-      await grap.contracts.grap.methods.transferFrom(user, new_user, "100").send({from: new_user});
-      let bal10 = await grap.contracts.grap.methods.balanceOf(user).call();
-      let bal11 = await grap.contracts.grap.methods.balanceOf(new_user).call();
-      expect((grap.toBigN(bal01).plus(grap.toBigN(100))).toString()).toBe(bal11);
-      expect((grap.toBigN(bal00).minus(grap.toBigN(100))).toString()).toBe(bal10);
+      let bal00 = await oliv.contracts.oliv.methods.balanceOf(user).call();
+      let bal01 = await oliv.contracts.oliv.methods.balanceOf(new_user).call();
+      await oliv.contracts.oliv.methods.approve(new_user, "100").send({from: user});
+      await oliv.contracts.oliv.methods.transferFrom(user, new_user, "100").send({from: new_user});
+      let bal10 = await oliv.contracts.oliv.methods.balanceOf(user).call();
+      let bal11 = await oliv.contracts.oliv.methods.balanceOf(new_user).call();
+      expect((oliv.toBigN(bal01).plus(oliv.toBigN(100))).toString()).toBe(bal11);
+      expect((oliv.toBigN(bal00).minus(oliv.toBigN(100))).toString()).toBe(bal10);
     });
     test("approve", async () => {
-      await grap.contracts.grap.methods.approve(new_user, "100").send({from: user});
-      let allowance = await grap.contracts.grap.methods.allowance(user, new_user).call();
+      await oliv.contracts.oliv.methods.approve(new_user, "100").send({from: user});
+      let allowance = await oliv.contracts.oliv.methods.allowance(user, new_user).call();
       expect(allowance).toBe("100")
     });
     test("increaseAllowance", async () => {
-      await grap.contracts.grap.methods.increaseAllowance(new_user, "100").send({from: user});
-      let allowance = await grap.contracts.grap.methods.allowance(user, new_user).call();
+      await oliv.contracts.oliv.methods.increaseAllowance(new_user, "100").send({from: user});
+      let allowance = await oliv.contracts.oliv.methods.allowance(user, new_user).call();
       expect(allowance).toBe("100")
     });
     test("decreaseAllowance", async () => {
-      await grap.contracts.grap.methods.increaseAllowance(new_user, "100").send({from: user});
-      let allowance = await grap.contracts.grap.methods.allowance(user, new_user).call();
+      await oliv.contracts.oliv.methods.increaseAllowance(new_user, "100").send({from: user});
+      let allowance = await oliv.contracts.oliv.methods.allowance(user, new_user).call();
       expect(allowance).toBe("100")
-      await grap.contracts.grap.methods.decreaseAllowance(new_user, "100").send({from: user});
-      allowance = await grap.contracts.grap.methods.allowance(user, new_user).call();
+      await oliv.contracts.oliv.methods.decreaseAllowance(new_user, "100").send({from: user});
+      allowance = await oliv.contracts.oliv.methods.allowance(user, new_user).call();
       expect(allowance).toBe("0")
     });
     test("decreaseAllowance from 0", async () => {
-      await grap.contracts.grap.methods.decreaseAllowance(new_user, "100").send({from: user});
-      let allowance = await grap.contracts.grap.methods.allowance(user, new_user).call();
+      await oliv.contracts.oliv.methods.decreaseAllowance(new_user, "100").send({from: user});
+      let allowance = await oliv.contracts.oliv.methods.allowance(user, new_user).call();
       expect(allowance).toBe("0")
     });
   })

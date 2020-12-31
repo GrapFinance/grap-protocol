@@ -17,7 +17,7 @@ let infura = new Web3(
   new Web3.providers.WebsocketProvider("wss://mainnet.infura.io/ws/v3/9a6f973e507746edae097142b766b6d8")
 );
 
-export class Grap {
+export class Oliv {
   constructor(
     provider,
     networkId,
