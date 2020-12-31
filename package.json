@@ -11,10 +11,10 @@
   "dependencies": {
     "dotenv-flow": "^3.2.0",
     "ethers": "^5.0.8",
-    "ganache-core": "^2.11.2"
+    "ganache-core": "^2.13.1"
   },
   "devDependencies": {
-    "@truffle/hdwallet-provider": "^1.0.40",
+    "@truffle/hdwallet-provider": "^1.2.1",
     "ethereumjs-abi": "^0.6.8",
     "ethereumjs-util": "^7.0.4"
   }
