@@ -3,13 +3,13 @@
 
 // Token
 // deployed first
-const GRAPImplementation = artifacts.require("GRAPDelegate");
-const GRAPProxy = artifacts.require("GRAPDelegator");
+const OLIVImplementation = artifacts.require("OLIVDelegate");
+const OLIVProxy = artifacts.require("OLIVDelegator");
 
 // Rs
 // deployed second
-const GRAPReserves = artifacts.require("GRAPReserves");
-const GRAPRebaser = artifacts.require("GRAPRebaser");
+const OLIVReserves = artifacts.require("OLIVReserves");
+const OLIVRebaser = artifacts.require("OLIVRebaser");
 
 // Governance
 // deployed third
@@ -39,6 +39,6 @@ async function deployGovernance(deployer, network) {
   await deployer.deploy(Timelock);
   await deployer.deploy(Gov,
       Timelock.address,
-      GRAPProxy.address
+      OLIVProxy.address
   );
 }

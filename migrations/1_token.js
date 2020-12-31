@@ -2,8 +2,8 @@
 
 // Token
 // deployed first
-const GRAPImplementation = artifacts.require("GRAPDelegate");
-const GRAPProxy = artifacts.require("GRAPDelegator");
+const OLIVImplementation = artifacts.require("OLIVDelegate");
+const OLIVProxy = artifacts.require("OLIVDelegator");
 
 // ============ Main Migration ============
 
@@ -19,13 +19,13 @@ module.exports = migration;
 
 
 async function deployToken(deployer, network) {
-  await deployer.deploy(GRAPImplementation);
-  await deployer.deploy(GRAPProxy,
-    "GRAP",
-    "GRAP",
+  await deployer.deploy(OLIVImplementation);
+  await deployer.deploy(OLIVProxy,
+    "OLIV",
+    "OLIV",
     18,
     "2000000000000000000000000",
-    GRAPImplementation.address,
+    OLIVImplementation.address,
     "0x"
   );
 }
