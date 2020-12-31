@@ -1,15 +1,15 @@
 pragma solidity 0.5.17;
 
-import "./GRAP.sol";
+import "./OLIV.sol";
 
-contract GRAPDelegationStorage {
+contract OLIVDelegationStorage {
     /**
      * @notice Implementation address for this contract
      */
     address public implementation;
 }
 
-contract GRAPDelegatorInterface is GRAPDelegationStorage {
+contract OLIVDelegatorInterface is OLIVDelegationStorage {
     /**
      * @notice Emitted when implementation is changed
      */
@@ -24,7 +24,7 @@ contract GRAPDelegatorInterface is GRAPDelegationStorage {
     function _setImplementation(address implementation_, bool allowResign, bytes memory becomeImplementationData) public;
 }
 
-contract GRAPDelegateInterface is GRAPDelegationStorage {
+contract OLIVDelegateInterface is OLIVDelegationStorage {
     /**
      * @notice Called by the delegator on a delegate to initialize it for duty
      * @dev Should revert if any issues arise which make it unfit for delegation
@@ -39,7 +39,7 @@ contract GRAPDelegateInterface is GRAPDelegationStorage {
 }
 
 
-contract GRAPDelegate is GRAP, GRAPDelegateInterface {
+contract OLIVDelegate is OLIV, OLIVDelegateInterface {
     /**
      * @notice Construct an empty delegate
      */

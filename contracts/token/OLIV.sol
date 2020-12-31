@@ -1,9 +1,9 @@
 pragma solidity 0.5.17;
 
-/* import "./GRAPTokenInterface.sol"; */
-import "./GRAPGovernance.sol";
+/* import "./OLIVTokenInterface.sol"; */
+import "./OLIVGovernance.sol";
 
-contract GRAPToken is GRAPGovernanceToken {
+contract OLIVToken is OLIVGovernanceToken {
     // Modifiers
     modifier onlyGov() {
         require(msg.sender == gov);
@@ -33,7 +33,7 @@ contract GRAPToken is GRAPGovernanceToken {
     )
         public
     {
-        require(grapsScalingFactor == 0, "already initialized");
+        require(olivsScalingFactor == 0, "already initialized");
         name = name_;
         symbol = symbol_;
         decimals = decimals_;
@@ -66,8 +66,8 @@ contract GRAPToken is GRAPGovernanceToken {
         view
         returns (uint256)
     {
-        // scaling factor can only go up to 2**256-1 = initSupply * grapsScalingFactor
-        // this is used to check if grapsScalingFactor will be too high to compute balances when rebasing.
+        // scaling factor can only go up to 2**256-1 = initSupply * olivsScalingFactor
+        // this is used to check if olivsScalingFactor will be too high to compute balances when rebasing.
         return uint256(-1) / initSupply;
     }
 
@@ -91,20 +91,20 @@ contract GRAPToken is GRAPGovernanceToken {
       _totalSupply = _totalSupply.add(amount.mul(10**24/ (BASE)));
 
       // get underlying value
-      uint256 grapValue = amount.mul(internalDecimals).div(grapsScalingFactor);
+      uint256 olivValue = amount.mul(internalDecimals).div(olivsScalingFactor);
 
       // increase initSupply
-      initSupply = initSupply.add(grapValue);
+      initSupply = initSupply.add(olivValue);
 
       // make sure the mint didnt push maxScalingFactor too low
-      require(grapsScalingFactor <= _maxScalingFactor(), "max scaling factor too low");
+      require(olivsScalingFactor <= _maxScalingFactor(), "max scaling factor too low");
 
       // add balance
-      _grapBalances[to] = _grapBalances[to].add(grapValue);
+      _olivBalances[to] = _olivBalances[to].add(olivValue);
       emit Transfer(address(0), to, amount);
     
       // add delegates to the minter
-      _moveDelegates(address(0), _delegates[to], grapValue);
+      _moveDelegates(address(0), _delegates[to], olivValue);
       emit Mint(to, amount);
     }
 
@@ -121,22 +121,22 @@ contract GRAPToken is GRAPGovernanceToken {
         validRecipient(to)
         returns (bool)
     {
-        // underlying balance is stored in graps, so divide by current scaling factor
+        // underlying balance is stored in olivs, so divide by current scaling factor
 
         // note, this means as scaling factor grows, dust will be untransferrable.
-        // minimum transfer value == grapsScalingFactor / 1e24;
+        // minimum transfer value == olivsScalingFactor / 1e24;
 
         // get amount in underlying
-        uint256 grapValue = value.mul(internalDecimals).div(grapsScalingFactor);
+        uint256 olivValue = value.mul(internalDecimals).div(olivsScalingFactor);
 
         // sub from balance of sender
-        _grapBalances[msg.sender] = _grapBalances[msg.sender].sub(grapValue);
+        _olivBalances[msg.sender] = _olivBalances[msg.sender].sub(olivValue);
 
         // add to balance of receiver
-        _grapBalances[to] = _grapBalances[to].add(grapValue);
+        _olivBalances[to] = _olivBalances[to].add(olivValue);
         emit Transfer(msg.sender, to, value);
 
-        _moveDelegates(_delegates[msg.sender], _delegates[to], grapValue);
+        _moveDelegates(_delegates[msg.sender], _delegates[to], olivValue);
         return true;
     }
 
@@ -154,15 +154,15 @@ contract GRAPToken is GRAPGovernanceToken {
         // decrease allowance
         _allowedFragments[from][msg.sender] = _allowedFragments[from][msg.sender].sub(value);
 
-        // get value in graps
-        uint256 grapValue = value.mul(internalDecimals).div(grapsScalingFactor);
+        // get value in olivs
+        uint256 olivValue = value.mul(internalDecimals).div(olivsScalingFactor);
 
         // sub from from
-        _grapBalances[from] = _grapBalances[from].sub(grapValue);
-        _grapBalances[to] = _grapBalances[to].add(grapValue);
+        _olivBalances[from] = _olivBalances[from].sub(olivValue);
+        _olivBalances[to] = _olivBalances[to].add(olivValue);
         emit Transfer(from, to, value);
 
-        _moveDelegates(_delegates[from], _delegates[to], grapValue);
+        _moveDelegates(_delegates[from], _delegates[to], olivValue);
         return true;
     }
 
@@ -175,7 +175,7 @@ contract GRAPToken is GRAPGovernanceToken {
       view
       returns (uint256)
     {
-      return _grapBalances[who].mul(grapsScalingFactor).div(internalDecimals);
+      return _olivBalances[who].mul(olivsScalingFactor).div(internalDecimals);
     }
 
     /** @notice Currently returns the internal storage amount
@@ -187,7 +187,7 @@ contract GRAPToken is GRAPGovernanceToken {
       view
       returns (uint256)
     {
-      return _grapBalances[who];
+      return _olivBalances[who];
     }
 
     /**
@@ -331,30 +331,30 @@ contract GRAPToken is GRAPGovernanceToken {
         returns (uint256)
     {
         if (indexDelta == 0) {
-          emit Rebase(epoch, grapsScalingFactor, grapsScalingFactor);
+          emit Rebase(epoch, olivsScalingFactor, olivsScalingFactor);
           return _totalSupply;
         }
 
-        uint256 prevGrapsScalingFactor = grapsScalingFactor;
+        uint256 prevOlivsScalingFactor = olivsScalingFactor;
 
         if (!positive) {
-           grapsScalingFactor = grapsScalingFactor.mul(BASE.sub(indexDelta)).div(BASE);
+           olivsScalingFactor = olivsScalingFactor.mul(BASE.sub(indexDelta)).div(BASE);
         } else {
-            uint256 newScalingFactor = grapsScalingFactor.mul(BASE.add(indexDelta)).div(BASE);
+            uint256 newScalingFactor = olivsScalingFactor.mul(BASE.add(indexDelta)).div(BASE);
             if (newScalingFactor < _maxScalingFactor()) {
-                grapsScalingFactor = newScalingFactor;
+                olivsScalingFactor = newScalingFactor;
             } else {
-              grapsScalingFactor = _maxScalingFactor();
+              olivsScalingFactor = _maxScalingFactor();
             }
         }
 
-        _totalSupply = initSupply.mul(grapsScalingFactor).div(BASE);
-        emit Rebase(epoch, prevGrapsScalingFactor, grapsScalingFactor);
+        _totalSupply = initSupply.mul(olivsScalingFactor).div(BASE);
+        emit Rebase(epoch, prevOlivsScalingFactor, olivsScalingFactor);
         return _totalSupply;
     }
 }
 
-contract GRAP is GRAPToken {
+contract OLIV is OLIVToken {
     /**
      * @notice Initialize the new money market
      * @param name_ ERC-20 name of this token
@@ -376,8 +376,8 @@ contract GRAP is GRAPToken {
 
         initSupply = initSupply_.mul(10**24/ (BASE));
         _totalSupply = initSupply;
-        grapsScalingFactor = BASE;
-        _grapBalances[initial_owner] = initSupply_.mul(10**24 / (BASE));
+        olivsScalingFactor = BASE;
+        _olivBalances[initial_owner] = initSupply_.mul(10**24 / (BASE));
 
         // owner renounces ownership after deployment as they need to set
         // rebaser and incentivizer

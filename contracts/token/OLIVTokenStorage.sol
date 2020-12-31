@@ -2,8 +2,8 @@ pragma solidity 0.5.17;
 
 import "../lib/SafeMath.sol";
 
-// Storage for a GRAP token
-contract GRAPTokenStorage {
+// Storage for a OLIV token
+contract OLIVTokenStorage {
 
     using SafeMath for uint256;
 
@@ -43,12 +43,12 @@ contract GRAPTokenStorage {
     address public rebaser;
 
     /**
-     * @notice Reserve address of GRAP protocol
+     * @notice Reserve address of OLIV protocol
      */
     address public incentivizer;
 
     /**
-     * @notice Total supply of GRAPs
+     * @notice Total supply of OLIVs
      */
     uint256 internal _totalSupply;
 
@@ -65,9 +65,9 @@ contract GRAPTokenStorage {
     /**
      * @notice Scaling factor that adjusts everyone's balances
      */
-    uint256 public grapsScalingFactor;
+    uint256 public olivsScalingFactor;
 
-    mapping (address => uint256) internal _grapBalances;
+    mapping (address => uint256) internal _olivBalances;
 
     mapping (address => mapping (address => uint256)) internal _allowedFragments;
 

@@ -1,11 +1,11 @@
 pragma solidity 0.5.17;
 
-import "./GRAPTokenInterface.sol";
-import "./GRAPDelegate.sol";
+import "./OLIVTokenInterface.sol";
+import "./OLIVDelegate.sol";
 
-contract GRAPDelegator is GRAPTokenInterface, GRAPDelegatorInterface {
+contract OLIVDelegator is OLIVTokenInterface, OLIVDelegatorInterface {
     /**
-     * @notice Construct a new GRAP
+     * @notice Construct a new OLIV
      * @param name_ ERC-20 name of this token
      * @param symbol_ ERC-20 symbol of this token
      * @param decimals_ ERC-20 decimal precision of this token
@@ -53,7 +53,7 @@ contract GRAPDelegator is GRAPTokenInterface, GRAPDelegatorInterface {
      * @param becomeImplementationData The encoded bytes data to be passed to _becomeImplementation
      */
     function _setImplementation(address implementation_, bool allowResign, bytes memory becomeImplementationData) public {
-        require(msg.sender == gov, "GRAPDelegator::_setImplementation: Caller must be gov");
+        require(msg.sender == gov, "OLIVDelegator::_setImplementation: Caller must be gov");
 
         if (allowResign) {
             delegateToImplementation(abi.encodeWithSignature("_resignImplementation()"));
@@ -412,7 +412,7 @@ contract GRAPDelegator is GRAPTokenInterface, GRAPDelegatorInterface {
      * @dev It returns to the external caller whatever the implementation returns or forwards reverts
      */
     function () external payable {
-        require(msg.value == 0,"GRAPDelegator:fallback: cannot send value to fallback");
+        require(msg.value == 0,"OLIVDelegator:fallback: cannot send value to fallback");
 
         // delegate all other functions to current implementation
         delegateAndReturn();
