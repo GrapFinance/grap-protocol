@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js'
+import BigNumber from '../../../oliv/node_modules/bignumber.js.js'
 import React, { useCallback, useMemo, useState } from 'react'
 import Button from '../../../components/Button'
 import Modal, { ModalProps } from '../../../components/Modal'

@@ -8,7 +8,7 @@ import CardContent from '../../../components/CardContent'
 import Label from '../../../components/Label'
 
 import { getDisplayBalance } from '../../../utils/formatBalance'
-import BigNumber from 'bignumber.js'
+import BigNumber from '../../../oliv/node_modules/bignumber.js.js'
 
 interface StatsProps {
   circSupply?: string,

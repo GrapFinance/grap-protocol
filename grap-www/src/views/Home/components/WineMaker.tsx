@@ -7,7 +7,7 @@ import CardContent from "../../../components/CardContent";
 import get from "../../../models/wines";
 
 import {getDisplayBalance} from "../../../utils/formatBalance";
-import BigNumber from "bignumber.js";
+import BigNumber from "../../../oliv/node_modules/bignumber.js.js";
 import Button from "../../../components/Button";
 import {claimWine, claimFee} from "../../../grapUtils";
 interface WineMakerProps {

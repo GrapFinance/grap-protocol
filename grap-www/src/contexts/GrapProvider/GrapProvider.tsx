@@ -2,7 +2,7 @@ import React, {createContext, useEffect, useState} from "react";
 
 import {useWallet} from "use-wallet";
 
-import {Grap} from "../../grap";
+import {Grap} from "../../oliv";
 
 export interface GrapContext {
   grap?: typeof Grap;

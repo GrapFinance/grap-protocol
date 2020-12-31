@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js'
+import BigNumber from '../oliv/node_modules/bignumber.js.js'
 
 export const getDisplayBalance = (balance: BigNumber, decimals = 18) => {
   const displayBalance = balance.dividedBy(new BigNumber(10).pow(decimals))

@@ -1,7 +1,7 @@
   
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import BigNumber from 'bignumber.js'
+import BigNumber from '../../oliv/node_modules/bignumber.js.js'
 
 import { useWallet } from 'use-wallet'
 
@@ -20,7 +20,7 @@ import { getProposal, getTotalVotes, getQuorumVotes, getProposalStatus, castVote
 
 import { Proposal, ProposalStatus } from '../../contexts/Proposals'
 
-import {PROPOSALSTATUSCODE} from '../../grap/lib/constants'
+import {PROPOSALSTATUSCODE} from '../../oliv/lib/constants'
 
 
 

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import { useWallet } from 'use-wallet'
-import { Grap } from '../grap'
+import { Grap } from '../oliv'
 import { rebase } from '../grapUtils'
 
 import useGrap from '../hooks/useGrap'

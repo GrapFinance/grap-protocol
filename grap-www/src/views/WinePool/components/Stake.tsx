@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js'
+import BigNumber from '../../../oliv/node_modules/bignumber.js.js'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Contract } from 'web3-eth-contract'

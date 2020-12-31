@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import styled from "styled-components";
 import {ChainId, Token, WETH, Fetcher, Route} from "@uniswap/sdk";
-import Web3 from "web3";
+import Web3 from "../../../oliv/node_modules/web3";
 import useGrap from "../../../hooks/useGrap";
 
 import Card from "../../../components/Card";
@@ -13,8 +13,8 @@ import {getPoolStartTime} from "../../../grapUtils";
 import {getDisplayBalance} from "../../../utils/formatBalance";
 import {getStats} from "../../../views/Home/utils";
 import {OverviewData} from "../../../views/Home/types";
-import {Grap} from "../../../grap";
-import BigNumber from "bignumber.js";
+import {Grap} from "../../../oliv";
+import BigNumber from "../../../oliv/node_modules/bignumber.js.js";
 export interface GrapContext {
   grap?: typeof Grap;
 }

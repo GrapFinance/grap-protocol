@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Web3 from 'web3'
+import Web3 from '../oliv/node_modules/web3'
 import { provider } from 'web3-core'
 import { useWallet } from 'use-wallet'
 // import debounce from 'debounce'

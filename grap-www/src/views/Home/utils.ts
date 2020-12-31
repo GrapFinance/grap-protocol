@@ -1,4 +1,4 @@
-import {Grap} from "../../grap";
+import {Grap} from "../../oliv";
 
 import {
   getCurrentPrice as gCP,

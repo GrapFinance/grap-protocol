@@ -1,8 +1,8 @@
-import {ethers} from "ethers";
+import {ethers} from "../oliv/lib/node_modules/ethers";
 
-import BigNumber from "bignumber.js";
+import BigNumber from "../oliv/node_modules/bignumber.js.js";
 
-import {PROPOSALSTATUSCODE} from "../grap/lib/constants";
+import {PROPOSALSTATUSCODE} from "../oliv/lib/constants";
 
 BigNumber.config({
   EXPONENTIAL_AT: 1000,

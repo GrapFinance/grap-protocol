@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import BigNumber from 'bignumber.js'
+import BigNumber from '../oliv/node_modules/bignumber.js.js'
 import { useWallet } from 'use-wallet'
 
 import { getWinePoolStaked, getBrewMaster } from '../grapUtils/index'
