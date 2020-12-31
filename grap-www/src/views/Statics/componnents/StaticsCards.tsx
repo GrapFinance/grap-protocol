@@ -2,51 +2,51 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import styled from "styled-components";
 import {ChainId, Token, WETH, Fetcher, Route} from "@uniswap/sdk";
 import Web3 from "../../../oliv/node_modules/web3";
-import useGrap from "../../../hooks/useGrap";
+import useOliv from "../../../hooks/useOliv";
 
 import Card from "../../../components/Card";
 import CardContent from "../../../components/CardContent";
 import Loader from "../../../components/Loader";
 import useFarms from "../../../hooks/useFarms";
 import {Farm} from "../../../contexts/Farms";
-import {getPoolStartTime} from "../../../grapUtils";
+import {getPoolStartTime} from "../../../olivUtils";
 import {getDisplayBalance} from "../../../utils/formatBalance";
 import {getStats} from "../../../views/Home/utils";
 import {OverviewData} from "../../../views/Home/types";
-import {Grap} from "../../../oliv";
+import {Oliv} from "../../../oliv";
 import BigNumber from "../../../oliv/node_modules/bignumber.js.js";
-export interface GrapContext {
-  grap?: typeof Grap;
+export interface OlivContext {
+  oliv?: typeof Oliv;
 }
 
 const ADDRESS = "0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB";
-let grap: any;
+let oliv: any;
 let tokenList: {[index: string]: {[index: string]: string}} = {
   uni_lp: {
     uni_token_addr: "0x4eFdFe92F7528Bd16b95083d7Ba1b247De32F549",
     token_name: "ycrv",
     uni_token_name: "ycrvUNIV",
   },
-  grap_yfii_bal: {
+  oliv_yfii_bal: {
     bal_token_addr: "0x09B8De949282C7F73355b8285f131C447694f95D",
     token_name: "yfii",
-    bal_token_name: "grap_yfii_bal",
+    bal_token_name: "oliv_yfii_bal",
   },
-  eth_grap_univ: {
+  eth_oliv_univ: {
     uni_token_addr: "0xC09fb8E468274a683A7570D0b795f8244FBEFf9C",
     token_name: "weth",
-    uni_token_name: "eth_grap_univ",
+    uni_token_name: "eth_oliv_univ",
   },
-  sake_grap_univ: {
+  sake_oliv_univ: {
     uni_token_addr: "0x67222b7e2f48a8C23E84B19a2d8F7b8162aB86c5",
     token_name: "sake",
-    uni_token_name: "sake_grap_univ",
+    uni_token_name: "sake_oliv_univ",
   }
 };
 
 const FarmCards: React.FC = () => {
   const [farms] = useFarms();
-  grap = useGrap();
+  oliv = useOliv();
 
   useEffect(() => {}, []);
 
@@ -86,26 +86,26 @@ const StaticsCard: React.FC<StaticsCardProps> = ({farm}) => {
   const [data, setData] = useState(null);
 
   const getData = useCallback(async () => {
-    const price = (await lookUpPrices(["grap-finance"]))["grap-finance"].usd;
-    const selfAddress = grap.web3.currentProvider.selectedAddress;
+    const price = (await lookUpPrices(["oliv-finance"]))["oliv-finance"].usd;
+    const selfAddress = oliv.web3.currentProvider.selectedAddress;
     const token = farm.depositToken;
     let ah: any = {
       weth: "eth_pool",
       uni_lp: "ycrvUNIV_pool",
-      yffi_grap_univ: "yffi_grap_univ_pool",
+      yffi_oliv_univ: "yffi_oliv_univ_pool",
     };
     let key = ah[token] || `${token}_pool`;
-    const STAKING_POOL = grap.contracts[key];
-    const Token = grap.contracts[token];
-    const GRAP_TOKEN = grap.contracts.grap;
-    const rewardTokenTicker = "GRAP";
-    const grapScale =
-      (await GRAP_TOKEN.methods.grapsScalingFactor().call()) / 1e18;
+    const STAKING_POOL = oliv.contracts[key];
+    const Token = oliv.contracts[token];
+    const OLIV_TOKEN = oliv.contracts.oliv;
+    const rewardTokenTicker = "OLIV";
+    const olivScale =
+      (await OLIV_TOKEN.methods.olivsScalingFactor().call()) / 1e18;
     const rewardPoolAddr = STAKING_POOL._address;
     const amount =
       (await STAKING_POOL.methods.balanceOf(selfAddress).call()) / 1e18;
     const earned =
-      (grapScale * (await STAKING_POOL.methods.earned(selfAddress).call())) /
+      (olivScale * (await STAKING_POOL.methods.earned(selfAddress).call())) /
       1e18;
     const totalSupply = (await Token.methods.totalSupply().call()) / 1e18;
     const totalStakedAmount =
@@ -113,16 +113,16 @@ const StaticsCard: React.FC<StaticsCardProps> = ({farm}) => {
 
     const weekly_reward =
       (Math.round((await STAKING_POOL.methods.rewardRate().call()) * 604800) *
-        grapScale) /
+        olivScale) /
       1e18;
     const rewardPerToken = weekly_reward / totalStakedAmount;
 
     let hash: any = {
-      grap_yfii_bal: ["yfii-finance"],
+      oliv_yfii_bal: ["yfii-finance"],
       uni_lp: ["curve-fi-ydai-yusdc-yusdt-ytusd"],
-      eth_grap_univ: ["ethereum"],
-      dogefi_grap_univ: ["dogefi"],
-      sake_grap_univ: ["sake-token"],
+      eth_oliv_univ: ["ethereum"],
+      dogefi_oliv_univ: ["dogefi"],
+      sake_oliv_univ: ["sake-token"],
     };
     let stakingTokenTicker = token;
     let targetTokenPrice = 0;
@@ -137,40 +137,40 @@ const StaticsCard: React.FC<StaticsCardProps> = ({farm}) => {
           const UNI_TOKEN_ADDR = tokenList[token].uni_token_addr;
           stakingTokenTicker = tokenList[token].token_name;
           const totalyTokenInBalancerPair =
-            (await grap.contracts[tokenList[token].token_name].methods
+            (await oliv.contracts[tokenList[token].token_name].methods
               .balanceOf(UNI_TOKEN_ADDR)
               .call()) / 1e18;
-          const totalGRAPInUniswapPair =
-            (await GRAP_TOKEN.methods.balanceOf(UNI_TOKEN_ADDR).call()) / 1e18;
+          const totalOLIVInUniswapPair =
+            (await OLIV_TOKEN.methods.balanceOf(UNI_TOKEN_ADDR).call()) / 1e18;
           const totalSupplyOfStakingToken =
-            (await grap.contracts[tokenList[token].uni_token_name].methods
+            (await oliv.contracts[tokenList[token].uni_token_name].methods
               .totalSupply()
               .call()) / 1e18;
           stakingTokenPrice =
             (targetTokenPrice * totalyTokenInBalancerPair +
-              price * totalGRAPInUniswapPair) /
+              price * totalOLIVInUniswapPair) /
             totalSupplyOfStakingToken;
         } else if (token.indexOf("bal") !== -1) {
           const BAL_TOKEN_ADDR = tokenList[token].bal_token_addr;
           stakingTokenTicker = tokenList[token].token_name;
           const totalyTokenInBalancerPair =
-            (await grap.contracts[tokenList[token].token_name].methods
+            (await oliv.contracts[tokenList[token].token_name].methods
               .balanceOf(BAL_TOKEN_ADDR)
               .call()) / 1e18;
-          const totalGRAPInBalancerPair =
-            (await GRAP_TOKEN.methods.balanceOf(BAL_TOKEN_ADDR).call()) / 1e18;
+          const totalOLIVInBalancerPair =
+            (await OLIV_TOKEN.methods.balanceOf(BAL_TOKEN_ADDR).call()) / 1e18;
           const totalSupplyOfStakingToken =
-            (await grap.contracts[tokenList[token].bal_token_name].methods
+            (await oliv.contracts[tokenList[token].bal_token_name].methods
               .totalSupply()
               .call()) / 1e18;
 
           const TokenPerBPT =
             totalyTokenInBalancerPair / totalSupplyOfStakingToken;
-          const GRAPPerBPT =
-            totalGRAPInBalancerPair / totalSupplyOfStakingToken;
+          const OLIVPerBPT =
+            totalOLIVInBalancerPair / totalSupplyOfStakingToken;
 
           stakingTokenPrice =
-            targetTokenPrice * TokenPerBPT + price * GRAPPerBPT;
+            targetTokenPrice * TokenPerBPT + price * OLIVPerBPT;
         }
       }
     }
