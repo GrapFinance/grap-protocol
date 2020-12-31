@@ -2,11 +2,11 @@ pragma solidity 0.5.17;
 
 import "../lib/IERC20.sol";
 import "../lib/SafeERC20.sol";
-import "../token/GRAPTokenInterface.sol";
+import "../token/OLIVTokenInterface.sol";
 
-contract GRAPReserves {
+contract OLIVReserves {
 
-    // Token that serves as a reserve for GRAP
+    // Token that serves as a reserve for OLIV
     address public reserveToken;
 
     address public gov;
@@ -15,7 +15,7 @@ contract GRAPReserves {
 
     address public rebaser;
 
-    address public grapAddress;
+    address public olivAddress;
 
     /*** Gov Events ***/
 
@@ -42,12 +42,12 @@ contract GRAPReserves {
 
     constructor(
         address reserveToken_,
-        address grapAddress_
+        address olivAddress_
     )
         public
     {
         reserveToken = reserveToken_;
-        grapAddress = grapAddress_;
+        olivAddress = olivAddress_;
         gov = msg.sender;
     }
 
@@ -56,9 +56,9 @@ contract GRAPReserves {
         onlyGov
     {
         address oldRebaser = rebaser;
-        GRAPTokenInterface(grapAddress).decreaseAllowance(oldRebaser, uint256(-1));
+        OLIVTokenInterface(olivAddress).decreaseAllowance(oldRebaser, uint256(-1));
         rebaser = rebaser_;
-        GRAPTokenInterface(grapAddress).approve(rebaser_, uint256(-1));
+        OLIVTokenInterface(olivAddress).approve(rebaser_, uint256(-1));
         emit NewRebaser(oldRebaser, rebaser_);
     }
 
