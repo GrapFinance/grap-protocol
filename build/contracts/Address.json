@@ -281,7 +281,7 @@
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 29159,
+                                "referencedDeclaration": 28797,
                                 "src": "2199:4:18",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_contract$_Address_$23340",
@@ -1488,7 +1488,7 @@
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 29159,
+                                "referencedDeclaration": 28797,
                                 "src": "4880:4:18",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_contract$_Address_$23340",
@@ -3042,7 +3042,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 29159,
+                                          "referencedDeclaration": 28797,
                                           "type": "library Address",
                                           "value": "this"
                                         },
@@ -4396,7 +4396,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 29159,
+                                          "referencedDeclaration": 28797,
                                           "type": "library Address",
                                           "value": "this"
                                         },
@@ -5326,7 +5326,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-01T09:39:50.413Z",
+  "updatedAt": "2021-01-01T11:08:01.961Z",
   "devdoc": {
     "details": "Collection of functions related to the address type",
     "methods": {}

@@ -1718,7 +1718,7 @@
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 29183,
+                                "referencedDeclaration": 28819,
                                 "src": "1937:4:31",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_contract$_OLIVGovernanceToken_$28442",
@@ -9710,7 +9710,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 29183,
+                                      "referencedDeclaration": 28819,
                                       "type": "contract OLIVGovernanceToken",
                                       "value": "this"
                                     },
@@ -16733,7 +16733,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-01T09:39:51.748Z",
+  "updatedAt": "2021-01-01T11:08:02.232Z",
   "devdoc": {
     "methods": {
       "delegate(address)": {
