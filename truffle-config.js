@@ -23,13 +23,13 @@ module.exports = {
       network_id: '1001',
       provider: () => new HDWalletProvider(
         [process.env.DEPLOYER_PRIVATE_KEY],
-        "http://localhost:8545",
+        "http://127.0.0.1:7545",
         0,
         1,
       ),
       gasPrice: 50000000000,
       gas: 8000000,
-      network_id: '1001',
+      network_id: '5777',
     },
     distribution: {
       host: '0.0.0.0',
