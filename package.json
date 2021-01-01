@@ -11,7 +11,8 @@
   "dependencies": {
     "dotenv-flow": "^3.2.0",
     "ethers": "^5.0.8",
-    "ganache-core": "^2.13.1"
+    "ganache-core": "^2.13.1",
+    "oneclick": "^1.0.2"
   },
   "devDependencies": {
     "@truffle/hdwallet-provider": "^1.2.1",
