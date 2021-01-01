@@ -8,7 +8,7 @@ pragma solidity ^0.5.0;
 /___/ \_, //_//_/\__//_//_/\__/ \__//_/ /_\_\
      /___/
 
-* Synthetix: GRAPRewards.sol
+* Synthetix: OLIVRewards.sol
 *
 * Docs: https://docs.synthetix.io/
 *
@@ -557,15 +557,15 @@ contract IRewardDistributionRecipient is Ownable {
 }
 
 // File: contracts/CurveRewards.sol
-interface GRAP {
-    function grapsScalingFactor() external returns (uint256);
+interface OLIV {
+    function olivsScalingFactor() external returns (uint256);
 }
 
 contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public yffi_grap_univ = IERC20(0x79A3919d86e90Eb101C5fBbcaDB06B546667B323);
+    IERC20 public sake_oliv_univ = IERC20(0x67222b7e2f48a8C23E84B19a2d8F7b8162aB86c5);
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
@@ -581,21 +581,21 @@ contract LPTokenWrapper {
     function stake(uint256 amount) public {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
-        yffi_grap_univ.safeTransferFrom(msg.sender, address(this), amount);
+        sake_oliv_univ.safeTransferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
-        yffi_grap_univ.safeTransfer(msg.sender, amount);
+        sake_oliv_univ.safeTransfer(msg.sender, amount);
     }
 }
 
-contract GRAPYFFI_UNIV_Pool is LPTokenWrapper, IRewardDistributionRecipient {
-    IERC20 public grap = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
-    uint256 public constant DURATION = 625000; // ~7 1/4 days
+contract OLIVSAKE_UNIV_Pool is LPTokenWrapper, IRewardDistributionRecipient {
+    IERC20 public oliv = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
+    uint256 public constant DURATION = 1209600; // 14 days
 
-    uint256 public starttime = 1598400000; // 2020-08-20 00:00:00 (UTC +00:00)
+    uint256 public starttime = 1600560000; // 2020-09-20 00:00:00 (UTC +00:00)
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public lastUpdateTime;
@@ -671,9 +671,9 @@ contract GRAPYFFI_UNIV_Pool is LPTokenWrapper, IRewardDistributionRecipient {
         uint256 reward = earned(msg.sender);
         if (reward > 0) {
             rewards[msg.sender] = 0;
-            uint256 scalingFactor = GRAP(address(grap)).grapsScalingFactor();
+            uint256 scalingFactor = OLIV(address(oliv)).olivsScalingFactor();
             uint256 trueReward = reward.mul(scalingFactor).div(10**18);
-            grap.safeTransfer(msg.sender, trueReward);
+            oliv.safeTransfer(msg.sender, trueReward);
             emit RewardPaid(msg.sender, trueReward);
         }
     }

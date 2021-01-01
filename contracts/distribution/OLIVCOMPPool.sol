@@ -1,6 +1,3 @@
-pragma solidity ^0.5.0;
-
-
 /*
    ____            __   __        __   _
   / __/__ __ ___  / /_ / /  ___  / /_ (_)__ __
@@ -8,7 +5,7 @@ pragma solidity ^0.5.0;
 /___/ \_, //_//_/\__//_//_/\__/ \__//_/ /_\_\
      /___/
 
-* Synthetix: GRAPRewards.sol
+* Synthetix: OLIVRewards.sol
 *
 * Docs: https://docs.synthetix.io/
 *
@@ -35,7 +32,11 @@ pragma solidity ^0.5.0;
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 */
+
 // File: @openzeppelin/contracts/math/Math.sol
+
+pragma solidity ^0.5.0;
+
 /**
  * @dev Standard math utilities missing in the Solidity language.
  */
@@ -65,6 +66,9 @@ library Math {
 }
 
 // File: @openzeppelin/contracts/math/SafeMath.sol
+
+pragma solidity ^0.5.0;
+
 /**
  * @dev Wrappers over Solidity's arithmetic operations with added overflow
  * checks.
@@ -221,6 +225,9 @@ library SafeMath {
 }
 
 // File: @openzeppelin/contracts/GSN/Context.sol
+
+pragma solidity ^0.5.0;
+
 /*
  * @dev Provides information about the current execution context, including the
  * sender of the transaction and its data. While these are generally available
@@ -248,6 +255,9 @@ contract Context {
 }
 
 // File: @openzeppelin/contracts/ownership/Ownable.sol
+
+pragma solidity ^0.5.0;
+
 /**
  * @dev Contract module which provides a basic access control mechanism, where
  * there is an account (an owner) that can be granted exclusive access to
@@ -323,6 +333,9 @@ contract Ownable is Context {
 }
 
 // File: @openzeppelin/contracts/token/ERC20/IERC20.sol
+
+pragma solidity ^0.5.0;
+
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
  * the optional functions; to access them see {ERC20Detailed}.
@@ -399,6 +412,9 @@ interface IERC20 {
 }
 
 // File: @openzeppelin/contracts/utils/Address.sol
+
+pragma solidity ^0.5.5;
+
 /**
  * @dev Collection of functions related to the address type
  */
@@ -467,6 +483,12 @@ library Address {
 }
 
 // File: @openzeppelin/contracts/token/ERC20/SafeERC20.sol
+
+pragma solidity ^0.5.0;
+
+
+
+
 /**
  * @title SafeERC20
  * @dev Wrappers around ERC20 operations that throw on failure (when the token
@@ -538,6 +560,11 @@ library SafeERC20 {
 }
 
 // File: contracts/IRewardDistributionRecipient.sol
+
+pragma solidity ^0.5.0;
+
+
+
 contract IRewardDistributionRecipient is Ownable {
     address public rewardDistribution;
 
@@ -557,15 +584,21 @@ contract IRewardDistributionRecipient is Ownable {
 }
 
 // File: contracts/CurveRewards.sol
-interface GRAP {
-    function grapsScalingFactor() external returns (uint256);
+
+pragma solidity ^0.5.0;
+
+
+interface OLIV {
+    function olivsScalingFactor() external returns (uint256);
 }
+
+
 
 contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public eth_grap_univ = IERC20(0xC09fb8E468274a683A7570D0b795f8244FBEFf9C);
+    IERC20 public comp = IERC20(0xc00e94Cb662C3520282E6f5717214004A7f26888);
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
@@ -581,21 +614,21 @@ contract LPTokenWrapper {
     function stake(uint256 amount) public {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
-        eth_grap_univ.safeTransferFrom(msg.sender, address(this), amount);
+        comp.safeTransferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
-        eth_grap_univ.safeTransfer(msg.sender, amount);
+        comp.safeTransfer(msg.sender, amount);
     }
 }
 
-contract GRAPETH_UNIV_Pool is LPTokenWrapper, IRewardDistributionRecipient {
-    IERC20 public grap = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
-    uint256 public constant DURATION = 3024000; // ~5 weeks
+contract OLIVCOMPPool is LPTokenWrapper, IRewardDistributionRecipient {
+    IERC20 public oliv = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
+    uint256 public constant DURATION = 625000; // ~7 1/4 days
 
-    uint256 public starttime = 1599436800; // 2020-09-07 00:00:00 (UTC +00:00)
+    uint256 public starttime = 1597881600; // 2020-08-20 00:00:00 (UTC +00:00)
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public lastUpdateTime;
@@ -671,9 +704,9 @@ contract GRAPETH_UNIV_Pool is LPTokenWrapper, IRewardDistributionRecipient {
         uint256 reward = earned(msg.sender);
         if (reward > 0) {
             rewards[msg.sender] = 0;
-            uint256 scalingFactor = GRAP(address(grap)).grapsScalingFactor();
+            uint256 scalingFactor = OLIV(address(oliv)).olivsScalingFactor();
             uint256 trueReward = reward.mul(scalingFactor).div(10**18);
-            grap.safeTransfer(msg.sender, trueReward);
+            oliv.safeTransfer(msg.sender, trueReward);
             emit RewardPaid(msg.sender, trueReward);
         }
     }

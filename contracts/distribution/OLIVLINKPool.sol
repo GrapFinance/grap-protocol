@@ -5,7 +5,7 @@
 /___/ \_, //_//_/\__//_//_/\__/ \__//_/ /_\_\
      /___/
 
-* Synthetix: GRAPRewards.sol
+* Synthetix: OLIVRewards.sol
 *
 * Docs: https://docs.synthetix.io/
 *
@@ -588,8 +588,8 @@ contract IRewardDistributionRecipient is Ownable {
 pragma solidity ^0.5.0;
 
 
-interface GRAP {
-    function grapsScalingFactor() external returns (uint256);
+interface OLIV {
+    function olivsScalingFactor() external returns (uint256);
 }
 
 
@@ -598,7 +598,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public snx = IERC20(0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F);
+    IERC20 public link = IERC20(0x514910771AF9Ca656af840dff83E8264EcF986CA);
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
@@ -614,18 +614,18 @@ contract LPTokenWrapper {
     function stake(uint256 amount) public {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
-        snx.safeTransferFrom(msg.sender, address(this), amount);
+        link.safeTransferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
-        snx.safeTransfer(msg.sender, amount);
+        link.safeTransfer(msg.sender, amount);
     }
 }
 
-contract GRAPSNXPool is LPTokenWrapper, IRewardDistributionRecipient {
-    IERC20 public grap = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
+contract OLIVLINKPool is LPTokenWrapper, IRewardDistributionRecipient {
+    IERC20 public oliv = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
     uint256 public constant DURATION = 625000; // ~7 1/4 days
 
     uint256 public starttime = 1597881600; // 2020-08-20 00:00:00 (UTC +00:00)
@@ -704,9 +704,9 @@ contract GRAPSNXPool is LPTokenWrapper, IRewardDistributionRecipient {
         uint256 reward = earned(msg.sender);
         if (reward > 0) {
             rewards[msg.sender] = 0;
-            uint256 scalingFactor = GRAP(address(grap)).grapsScalingFactor();
+            uint256 scalingFactor = OLIV(address(oliv)).olivsScalingFactor();
             uint256 trueReward = reward.mul(scalingFactor).div(10**18);
-            grap.safeTransfer(msg.sender, trueReward);
+            oliv.safeTransfer(msg.sender, trueReward);
             emit RewardPaid(msg.sender, trueReward);
         }
     }

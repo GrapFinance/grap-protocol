@@ -5,7 +5,7 @@
 /___/ \_, //_//_/\__//_//_/\__/ \__//_/ /_\_\
      /___/
 
-* Synthetix: GRAPRewards.sol
+* Synthetix: OLIVRewards.sol
 *
 * Docs: https://docs.synthetix.io/
 *
@@ -588,8 +588,8 @@ contract IRewardDistributionRecipient is Ownable {
 pragma solidity ^0.5.0;
 
 
-interface GRAP {
-    function grapsScalingFactor() external returns (uint256);
+interface OLIV {
+    function olivsScalingFactor() external returns (uint256);
 }
 
 
@@ -623,8 +623,8 @@ contract LPTokenWrapper {
     }
 }
 
-contract GRAPYFIPool is LPTokenWrapper, IRewardDistributionRecipient {
-    IERC20 public grap = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
+contract OLIVYFIPool is LPTokenWrapper, IRewardDistributionRecipient {
+    IERC20 public oliv = IERC20(0xC8D2AB2a6FdEbC25432E54941cb85b55b9f152dB);
     uint256 public constant DURATION = 625000; // ~7 1/4 days
 
     uint256 public starttime = 1597881600; // 2020-08-20 00:00:00 (UTC +00:00)
@@ -703,9 +703,9 @@ contract GRAPYFIPool is LPTokenWrapper, IRewardDistributionRecipient {
         uint256 reward = earned(msg.sender);
         if (reward > 0) {
             rewards[msg.sender] = 0;
-            uint256 scalingFactor = GRAP(address(grap)).grapsScalingFactor();
+            uint256 scalingFactor = OLIV(address(oliv)).olivsScalingFactor();
             uint256 trueReward = reward.mul(scalingFactor).div(10**18);
-            grap.safeTransfer(msg.sender, trueReward);
+            oliv.safeTransfer(msg.sender, trueReward);
             emit RewardPaid(msg.sender, trueReward);
         }
     }
