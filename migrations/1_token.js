@@ -2,8 +2,8 @@
 
 // Token
 // deployed first
-const GRAPImplementation = artifacts.require("GRAPDelegate");
-const GRAPProxy = artifacts.require("GRAPDelegator");
+const RUPXImplementation = artifacts.require("RUPXDelegate");
+const RUPXProxy = artifacts.require("RUPXDelegator");
 
 // ============ Main Migration ============
 
@@ -19,13 +19,13 @@ module.exports = migration;
 
 
 async function deployToken(deployer, network) {
-  await deployer.deploy(GRAPImplementation);
-  await deployer.deploy(GRAPProxy,
-    "GRAP",
-    "GRAP",
+  await deployer.deploy(RUPXImplementation);
+  await deployer.deploy(RUPXProxy,
+    "RUPX",
+    "RUPX",
     18,
-    "2000000000000000000000000",
-    GRAPImplementation.address,
+    "100000000000000000000000000",
+    RUPXImplementation.address,
     "0x"
   );
 }

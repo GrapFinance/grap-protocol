@@ -1,21 +1,36 @@
 {
-  "name": "grap",
+  "name": "Topo",
   "version": "1.0.0",
-  "description": "GRAP protocol repo",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "JS library for interacting with Topo smart contracts",
+  "main": "./index.js",
+  "type": "module",
+  "author": {
+    "name": "Topo Co."
   },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv-flow": "^3.2.0",
-    "ethers": "^5.0.8",
-    "ganache-core": "^2.11.2"
-  },
+  "license": "Apache-2.0",
   "devDependencies": {
-    "@truffle/hdwallet-provider": "^1.0.40",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.8.3",
     "ethereumjs-abi": "^0.6.8",
-    "ethereumjs-util": "^7.0.4"
+    "ethereumjs-util": "^7.0.4",
+    "ethers": "4.0.38",
+    "jest": "24.9.0",
+    "web3": "^1.0.0-beta.37"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/polyfill": "^7.8.3",
+    "@truffle/hdwallet-provider": "^1.0.43",
+    "babel-jest": "24.9.0",
+    "dotenv-flow": "^3.2.0",
+    "ganache-cli": "^6.10.1",
+    "node-fetch": "^2.6.0",
+    "scrypt-js": "^2.0.4"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
